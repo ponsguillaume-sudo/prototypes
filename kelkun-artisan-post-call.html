@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kelkun Pro - Post-appel</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Bricolage+Grotesque:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --kelkun-primary: #00BFA6;
+            --kelkun-primary-dark: #00a891;
+            --kelkun-primary-light: #F0FDFB;
+            --gray-50: #F9FAFB;
+            --gray-100: #F3F4F6;
+            --gray-200: #E5E7EB;
+            --gray-300: #D1D5DB;
+            --gray-400: #9CA3AF;
+            --gray-500: #6B7280;
+            --gray-600: #4B5563;
+            --gray-700: #374151;
+            --gray-900: #111827;
+            --green-500: #10B981;
+            --green-50: #ECFDF5;
+        }
+
+        body {
+            font-family: 'DM Sans', -apple-system, sans-serif;
+            background: var(--gray-50);
+            color: var(--gray-900);
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+
+        /* Mobile Container */
+        .mobile-frame {
+            max-width: 430px;
+            margin: 40px auto;
+            background: white;
+            border-radius: 40px;
+            box-shadow: 0 20px 80px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            border: 12px solid #1f2937;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--gray-200);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .back-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: none;
+            border: none;
+            color: var(--gray-700);
+            font-size: 0.938rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .header-title {
+            font-size: 0.938rem;
+            font-weight: 600;
+            color: var(--gray-600);
+        }
+
+        /* Progress Header */
+        .progress-header {
+            background: linear-gradient(135deg, var(--kelkun-primary) 0%, var(--kelkun-primary-dark) 100%);
+            padding: 32px 24px 40px;
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-header::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            right: -10%;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .progress-check-icon {
+            width: 64px;
+            height: 64px;
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin: 0 auto 16px;
+            position: relative;
+            z-index: 1;
+            animation: checkPulse 1.5s ease-in-out;
+        }
+
+        @keyframes checkPulse {
+            0% {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .progress-header-title {
+            font-family: 'Bricolage Grotesque', sans-serif;
+            font-size: 1.625rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .progress-header-subtitle {
+            font-size: 1rem;
+            opacity: 0.95;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .progress-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .progress-dots {
+            display: flex;
+            gap: 8px;
+        }
+
+        .progress-dot {
+            width: 12px;
+            height: 12px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+
+        .progress-dot.completed {
+            background: white;
+            transform: scale(1.2);
+        }
+
+        .progress-text {
+            font-size: 0.875rem;
+            font-weight: 600;
+            opacity: 0.9;
+        }
+
+        /* Content */
+        .content {
+            padding: 24px 20px;
+            overflow-y: auto;
+            max-height: calc(100vh - 200px);
+        }
+
+        /* Client Card */
+        .client-card {
+            background: white;
+            border: 2px solid var(--gray-200);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+
+        .client-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .client-avatar {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, var(--kelkun-primary), var(--kelkun-primary-dark));
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .client-info {
+            flex: 1;
+        }
+
+        .client-name {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 4px;
+        }
+
+        .client-type {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .verified-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: var(--kelkun-primary-light);
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--kelkun-primary-dark);
+        }
+
+        .client-contact {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .contact-item {
+            font-size: 0.938rem;
+            color: var(--gray-700);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .contact-item:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Details Section */
+        .details-toggle {
+            background: white;
+            border: 2px solid var(--gray-200);
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 24px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.2s;
+        }
+
+        .details-toggle:hover {
+            border-color: var(--gray-300);
+        }
+
+        .details-toggle-text {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.938rem;
+            font-weight: 600;
+            color: var(--gray-700);
+        }
+
+        .details-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .details-toggle.open .details-icon {
+            transform: rotate(180deg);
+        }
+
+        /* Section Title */
+        .section-title {
+            font-size: 0.938rem;
+            font-weight: 700;
+            color: var(--gray-700);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Step Card */
+        .step-card {
+            background: white;
+            border: 2px solid var(--gray-200);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 16px;
+            position: relative;
+        }
+
+        .step-card.completed {
+            background: var(--green-50);
+            border-color: var(--green-500);
+        }
+
+        .step-card.active {
+            background: var(--kelkun-primary-light);
+            border-color: var(--kelkun-primary);
+            border-width: 3px;
+            padding: 19px; /* Compensate for thicker border */
+            animation: slideInUp 0.5s ease;
+        }
+
+        .step-card.locked {
+            background: var(--gray-50);
+            border-color: var(--gray-200);
+            opacity: 0.6;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .step-header {
+            display: flex;
+            align-items: start;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .step-icon {
+            font-size: 1.125rem;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 4px;
+        }
+
+        .step-card.locked .step-title {
+            color: var(--gray-500);
+        }
+
+        .step-subtitle {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            line-height: 1.5;
+        }
+
+        .step-card.completed .step-subtitle {
+            color: var(--green-500);
+            font-weight: 600;
+        }
+
+        .step-card.locked .step-subtitle {
+            color: var(--gray-400);
+        }
+
+        .step-question {
+            font-size: 0.938rem;
+            color: var(--gray-700);
+            margin: 16px 0 20px;
+            line-height: 1.5;
+        }
+
+        /* Buttons */
+        .step-actions {
+            margin-top: 20px;
+        }
+
+        .btn-primary {
+            width: 100%;
+            background: var(--kelkun-primary);
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s;
+            margin-bottom: 12px;
+        }
+
+        .btn-primary:hover {
+            background: var(--kelkun-primary-dark);
+        }
+
+        .btn-primary:active {
+            transform: scale(0.98);
+        }
+
+        .btn-secondary {
+            width: 100%;
+            background: white;
+            color: var(--gray-700);
+            border: 2px solid var(--gray-200);
+            padding: 16px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.938rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s;
+            margin-bottom: 16px;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--gray-300);
+            background: var(--gray-50);
+        }
+
+        .btn-secondary:active {
+            transform: scale(0.98);
+        }
+
+        .link-subtle {
+            color: var(--kelkun-primary);
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-align: center;
+            display: block;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .link-subtle:hover {
+            text-decoration: underline;
+        }
+
+        /* Lock Icon */
+        .lock-icon {
+            font-size: 1.25rem;
+            color: var(--gray-400);
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            background: linear-gradient(135deg, var(--green-500), #059669);
+            color: white;
+            padding: 16px 20px;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(16, 185, 129, 0.4);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.4s ease;
+            z-index: 1000;
+            max-width: 380px;
+            width: 90%;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .toast-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .toast-content {
+            flex: 1;
+        }
+
+        .toast-title {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        .toast-desc {
+            font-size: 13px;
+            opacity: 0.95;
+        }
+    </style>
+</head>
+<body>
+    <div class="mobile-frame">
+        <!-- Header -->
+        <div class="header">
+            <button class="back-btn" onclick="showToast('Retour...', 'Navigation')">
+                ← Retour
+            </button>
+            <div class="header-title">Intervention #6VHTD</div>
+        </div>
+
+        <!-- Progress Header -->
+        <div class="progress-header">
+            <div class="progress-check-icon">✓</div>
+            <div class="progress-header-title">Appel effectué !</div>
+            <div class="progress-header-subtitle">Confirmez maintenant le rendez-vous</div>
+            <div class="progress-indicator">
+                <div class="progress-dots">
+                    <div class="progress-dot completed"></div>
+                    <div class="progress-dot completed"></div>
+                    <div class="progress-dot"></div>
+                    <div class="progress-dot"></div>
+                </div>
+                <div class="progress-text">Étape 2 sur 4</div>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <!-- Client Card -->
+            <div class="client-card">
+                <div class="client-header">
+                    <div class="client-avatar">MD</div>
+                    <div class="client-info">
+                        <div class="client-name">Michel Durand</div>
+                        <div class="client-type">
+                            🏢 Client Gedimat
+                            <span class="verified-badge">✓ Vérifié</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="client-contact">
+                    <div class="contact-item">📞 06 12 34 56 78</div>
+                    <div class="contact-item">📍 Lattes (34) • 8 km</div>
+                </div>
+            </div>
+
+            <!-- Details Toggle -->
+            <div class="details-toggle" onclick="toggleDetails()">
+                <div class="details-toggle-text">
+                    <span>📋</span>
+                    <span>Détails de la demande</span>
+                </div>
+                <div class="details-icon">▼</div>
+            </div>
+
+            <!-- Steps Section -->
+            <div class="section-title">
+                📋 Prochaines étapes
+            </div>
+
+            <!-- Step 1: Completed -->
+            <div class="step-card completed">
+                <div class="step-header">
+                    <div class="step-icon">✓</div>
+                    <div class="step-content">
+                        <div class="step-title">Appeler le client</div>
+                        <div class="step-subtitle">Appel effectué il y a 2 min</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2: Active -->
+            <div class="step-card active">
+                <div class="step-header">
+                    <div class="step-icon">2️⃣</div>
+                    <div class="step-content">
+                        <div class="step-title">Confirmer le rendez-vous</div>
+                    </div>
+                </div>
+                
+                <div class="step-question">
+                    Avez-vous fixé une date avec M. Durand ?
+                </div>
+
+                <div class="step-actions">
+                    <button class="btn-primary" onclick="confirmDateFixed()">
+                        ✓ Oui, date fixée
+                    </button>
+                    <button class="btn-secondary" onclick="showDatePicker()">
+                        📅 Choisir une date maintenant
+                    </button>
+                    <a class="link-subtle" onclick="snoozeMeeting()">
+                        Rappeler le client plus tard
+                    </a>
+                </div>
+            </div>
+
+            <!-- Step 3: Locked -->
+            <div class="step-card locked">
+                <div class="step-header">
+                    <div class="step-icon">3️⃣</div>
+                    <div class="step-content">
+                        <div class="step-title">Envoyer votre devis</div>
+                        <div class="step-subtitle">Disponible après confirmation RDV</div>
+                    </div>
+                    <div class="lock-icon">🔒</div>
+                </div>
+            </div>
+
+            <!-- Step 4: Locked -->
+            <div class="step-card locked">
+                <div class="step-header">
+                    <div class="step-icon">4️⃣</div>
+                    <div class="step-content">
+                        <div class="step-title">Réaliser l'intervention</div>
+                        <div class="step-subtitle">Disponible après envoi du devis</div>
+                    </div>
+                    <div class="lock-icon">🔒</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast">
+        <div class="toast-icon">✓</div>
+        <div class="toast-content">
+            <div class="toast-title" id="toastTitle">Succès</div>
+            <div class="toast-desc" id="toastDesc">Action effectuée</div>
+        </div>
+    </div>
+
+    <script>
+        function showToast(title, desc) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastTitle').textContent = title;
+            document.getElementById('toastDesc').textContent = desc || '';
+            
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2500);
+        }
+
+        function toggleDetails() {
+            const toggle = document.querySelector('.details-toggle');
+            toggle.classList.toggle('open');
+            showToast('Détails', toggle.classList.contains('open') ? 'Affichés' : 'Masqués');
+        }
+
+        function confirmDateFixed() {
+            showToast('RDV confirmé !', 'Étape suivante débloquée');
+            
+            // Simulate step progression
+            setTimeout(() => {
+                // Update step 2 to completed
+                const step2 = document.querySelectorAll('.step-card')[1];
+                step2.classList.remove('active');
+                step2.classList.add('completed');
+                step2.innerHTML = `
+                    <div class="step-header">
+                        <div class="step-icon">✓</div>
+                        <div class="step-content">
+                            <div class="step-title">Confirmer le rendez-vous</div>
+                            <div class="step-subtitle">RDV fixé : Demain 9h</div>
+                        </div>
+                    </div>
+                `;
+                
+                // Unlock step 3
+                const step3 = document.querySelectorAll('.step-card')[2];
+                step3.classList.remove('locked');
+                step3.classList.add('active');
+                step3.innerHTML = `
+                    <div class="step-header">
+                        <div class="step-icon">3️⃣</div>
+                        <div class="step-content">
+                            <div class="step-title">Envoyer votre devis</div>
+                        </div>
+                    </div>
+                    <div class="step-question">
+                        Importez votre devis ou créez-en un directement
+                    </div>
+                    <div class="step-actions">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                            <button class="btn-secondary" style="margin: 0;" onclick="showToast('Import', 'Ouverture galerie...')">
+                                📤 Importer
+                            </button>
+                            <button class="btn-secondary" style="margin: 0;" onclick="showToast('Création', 'Ouverture éditeur...')">
+                                ➕ Créer
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                // Scroll to step 3
+                step3.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 1500);
+        }
+
+        function showDatePicker() {
+            showToast('Date picker', 'Sélection de date...');
+            // In production, open a date/time picker modal
+            setTimeout(() => {
+                confirmDateFixed();
+            }, 2000);
+        }
+
+        function snoozeMeeting() {
+            showToast('Rappel programmé', 'Notification dans 2h');
+            setTimeout(() => {
+                alert('Cette intervention sera mise en attente et vous recevrez un rappel dans 2 heures.');
+            }, 500);
+        }
+    </script>
+</body>
+</html>
