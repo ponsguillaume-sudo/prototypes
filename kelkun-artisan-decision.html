@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kelkun - Nouvelle demande d'intervention</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Bricolage+Grotesque:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --kelkun-primary: #00BFA6;
+            --kelkun-primary-dark: #00a891;
+            --kelkun-primary-light: #e6f9f6;
+            --blue-light: #EEF2FF;
+            --gray-50: #F9FAFB;
+            --gray-100: #F3F4F6;
+            --gray-200: #E5E7EB;
+            --gray-400: #9CA3AF;
+            --gray-500: #6B7280;
+            --gray-600: #4B5563;
+            --gray-700: #374151;
+            --gray-900: #111827;
+            --orange-500: #F97316;
+            --orange-50: #FFF7ED;
+            --red-500: #EF4444;
+            --red-50: #FEF2F2;
+            --yellow-500: #EAB308;
+            --yellow-50: #FEFCE8;
+        }
+
+        body {
+            font-family: 'DM Sans', -apple-system, sans-serif;
+            background: var(--gray-50);
+            color: var(--gray-900);
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+
+        /* Mobile Container */
+        .mobile-frame {
+            max-width: 430px;
+            margin: 40px auto;
+            background: white;
+            border-radius: 40px;
+            box-shadow: 0 20px 80px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            border: 12px solid #1f2937;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--kelkun-primary) 0%, var(--kelkun-primary-dark) 100%);
+            padding: 20px 20px 100px;
+            position: relative;
+            color: white;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -20%;
+            right: -5%;
+            width: 250px;
+            height: 250px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .back-btn {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .menu-btn {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .new-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            padding: 8px 14px;
+            border-radius: 10px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            animation: pulse-badge 2s infinite;
+        }
+
+        @keyframes pulse-badge {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .header-content h1 {
+            font-family: 'Bricolage Grotesque', sans-serif;
+            font-size: 1.875rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .header-subtitle {
+            font-size: 1rem;
+            opacity: 0.95;
+            line-height: 1.5;
+        }
+
+        /* Content */
+        .content {
+            padding: 0 20px 24px;
+            margin-top: -80px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Urgent Decision Card */
+        .decision-card {
+            background: linear-gradient(135deg, var(--orange-50) 0%, #fff7ed 100%);
+            border: 2px solid var(--orange-500);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 24px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 12px 32px rgba(249, 115, 22, 0.2);
+        }
+
+        .decision-card::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            right: -15%;
+            width: 180px;
+            height: 180px;
+            background: radial-gradient(circle, rgba(249, 115, 22, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .decision-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .decision-icon {
+            width: 48px;
+            height: 48px;
+            background: white;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .decision-deadline {
+            background: var(--red-500);
+            color: white;
+            padding: 8px 14px;
+            border-radius: 10px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            animation: pulse-deadline 2s infinite;
+        }
+
+        @keyframes pulse-deadline {
+            0%, 100% { transform: scale(1); box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3); }
+            50% { transform: scale(1.05); box-shadow: 0 4px 16px rgba(239, 68, 68, 0.5); }
+        }
+
+        .decision-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .decision-label {
+            font-size: 0.813rem;
+            color: var(--gray-600);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .decision-title {
+            font-size: 1.375rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 8px;
+        }
+
+        .decision-description {
+            font-size: 0.938rem;
+            color: var(--gray-700);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .decision-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .btn-accept {
+            background: var(--kelkun-primary);
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.938rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 4px 12px rgba(0, 191, 166, 0.3);
+        }
+
+        .btn-accept:active {
+            transform: scale(0.98);
+        }
+
+        .btn-decline {
+            background: white;
+            color: var(--gray-700);
+            border: 2px solid var(--gray-300);
+            padding: 14px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.938rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-decline:active {
+            transform: scale(0.98);
+        }
+
+        /* Info Cards */
+        .info-card {
+            background: white;
+            border: 2px solid var(--gray-200);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .info-title {
+            font-size: 0.938rem;
+            font-weight: 700;
+            color: var(--gray-700);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+        }
+
+        .info-value {
+            font-size: 0.938rem;
+            font-weight: 600;
+            color: var(--gray-900);
+            text-align: right;
+        }
+
+        .priority-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.813rem;
+            font-weight: 600;
+        }
+
+        .priority-urgent {
+            background: var(--red-50);
+            color: var(--red-500);
+        }
+
+        /* Client Card */
+        .client-card {
+            background: var(--blue-light);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .client-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .client-avatar {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #6366F1, #4F46E5);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .client-info {
+            flex: 1;
+        }
+
+        .client-name {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 4px;
+        }
+
+        .client-type {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+        }
+
+        .client-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .contact-btn {
+            background: white;
+            border: 2px solid var(--gray-200);
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .contact-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Problem Description */
+        .problem-card {
+            background: white;
+            border: 2px solid var(--gray-200);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .problem-title {
+            font-size: 0.938rem;
+            font-weight: 700;
+            color: var(--gray-700);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .problem-text {
+            font-size: 0.938rem;
+            color: var(--gray-700);
+            line-height: 1.6;
+            background: var(--gray-50);
+            padding: 16px;
+            border-radius: 12px;
+            border-left: 3px solid var(--kelkun-primary);
+        }
+
+        /* Next Steps */
+        .next-steps {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 2px solid var(--gray-200);
+        }
+
+        .next-steps-title {
+            font-size: 0.938rem;
+            font-weight: 700;
+            color: var(--gray-700);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .step-item {
+            background: var(--gray-50);
+            border: 2px solid var(--gray-200);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            opacity: 0.5;
+            transition: all 0.3s ease;
+        }
+
+        .step-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .step-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--gray-200);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-title {
+            font-weight: 600;
+            color: var(--gray-700);
+            font-size: 0.938rem;
+            margin-bottom: 4px;
+        }
+
+        .step-desc {
+            font-size: 0.813rem;
+            color: var(--gray-600);
+        }
+
+        .lock-icon {
+            color: var(--gray-400);
+            font-size: 18px;
+        }
+
+        /* Earnings Card */
+        .earnings-card {
+            background: linear-gradient(135deg, var(--kelkun-primary-light) 0%, #d1fae5 100%);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .earnings-icon {
+            font-size: 48px;
+            margin-bottom: 8px;
+        }
+
+        .earnings-label {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            margin-bottom: 8px;
+        }
+
+        .earnings-amount {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--kelkun-primary-dark);
+            margin-bottom: 8px;
+        }
+
+        .earnings-desc {
+            font-size: 0.813rem;
+            color: var(--gray-600);
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: sticky;
+            bottom: 0;
+            background: white;
+            border-top: 1px solid var(--gray-200);
+            padding: 16px 20px;
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 12px;
+        }
+
+        .nav-btn-decline {
+            background: var(--gray-100);
+            border: none;
+            padding: 14px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: var(--gray-700);
+        }
+
+        .nav-btn-decline:active {
+            transform: scale(0.98);
+        }
+
+        .nav-btn-accept {
+            background: var(--kelkun-primary);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 4px 12px rgba(0, 191, 166, 0.3);
+        }
+
+        .nav-btn-accept:active {
+            transform: scale(0.98);
+        }
+
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--gray-900);
+            color: white;
+            padding: 14px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.938rem;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 100;
+        }
+
+        .toast.show {
+            opacity: 1;
+        }
+
+        /* Animations */
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .content > * {
+            animation: slideInUp 0.5s ease backwards;
+        }
+
+        .content > *:nth-child(1) { animation-delay: 0.1s; }
+        .content > *:nth-child(2) { animation-delay: 0.2s; }
+        .content > *:nth-child(3) { animation-delay: 0.3s; }
+        .content > *:nth-child(4) { animation-delay: 0.4s; }
+        .content > *:nth-child(5) { animation-delay: 0.5s; }
+        .content > *:nth-child(6) { animation-delay: 0.6s; }
+        .content > *:nth-child(7) { animation-delay: 0.7s; }
+    </style>
+</head>
+<body>
+    <div class="mobile-frame">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-top">
+                <button class="back-btn">←</button>
+                <button class="menu-btn">⋯</button>
+            </div>
+            <div class="header-content">
+                <div class="new-badge">
+                    ⚡ Nouvelle demande
+                </div>
+                <h1>Intervention urgente</h1>
+                <p class="header-subtitle">Demande reçue il y a 3 minutes • Montpellier</p>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <!-- Urgent Decision Card -->
+            <div class="decision-card">
+                <div class="decision-header">
+                    <div class="decision-icon">⚡</div>
+                    <div class="decision-deadline">
+                        ⏰ Réponse sous 2h
+                    </div>
+                </div>
+                <div class="decision-content">
+                    <div class="decision-label">Action requise</div>
+                    <div class="decision-title">Accepter ou refuser</div>
+                    <div class="decision-description">
+                        Confirmez votre disponibilité pour cette intervention. Le client attend votre réponse rapidement.
+                    </div>
+                    <div class="decision-actions">
+                        <button class="btn-accept" onclick="showToast('Demande acceptée ! 🎉')">
+                            <span>✓</span>
+                            <span>Accepter</span>
+                        </button>
+                        <button class="btn-decline" onclick="showToast('Demande refusée')">
+                            <span>✗</span>
+                            <span>Refuser</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Info Card -->
+            <div class="info-card">
+                <div class="info-title">
+                    📊 Informations clés
+                </div>
+                <div class="info-row">
+                    <div class="info-label">N° de demande</div>
+                    <div class="info-value">#KLK-2025-0142</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Priorité</div>
+                    <div class="info-value">
+                        <span class="priority-badge priority-urgent">🔥 Urgent</span>
+                    </div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Type d'intervention</div>
+                    <div class="info-value">Dépannage</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Localisation</div>
+                    <div class="info-value">Montpellier (34)</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Souhaité pour</div>
+                    <div class="info-value">Dans les 48h</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Distance</div>
+                    <div class="info-value">3,2 km de vous</div>
+                </div>
+            </div>
+
+            <!-- Client Card -->
+            <div class="client-card">
+                <div class="client-header">
+                    <div class="client-avatar">MC</div>
+                    <div class="client-info">
+                        <div class="client-name">M. Martin Claude</div>
+                        <div class="client-type">Particulier • Client vérifié ✓</div>
+                    </div>
+                </div>
+                <div class="client-actions">
+                    <button class="contact-btn" onclick="showToast('Appel en cours...')">
+                        📞 Appeler
+                    </button>
+                    <button class="contact-btn" onclick="showToast('Localisation ouverte')">
+                        📍 Itinéraire
+                    </button>
+                </div>
+            </div>
+
+            <!-- Problem Description -->
+            <div class="problem-card">
+                <div class="problem-title">
+                    💬 Description du problème
+                </div>
+                <div class="problem-text">
+                    "Fuite d'eau importante au niveau du compteur principal. L'eau s'accumule rapidement dans la cave. Besoin d'une intervention rapide pour éviter des dégâts matériels importants."
+                </div>
+            </div>
+
+            <!-- Earnings Card -->
+            <div class="earnings-card">
+                <div class="earnings-icon">💰</div>
+                <div class="earnings-label">Rémunération estimée</div>
+                <div class="earnings-amount">120-180 €</div>
+                <div class="earnings-desc">
+                    Estimation basée sur le type d'intervention et votre zone
+                </div>
+            </div>
+
+            <!-- Next Steps -->
+            <div class="next-steps">
+                <div class="next-steps-title">
+                    ⏭️ Si vous acceptez
+                </div>
+
+                <div class="step-item">
+                    <div class="step-icon">📞</div>
+                    <div class="step-content">
+                        <div class="step-title">Contact avec le client</div>
+                        <div class="step-desc">Confirmer les détails et planifier l'intervention</div>
+                    </div>
+                    <div class="lock-icon">→</div>
+                </div>
+
+                <div class="step-item">
+                    <div class="step-icon">🔧</div>
+                    <div class="step-content">
+                        <div class="step-title">Réalisation de l'intervention</div>
+                        <div class="step-desc">Effectuer les travaux convenus</div>
+                    </div>
+                    <div class="lock-icon">→</div>
+                </div>
+
+                <div class="step-item">
+                    <div class="step-icon">💳</div>
+                    <div class="step-content">
+                        <div class="step-title">Paiement sécurisé</div>
+                        <div class="step-desc">Vous êtes payé après validation du client</div>
+                    </div>
+                    <div class="lock-icon">→</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <button class="nav-btn-decline" onclick="showToast('Demande refusée')">
+                Refuser
+            </button>
+            <button class="nav-btn-accept" onclick="showToast('Demande acceptée ! 🎉')">
+                <span>✓</span>
+                <span>Accepter l'intervention</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2500);
+        }
+    </script>
+</body>
+</html>

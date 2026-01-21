@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kelkun - Nouveau devis (Quick Path)</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Bricolage+Grotesque:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --kelkun-primary: #00BFA6;
+            --kelkun-primary-dark: #00a891;
+            --kelkun-primary-light: #e6f9f6;
+            --gray-50: #F9FAFB;
+            --gray-100: #F3F4F6;
+            --gray-200: #E5E7EB;
+            --gray-300: #D1D5DB;
+            --gray-400: #9CA3AF;
+            --gray-500: #6B7280;
+            --gray-600: #4B5563;
+            --gray-700: #374151;
+            --gray-900: #111827;
+            --green-500: #10B981;
+            --green-50: #ECFDF5;
+        }
+
+        body {
+            font-family: 'DM Sans', -apple-system, sans-serif;
+            background: var(--gray-50);
+            color: var(--gray-900);
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+
+        /* Mobile Container */
+        .mobile-frame {
+            max-width: 430px;
+            margin: 40px auto;
+            background: white;
+            border-radius: 40px;
+            box-shadow: 0 20px 80px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            border: 12px solid #1f2937;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--kelkun-primary) 0%, var(--kelkun-primary-dark) 100%);
+            padding: 20px 20px 80px;
+            position: relative;
+            color: white;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -20%;
+            right: -5%;
+            width: 250px;
+            height: 250px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .back-btn {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .help-btn {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .header-content h1 {
+            font-family: 'Bricolage Grotesque', sans-serif;
+            font-size: 1.875rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .header-subtitle {
+            font-size: 0.938rem;
+            opacity: 0.95;
+            line-height: 1.5;
+        }
+
+        /* Content */
+        .content {
+            padding: 0 20px 24px;
+            margin-top: -60px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Quick Info Card */
+        .quick-info {
+            background: linear-gradient(135deg, var(--green-50) 0%, #d1fae5 100%);
+            border: 2px solid var(--green-500);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .quick-info-icon {
+            width: 48px;
+            height: 48px;
+            background: white;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .quick-info-text {
+            flex: 1;
+        }
+
+        .quick-info-title {
+            font-size: 0.938rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 4px;
+        }
+
+        .quick-info-desc {
+            font-size: 0.813rem;
+            color: var(--gray-600);
+            line-height: 1.4;
+        }
+
+        /* Main Card */
+        .devis-card {
+            background: white;
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+            border: 2px solid var(--gray-200);
+        }
+
+        /* Client Info */
+        .client-info {
+            background: var(--gray-50);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .client-avatar {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--kelkun-primary), var(--kelkun-primary-dark));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .client-details {
+            flex: 1;
+        }
+
+        .client-name {
+            font-size: 0.938rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 4px;
+        }
+
+        .client-address {
+            font-size: 0.813rem;
+            color: var(--gray-600);
+        }
+
+        .change-client-btn {
+            background: none;
+            border: none;
+            color: var(--kelkun-primary);
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        /* Input Group */
+        .input-group {
+            margin-bottom: 24px;
+        }
+
+        .input-label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--gray-700);
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 16px;
+            border: 2px solid var(--gray-200);
+            border-radius: 12px;
+            font-size: 0.938rem;
+            font-family: inherit;
+            transition: all 0.2s;
+            background: white;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--kelkun-primary);
+            box-shadow: 0 0 0 4px var(--kelkun-primary-light);
+        }
+
+        .input-field.large-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-align: right;
+            padding-right: 48px;
+        }
+
+        .currency-symbol {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--gray-400);
+            pointer-events: none;
+        }
+
+        /* Photo Upload */
+        .photo-upload {
+            border: 2px dashed var(--gray-300);
+            border-radius: 16px;
+            padding: 32px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: var(--gray-50);
+        }
+
+        .photo-upload:hover {
+            border-color: var(--kelkun-primary);
+            background: var(--kelkun-primary-light);
+        }
+
+        .photo-upload-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+            opacity: 0.5;
+        }
+
+        .photo-upload-text {
+            font-size: 0.938rem;
+            font-weight: 600;
+            color: var(--gray-700);
+            margin-bottom: 4px;
+        }
+
+        .photo-upload-hint {
+            font-size: 0.813rem;
+            color: var(--gray-500);
+        }
+
+        /* Preview Photo */
+        .photo-preview {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 16px;
+        }
+
+        .photo-preview img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .photo-preview-remove {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 32px;
+            height: 32px;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        /* AI Badge */
+        .ai-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .ai-generated {
+            background: var(--gray-50);
+            border: 2px solid var(--kelkun-primary);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .ai-generated-title {
+            font-size: 0.813rem;
+            color: var(--gray-600);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .ai-generated-text {
+            font-size: 0.938rem;
+            font-weight: 600;
+            color: var(--gray-900);
+            line-height: 1.5;
+        }
+
+        /* Advanced Link */
+        .advanced-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .advanced-link button {
+            background: none;
+            border: none;
+            color: var(--gray-600);
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+        .advanced-link button:hover {
+            background: var(--gray-100);
+            color: var(--gray-900);
+        }
+
+        /* Bottom Action */
+        .bottom-action {
+            position: sticky;
+            bottom: 0;
+            background: white;
+            border-top: 1px solid var(--gray-200);
+            padding: 16px 20px;
+        }
+
+        .send-btn {
+            width: 100%;
+            background: var(--kelkun-primary);
+            color: white;
+            border: none;
+            padding: 18px;
+            border-radius: 16px;
+            font-weight: 700;
+            font-size: 1.125rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 8px 24px rgba(0, 191, 166, 0.3);
+        }
+
+        .send-btn:active {
+            transform: scale(0.98);
+        }
+
+        .send-btn:disabled {
+            background: var(--gray-300);
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--gray-900);
+            color: white;
+            padding: 14px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.938rem;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 100;
+        }
+
+        .toast.show {
+            opacity: 1;
+        }
+
+        /* Success Animation */
+        @keyframes successPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .success-animation {
+            animation: successPulse 0.5s ease;
+        }
+
+        /* Animations */
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .content > * {
+            animation: slideInUp 0.5s ease backwards;
+        }
+
+        .content > *:nth-child(1) { animation-delay: 0.1s; }
+        .content > *:nth-child(2) { animation-delay: 0.2s; }
+        .content > *:nth-child(3) { animation-delay: 0.3s; }
+
+        /* Hidden state */
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="mobile-frame">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-top">
+                <button class="back-btn" onclick="window.history.back()">←</button>
+                <button class="help-btn">?</button>
+            </div>
+            <div class="header-content">
+                <h1>Nouveau devis</h1>
+                <p class="header-subtitle">Remplissez 3 infos, on s'occupe du reste</p>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <!-- Quick Info -->
+            <div class="quick-info">
+                <div class="quick-info-icon">⚡</div>
+                <div class="quick-info-text">
+                    <div class="quick-info-title">Devis en 15 secondes</div>
+                    <div class="quick-info-desc">Kelkun génère automatiquement les détails professionnels</div>
+                </div>
+            </div>
+
+            <!-- Main Card -->
+            <div class="devis-card">
+                <!-- Client Info (Pre-filled) -->
+                <div class="client-info">
+                    <div class="client-avatar">G</div>
+                    <div class="client-details">
+                        <div class="client-name">Gedimat Montpellier Sud</div>
+                        <div class="client-address">456 Av. des lavandes, 34000</div>
+                    </div>
+                    <button class="change-client-btn" onclick="showToast('Changement de client...')">
+                        Modifier
+                    </button>
+                </div>
+
+                <!-- Description -->
+                <div class="input-group">
+                    <label class="input-label">Décrivez l'intervention</label>
+                    <input 
+                        type="text" 
+                        class="input-field" 
+                        id="description"
+                        placeholder="Ex: Remplacement tuyau PVC 40m"
+                        oninput="updateButton()"
+                    >
+                </div>
+
+                <!-- Photo (Optional) -->
+                <div class="input-group">
+                    <label class="input-label">Photo du chantier (optionnel)</label>
+                    <div id="photoUpload" class="photo-upload" onclick="document.getElementById('photoInput').click()">
+                        <div class="photo-upload-icon">📸</div>
+                        <div class="photo-upload-text">Ajouter une photo</div>
+                        <div class="photo-upload-hint">L'IA analysera les détails</div>
+                    </div>
+                    <input type="file" id="photoInput" accept="image/*" style="display: none;" onchange="handlePhoto(event)">
+                    
+                    <!-- Photo Preview (Hidden initially) -->
+                    <div id="photoPreview" class="photo-preview hidden">
+                        <img id="photoImg" src="" alt="Preview">
+                        <button class="photo-preview-remove" onclick="removePhoto()">×</button>
+                    </div>
+
+                    <!-- AI Generated Description (Hidden initially) -->
+                    <div id="aiGenerated" class="ai-generated hidden">
+                        <div class="ai-badge">✨ IA Kelkun</div>
+                        <div class="ai-generated-title">Détails détectés :</div>
+                        <div class="ai-generated-text">Tuyau PVC diamètre 40mm, raccords inclus, 40 mètres linéaires estimés</div>
+                    </div>
+                </div>
+
+                <!-- Amount -->
+                <div class="input-group">
+                    <label class="input-label">Montant total TTC</label>
+                    <div class="input-wrapper">
+                        <input 
+                            type="number" 
+                            class="input-field large-text" 
+                            id="amount"
+                            placeholder="0"
+                            step="0.01"
+                            oninput="updateButton()"
+                        >
+                        <span class="currency-symbol">€</span>
+                    </div>
+                </div>
+
+                <!-- Advanced Link -->
+                <div class="advanced-link">
+                    <button onclick="goToAdvanced()">
+                        <span>🔧</span>
+                        <span>Personnaliser le devis</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Action -->
+        <div class="bottom-action">
+            <button class="send-btn" id="sendBtn" disabled onclick="sendDevis()">
+                <span>📨</span>
+                <span>Envoyer le devis</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        let hasPhoto = false;
+
+        function updateButton() {
+            const description = document.getElementById('description').value.trim();
+            const amount = document.getElementById('amount').value.trim();
+            const sendBtn = document.getElementById('sendBtn');
+            
+            // Enable button if both fields are filled
+            if (description && amount && parseFloat(amount) > 0) {
+                sendBtn.disabled = false;
+            } else {
+                sendBtn.disabled = true;
+            }
+        }
+
+        function handlePhoto(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const photoPreview = document.getElementById('photoPreview');
+                    const photoImg = document.getElementById('photoImg');
+                    const photoUpload = document.getElementById('photoUpload');
+                    const aiGenerated = document.getElementById('aiGenerated');
+                    
+                    photoImg.src = e.target.result;
+                    photoPreview.classList.remove('hidden');
+                    photoUpload.classList.add('hidden');
+                    
+                    // Simulate AI analysis
+                    setTimeout(() => {
+                        aiGenerated.classList.remove('hidden');
+                        // Auto-fill description if empty
+                        const descField = document.getElementById('description');
+                        if (!descField.value) {
+                            descField.value = "Remplacement tuyau PVC diam 40";
+                            updateButton();
+                        }
+                        showToast('✨ Analyse photo terminée');
+                    }, 1500);
+                    
+                    hasPhoto = true;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function removePhoto() {
+            const photoPreview = document.getElementById('photoPreview');
+            const photoUpload = document.getElementById('photoUpload');
+            const aiGenerated = document.getElementById('aiGenerated');
+            const photoInput = document.getElementById('photoInput');
+            
+            photoPreview.classList.add('hidden');
+            photoUpload.classList.remove('hidden');
+            aiGenerated.classList.add('hidden');
+            photoInput.value = '';
+            hasPhoto = false;
+            
+            showToast('Photo supprimée');
+        }
+
+        function sendDevis() {
+            const description = document.getElementById('description').value;
+            const amount = document.getElementById('amount').value;
+            const sendBtn = document.getElementById('sendBtn');
+            
+            // Disable button and show loading
+            sendBtn.disabled = true;
+            sendBtn.innerHTML = '<span>⏳</span><span>Génération en cours...</span>';
+            
+            // Simulate sending
+            setTimeout(() => {
+                sendBtn.classList.add('success-animation');
+                showToast('✅ Devis envoyé avec succès !');
+                
+                // Reset after animation
+                setTimeout(() => {
+                    window.location.href = 'kelkun-client-tracking.html'; // Redirect to tracking
+                }, 1000);
+            }, 1500);
+        }
+
+        function goToAdvanced() {
+            showToast('Ouverture du mode avancé...');
+            // In production, this would navigate to the full 3-step flow
+            setTimeout(() => {
+                alert('Dans la vraie app, cela ouvrirait le flow complet avec les 3 étapes que tu as dans Figma. Pour l\'instant, je garde juste le Quick Path pour la démo.');
+            }, 500);
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2500);
+        }
+
+        // Auto-format amount
+        document.getElementById('amount').addEventListener('blur', function() {
+            if (this.value) {
+                this.value = parseFloat(this.value).toFixed(2);
+            }
+        });
+    </script>
+</body>
+</html>

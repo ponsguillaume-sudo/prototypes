@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kelkun - Demande d'intervention Gedimat</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Bricolage+Grotesque:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --kelkun-primary: #00BFA6;
+            --kelkun-primary-dark: #00a891;
+            --kelkun-primary-light: #e6f9f6;
+            --gedimat-red: #E31E24;
+            --gedimat-red-light: #fef2f2;
+            --blue-light: #EEF2FF;
+            --gray-50: #F9FAFB;
+            --gray-100: #F3F4F6;
+            --gray-200: #E5E7EB;
+            --gray-300: #D1D5DB;
+            --gray-400: #9CA3AF;
+            --gray-500: #6B7280;
+            --gray-600: #4B5563;
+            --gray-700: #374151;
+            --gray-900: #111827;
+            --orange-500: #F97316;
+            --orange-50: #FFF7ED;
+            --green-500: #10B981;
+            --green-50: #ECFDF5;
+        }
+
+        body {
+            font-family: 'DM Sans', -apple-system, sans-serif;
+            background: var(--gray-50);
+            color: var(--gray-900);
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+
+        /* Mobile Container */
+        .mobile-frame {
+            max-width: 430px;
+            margin: 40px auto;
+            background: white;
+            border-radius: 40px;
+            box-shadow: 0 20px 80px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            border: 12px solid #1f2937;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--kelkun-primary) 0%, var(--kelkun-primary-dark) 100%);
+            padding: 20px 20px 80px;
+            position: relative;
+            color: white;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .back-btn {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .menu-btn {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .header-title {
+            position: relative;
+            z-index: 1;
+        }
+
+        .store-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 8px 14px;
+            border-radius: 10px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .header-title h1 {
+            font-family: 'Bricolage Grotesque', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .header-subtitle {
+            font-size: 0.938rem;
+            opacity: 0.9;
+        }
+
+        /* Content */
+        .content {
+            padding: 0 20px 24px;
+            margin-top: -60px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Request ID Card */
+        .request-id-card {
+            background: white;
+            border: 2px solid var(--gray-200);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .request-id-info {
+            flex: 1;
+        }
+
+        .request-id-label {
+            font-size: 0.813rem;
+            color: var(--gray-500);
+            margin-bottom: 4px;
+        }
+
+        .request-id-value {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            font-family: 'Courier New', monospace;
+        }
+
+        .copy-btn {
+            background: var(--gray-100);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover {
+            background: var(--gray-200);
+        }
+
+        /* Urgent Action Card */
+        .urgent-card {
+            background: linear-gradient(135deg, var(--gedimat-red) 0%, #c91a1f 100%);
+            border-radius: 20px;
+            padding: 24px;
+            color: white;
+            margin-bottom: 24px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 12px 32px rgba(227, 30, 36, 0.3);
+        }
+
+        .urgent-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .urgent-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .urgent-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .urgent-deadline {
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            padding: 8px 14px;
+            border-radius: 10px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            animation: pulse-subtle 2s infinite;
+        }
+
+        @keyframes pulse-subtle {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.85; }
+        }
+
+        .urgent-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .urgent-title {
+            font-size: 1.375rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .urgent-description {
+            font-size: 0.938rem;
+            opacity: 0.95;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-primary {
+            flex: 1;
+            background: white;
+            color: var(--gedimat-red);
+            border: none;
+            padding: 14px 20px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.938rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary:active {
+            transform: scale(0.98);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 14px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.938rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:active {
+            transform: scale(0.98);
+        }
+
+        /* Info Section */
+        .info-section {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 2px solid var(--gray-200);
+        }
+
+        .info-section-title {
+            font-size: 0.938rem;
+            font-weight: 700;
+            color: var(--gray-700);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-value {
+            font-size: 0.938rem;
+            font-weight: 600;
+            color: var(--gray-900);
+            text-align: right;
+        }
+
+        .priority-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.813rem;
+            font-weight: 600;
+        }
+
+        .priority-urgent {
+            background: var(--gedimat-red-light);
+            color: var(--gedimat-red);
+        }
+
+        .priority-normal {
+            background: var(--orange-50);
+            color: var(--orange-500);
+        }
+
+        /* Client Details */
+        .client-card {
+            background: var(--blue-light);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .client-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .client-avatar {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, var(--kelkun-primary), var(--kelkun-primary-dark));
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .client-info {
+            flex: 1;
+        }
+
+        .client-name {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 4px;
+        }
+
+        .client-type {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+        }
+
+        .client-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .contact-btn {
+            background: white;
+            border: 2px solid var(--gray-200);
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .contact-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Problem Description */
+        .problem-card {
+            background: white;
+            border: 2px solid var(--gray-200);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .problem-title {
+            font-size: 0.938rem;
+            font-weight: 700;
+            color: var(--gray-700);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .problem-text {
+            font-size: 0.938rem;
+            color: var(--gray-700);
+            line-height: 1.6;
+            background: var(--gray-50);
+            padding: 16px;
+            border-radius: 12px;
+            border-left: 3px solid var(--kelkun-primary);
+        }
+
+        /* Next Steps */
+        .next-steps {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 2px solid var(--gray-200);
+        }
+
+        .next-steps-title {
+            font-size: 0.938rem;
+            font-weight: 700;
+            color: var(--gray-700);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .step-item {
+            background: var(--gray-50);
+            border: 2px solid var(--gray-200);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            opacity: 0.5;
+            transition: all 0.3s ease;
+        }
+
+        .step-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .step-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--gray-200);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-title {
+            font-weight: 600;
+            color: var(--gray-700);
+            font-size: 0.938rem;
+            margin-bottom: 4px;
+        }
+
+        .step-desc {
+            font-size: 0.813rem;
+            color: var(--gray-600);
+        }
+
+        .lock-icon {
+            color: var(--gray-400);
+            font-size: 18px;
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: sticky;
+            bottom: 0;
+            background: white;
+            border-top: 1px solid var(--gray-200);
+            padding: 16px 20px;
+            display: flex;
+            gap: 12px;
+        }
+
+        .nav-btn {
+            flex: 1;
+            background: var(--gray-100);
+            border: none;
+            padding: 14px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .nav-btn.primary {
+            background: var(--kelkun-primary);
+            color: white;
+        }
+
+        .nav-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Animations */
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .content > * {
+            animation: slideInUp 0.5s ease backwards;
+        }
+
+        .content > *:nth-child(1) { animation-delay: 0.1s; }
+        .content > *:nth-child(2) { animation-delay: 0.2s; }
+        .content > *:nth-child(3) { animation-delay: 0.3s; }
+        .content > *:nth-child(4) { animation-delay: 0.4s; }
+        .content > *:nth-child(5) { animation-delay: 0.5s; }
+        .content > *:nth-child(6) { animation-delay: 0.6s; }
+
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--gray-900);
+            color: white;
+            padding: 14px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.938rem;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 100;
+        }
+
+        .toast.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="mobile-frame">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-top">
+                <button class="back-btn">←</button>
+                <button class="menu-btn">⋯</button>
+            </div>
+            <div class="header-title">
+                <div class="store-badge">
+                    🏪 Gedimat Montpellier Sud
+                </div>
+                <h1>Nouvelle intervention</h1>
+                <p class="header-subtitle">Demande reçue il y a 5 minutes</p>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <!-- Request ID -->
+            <div class="request-id-card">
+                <div class="request-id-info">
+                    <div class="request-id-label">N° de demande</div>
+                    <div class="request-id-value">#KLK-2025-0142</div>
+                </div>
+                <button class="copy-btn" onclick="copyRequestId()">📋</button>
+            </div>
+
+            <!-- Urgent Action Card -->
+            <div class="urgent-card">
+                <div class="urgent-header">
+                    <div class="urgent-icon">🔧</div>
+                    <div class="urgent-deadline">
+                        ⏰ Réponse sous 2h
+                    </div>
+                </div>
+                <div class="urgent-content">
+                    <div class="urgent-title">Action requise</div>
+                    <div class="urgent-description">
+                        Évaluez si une visite technique est nécessaire ou envoyez un devis directement.
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn-primary" onclick="showToast('Visite technique proposée !')">
+                            📍 Visite technique
+                        </button>
+                        <button class="btn-secondary" onclick="showToast('Envoi du devis...')">
+                            📄 Devis direct
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Info Section -->
+            <div class="info-section">
+                <div class="info-section-title">
+                    📊 Informations clés
+                </div>
+                <div class="info-row">
+                    <div class="info-label">
+                        <span>🎯</span>
+                        <span>Priorité</span>
+                    </div>
+                    <div class="info-value">
+                        <span class="priority-badge priority-urgent">🔥 Urgent</span>
+                    </div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">
+                        <span>🏗️</span>
+                        <span>Type d'intervention</span>
+                    </div>
+                    <div class="info-value">Dépannage</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">
+                        <span>📍</span>
+                        <span>Localisation</span>
+                    </div>
+                    <div class="info-value">Montpellier (34)</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">
+                        <span>📅</span>
+                        <span>Souhaité pour</span>
+                    </div>
+                    <div class="info-value">Dans les 48h</div>
+                </div>
+            </div>
+
+            <!-- Client Card -->
+            <div class="client-card">
+                <div class="client-header">
+                    <div class="client-avatar">MC</div>
+                    <div class="client-info">
+                        <div class="client-name">Magasin Central</div>
+                        <div class="client-type">Point de vente Gedimat</div>
+                    </div>
+                </div>
+                <div class="client-actions">
+                    <button class="contact-btn" onclick="showToast('Appel en cours...')">
+                        📞 Appeler
+                    </button>
+                    <button class="contact-btn" onclick="showToast('Localisation ouverte')">
+                        📍 Localiser
+                    </button>
+                </div>
+            </div>
+
+            <!-- Problem Description -->
+            <div class="problem-card">
+                <div class="problem-title">
+                    💬 Description du problème
+                </div>
+                <div class="problem-text">
+                    "Fuite d'eau importante au niveau du compteur principal dans l'arrière-boutique. L'eau s'accumule rapidement. Besoin d'une intervention rapide pour éviter des dégâts matériels."
+                </div>
+            </div>
+
+            <!-- Next Steps -->
+            <div class="next-steps">
+                <div class="next-steps-title">
+                    ⏭️ Prochaines étapes
+                </div>
+
+                <div class="step-item">
+                    <div class="step-icon">🔨</div>
+                    <div class="step-content">
+                        <div class="step-title">Réalisation de l'intervention</div>
+                        <div class="step-desc">Disponible après validation du devis</div>
+                    </div>
+                    <div class="lock-icon">🔒</div>
+                </div>
+
+                <div class="step-item">
+                    <div class="step-icon">📄</div>
+                    <div class="step-content">
+                        <div class="step-title">Envoi de la facture</div>
+                        <div class="step-desc">Disponible après l'intervention</div>
+                    </div>
+                    <div class="lock-icon">🔒</div>
+                </div>
+
+                <div class="step-item">
+                    <div class="step-icon">✅</div>
+                    <div class="step-content">
+                        <div class="step-title">Clôture du dossier</div>
+                        <div class="step-desc">Validation finale par le magasin</div>
+                    </div>
+                    <div class="lock-icon">🔒</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <button class="nav-btn" onclick="showToast('Demande refusée')">
+                Refuser
+            </button>
+            <button class="nav-btn primary" onclick="showToast('Proposition envoyée au magasin !')">
+                Envoyer ma réponse →
+            </button>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        function copyRequestId() {
+            navigator.clipboard.writeText('#KLK-2025-0142');
+            showToast('N° copié dans le presse-papier !');
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2500);
+        }
+    </script>
+</body>
+</html>

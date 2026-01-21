@@ -1,0 +1,1273 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kelkun - Trouvez votre artisan</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Bricolage+Grotesque:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --kelkun-primary: #00BFA6;
+            --kelkun-primary-dark: #00a891;
+            --kelkun-primary-light: #e6f9f6;
+            --blue-light: #EEF2FF;
+            --blue-500: #3B82F6;
+            --gray-50: #F9FAFB;
+            --gray-100: #F3F4F6;
+            --gray-200: #E5E7EB;
+            --gray-300: #D1D5DB;
+            --gray-400: #9CA3AF;
+            --gray-500: #6B7280;
+            --gray-600: #4B5563;
+            --gray-700: #374151;
+            --gray-900: #111827;
+            --orange-500: #F97316;
+            --orange-50: #FFF7ED;
+        }
+
+        body {
+            font-family: 'DM Sans', -apple-system, sans-serif;
+            background: white;
+            color: var(--gray-900);
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+
+        /* Mobile Container */
+        .mobile-frame {
+            max-width: 430px;
+            margin: 40px auto;
+            background: white;
+            border-radius: 40px;
+            box-shadow: 0 20px 80px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            border: 12px solid #1f2937;
+            min-height: 844px;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--gray-200);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Bricolage Grotesque', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--kelkun-primary);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            background: var(--gray-100);
+            border: none;
+            border-radius: 12px;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 0;
+            overflow-y: auto;
+            max-height: calc(844px - 82px - 80px);
+        }
+
+        /* Search Section */
+        .search-section {
+            padding: 24px 20px;
+            background: white;
+        }
+
+        .welcome-text {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--gray-900);
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: var(--gray-600);
+            margin-bottom: 20px;
+        }
+
+        .search-box {
+            background: var(--gray-100);
+            border-radius: 16px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.2s;
+            margin-bottom: 16px;
+        }
+
+        .search-box:active {
+            border-color: var(--kelkun-primary);
+            background: white;
+        }
+
+        .search-icon {
+            font-size: 24px;
+        }
+
+        .search-placeholder {
+            flex: 1;
+            font-size: 1.125rem;
+            color: var(--gray-600);
+            font-weight: 500;
+        }
+
+        /* Saved Places */
+        .saved-places {
+            padding: 0 20px 20px;
+        }
+
+        .saved-place {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px;
+            background: white;
+            border-radius: 14px;
+            margin-bottom: 12px;
+            border: 1px solid var(--gray-200);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .saved-place:active {
+            transform: scale(0.98);
+            background: var(--gray-50);
+        }
+
+        .place-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--gray-100);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .place-info {
+            flex: 1;
+        }
+
+        .place-label {
+            font-size: 1.063rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 2px;
+        }
+
+        .place-address {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+        }
+
+        .place-edit {
+            font-size: 14px;
+            color: var(--kelkun-primary);
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        /* Suggestions Section */
+        .suggestions-section {
+            padding: 24px 20px;
+            background: var(--gray-50);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .see-all {
+            font-size: 0.938rem;
+            color: var(--kelkun-primary);
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .suggestions-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .suggestion-card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px 16px;
+            text-align: center;
+            cursor: pointer;
+            border: 2px solid var(--gray-200);
+            transition: all 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .suggestion-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, var(--kelkun-primary-light) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .suggestion-card:active {
+            transform: scale(0.97);
+            border-color: var(--kelkun-primary);
+        }
+
+        .suggestion-card:active::before {
+            opacity: 1;
+        }
+
+        .suggestion-card.urgent {
+            border-color: var(--orange-500);
+            background: var(--orange-50);
+        }
+
+        .urgent-badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: var(--orange-500);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.688rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .suggestion-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .suggestion-label {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 4px;
+        }
+
+        .suggestion-desc {
+            font-size: 0.813rem;
+            color: var(--gray-600);
+            line-height: 1.4;
+        }
+
+        /* Featured Section */
+        .featured-section {
+            padding: 0 20px 24px;
+            background: var(--gray-50);
+        }
+
+        .featured-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 16px;
+        }
+
+        .featured-cards {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding-bottom: 12px;
+            scrollbar-width: none;
+        }
+
+        .featured-cards::-webkit-scrollbar {
+            display: none;
+        }
+
+        .featured-card {
+            min-width: 260px;
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 1px solid var(--gray-200);
+            transition: all 0.2s;
+        }
+
+        .featured-card:active {
+            transform: scale(0.98);
+        }
+
+        .featured-image {
+            width: 100%;
+            height: 140px;
+            background: linear-gradient(135deg, var(--kelkun-primary-light) 0%, #d4f4ef 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 64px;
+        }
+
+        .featured-content {
+            padding: 16px;
+        }
+
+        .featured-label {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 6px;
+        }
+
+        .featured-text {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            line-height: 1.5;
+        }
+
+        /* Trust Banner */
+        .trust-banner {
+            background: linear-gradient(135deg, var(--kelkun-primary-light) 0%, #d4f4ef 100%);
+            padding: 20px;
+            margin: 0 20px 24px;
+            border-radius: 16px;
+            text-align: center;
+            border: 2px solid var(--kelkun-primary);
+        }
+
+        .trust-items {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 16px;
+        }
+
+        .trust-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .trust-icon {
+            font-size: 32px;
+        }
+
+        .trust-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--gray-700);
+            text-align: center;
+            line-height: 1.3;
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: sticky;
+            bottom: 0;
+            background: white;
+            border-top: 1px solid var(--gray-200);
+            padding: 12px 8px 20px;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            padding: 8px 16px;
+            border-radius: 12px;
+            transition: all 0.2s;
+        }
+
+        .nav-item:active {
+            background: var(--gray-100);
+        }
+
+        .nav-item.active {
+            color: var(--kelkun-primary);
+        }
+
+        .nav-icon {
+            font-size: 24px;
+        }
+
+        .nav-label {
+            font-size: 0.688rem;
+            font-weight: 600;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .search-section,
+        .saved-places,
+        .suggestions-section,
+        .featured-section,
+        .trust-banner {
+            animation: fadeInUp 0.5s ease backwards;
+        }
+
+        .saved-places { animation-delay: 0.1s; }
+        .suggestions-section { animation-delay: 0.2s; }
+        .featured-section { animation-delay: 0.3s; }
+        .trust-banner { animation-delay: 0.4s; }
+
+        /* Artisans Section */
+        .artisans-section {
+            padding: 24px 20px;
+            background: white;
+            animation: fadeInUp 0.5s ease backwards;
+            animation-delay: 0.35s;
+        }
+
+        .artisan-filters {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+            scrollbar-width: none;
+        }
+
+        .artisan-filters::-webkit-scrollbar {
+            display: none;
+        }
+
+        .filter-chip {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 16px;
+            background: var(--gray-100);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--gray-700);
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+
+        .filter-chip:active {
+            transform: scale(0.96);
+        }
+
+        .filter-chip.active {
+            background: var(--kelkun-primary-light);
+            border-color: var(--kelkun-primary);
+            color: var(--kelkun-primary-dark);
+        }
+
+        .artisan-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .artisan-profile-card {
+            background: white;
+            border: 2px solid var(--gray-200);
+            border-radius: 20px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .artisan-profile-card:active {
+            transform: scale(0.98);
+        }
+
+        .artisan-profile-card.premium {
+            border-color: var(--kelkun-primary);
+            background: linear-gradient(135deg, var(--kelkun-primary-light) 0%, white 100%);
+        }
+
+        .premium-badge {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            box-shadow: 0 4px 12px rgba(255, 165, 0, 0.3);
+        }
+
+        .urgent-corner {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: var(--orange-500);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.688rem;
+            font-weight: 700;
+            box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
+        }
+
+        .artisan-profile-header {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .artisan-profile-avatar {
+            width: 64px;
+            height: 64px;
+            flex-shrink: 0;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .artisan-profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .artisan-profile-info {
+            flex: 1;
+        }
+
+        .artisan-profile-name {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 4px;
+        }
+
+        .artisan-profile-specialty {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            margin-bottom: 4px;
+        }
+
+        .artisan-profile-location {
+            font-size: 0.813rem;
+            color: var(--gray-500);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .artisan-profile-stats {
+            display: flex;
+            justify-content: space-around;
+            padding: 16px 0;
+            margin-bottom: 16px;
+            background: var(--gray-50);
+            border-radius: 12px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 2px;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--gray-600);
+            font-weight: 500;
+        }
+
+        .stat-divider {
+            width: 1px;
+            background: var(--gray-300);
+        }
+
+        .artisan-profile-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .mini-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 6px 10px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            background: var(--gray-100);
+            color: var(--gray-700);
+        }
+
+        .mini-badge.verified {
+            background: var(--green-50);
+            color: var(--green-500);
+        }
+
+        .mini-badge.insurance {
+            background: var(--blue-light);
+            color: var(--blue-500);
+        }
+
+        .mini-badge.available {
+            background: var(--yellow-50);
+            color: var(--yellow-500);
+        }
+
+        .mini-badge.certified {
+            background: #F3E8FF;
+            color: #9333EA;
+        }
+
+        .mini-badge.emergency {
+            background: var(--orange-50);
+            color: var(--orange-500);
+        }
+
+        .artisan-profile-specialties {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .specialty-tag {
+            padding: 6px 12px;
+            background: white;
+            border: 1px solid var(--gray-300);
+            border-radius: 8px;
+            font-size: 0.813rem;
+            color: var(--gray-700);
+            font-weight: 500;
+        }
+
+        .artisan-profile-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 14px 16px;
+            border-radius: 12px;
+            font-size: 0.938rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+        }
+
+        .action-btn:active {
+            transform: scale(0.96);
+        }
+
+        .action-btn.secondary {
+            background: white;
+            color: var(--gray-700);
+            border: 2px solid var(--gray-300);
+        }
+
+        .action-btn.primary {
+            background: var(--kelkun-primary);
+            color: white;
+            box-shadow: 0 4px 12px rgba(0, 191, 166, 0.3);
+        }
+
+        .action-btn.urgent-btn {
+            background: var(--orange-500);
+            box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
+        }
+
+        .view-more-btn {
+            width: 100%;
+            background: white;
+            border: 2px solid var(--kelkun-primary);
+            color: var(--kelkun-primary);
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 0.938rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .view-more-btn:active {
+            transform: scale(0.98);
+            background: var(--kelkun-primary-light);
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--gray-900);
+            color: white;
+            padding: 14px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.938rem;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 100;
+        }
+
+        .toast.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="mobile-frame">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">Kelkun</div>
+            <div class="header-actions">
+                <button class="icon-btn" onclick="showToast('Notifications')">🔔</button>
+                <button class="icon-btn" onclick="showToast('Menu')">☰</button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Search Section -->
+            <div class="search-section">
+                <h1 class="welcome-text">Bonjour ! 👋</h1>
+                <p class="subtitle">Quel est votre besoin aujourd'hui ?</p>
+                
+                <div class="search-box" onclick="showToast('Recherche ouverte')">
+                    <span class="search-icon">🔍</span>
+                    <span class="search-placeholder">Décrivez votre problème...</span>
+                </div>
+            </div>
+
+            <!-- Saved Places -->
+            <div class="saved-places">
+                <div class="saved-place" onclick="showToast('Mon domicile sélectionné')">
+                    <div class="place-icon">🏠</div>
+                    <div class="place-info">
+                        <div class="place-label">Mon domicile</div>
+                        <div class="place-address">15 rue Victor Hugo, Montpellier</div>
+                    </div>
+                    <div class="place-edit">✏️</div>
+                </div>
+
+                <div class="saved-place" onclick="showToast('Résidence secondaire sélectionnée')">
+                    <div class="place-icon">🏡</div>
+                    <div class="place-info">
+                        <div class="place-label">Résidence secondaire</div>
+                        <div class="place-address">Ajouter une adresse</div>
+                    </div>
+                    <div class="place-edit">➕</div>
+                </div>
+            </div>
+
+            <!-- Suggestions -->
+            <div class="suggestions-section">
+                <div class="section-header">
+                    <h2 class="section-title">Besoins fréquents</h2>
+                    <span class="see-all" onclick="showToast('Voir tous les services')">Tout voir</span>
+                </div>
+
+                <div class="suggestions-grid">
+                    <div class="suggestion-card urgent" onclick="showToast('Dépannage urgent sélectionné')">
+                        <span class="urgent-badge">Urgent</span>
+                        <span class="suggestion-icon">🚨</span>
+                        <div class="suggestion-label">Dépannage</div>
+                        <div class="suggestion-desc">Intervention rapide sous 2h</div>
+                    </div>
+
+                    <div class="suggestion-card" onclick="showToast('Réparation sélectionnée')">
+                        <span class="suggestion-icon">🔧</span>
+                        <div class="suggestion-label">Réparation</div>
+                        <div class="suggestion-desc">Prise de rendez-vous</div>
+                    </div>
+
+                    <div class="suggestion-card" onclick="showToast('Travaux sélectionnés')">
+                        <span class="suggestion-icon">🏗️</span>
+                        <div class="suggestion-label">Travaux</div>
+                        <div class="suggestion-desc">Devis gratuit détaillé</div>
+                    </div>
+
+                    <div class="suggestion-card" onclick="showToast('Entretien sélectionné')">
+                        <span class="suggestion-icon">✨</span>
+                        <div class="suggestion-label">Entretien</div>
+                        <div class="suggestion-desc">Maintenance régulière</div>
+                    </div>
+                </div>
+
+                <!-- Trust Banner -->
+                <div class="trust-banner">
+                    <div style="font-size: 1rem; font-weight: 700; color: var(--gray-900); margin-bottom: 4px;">
+                        ✅ 100% sécurisé
+                    </div>
+                    <div style="font-size: 0.875rem; color: var(--gray-700);">
+                        Artisans vérifiés • Paiement protégé • Garantie 10 000€
+                    </div>
+                    <div class="trust-items">
+                        <div class="trust-item">
+                            <span class="trust-icon">👨‍🔧</span>
+                            <span class="trust-label">4000+<br>artisans</span>
+                        </div>
+                        <div class="trust-item">
+                            <span class="trust-icon">⚡</span>
+                            <span class="trust-label">Réponse<br>rapide</span>
+                        </div>
+                        <div class="trust-item">
+                            <span class="trust-icon">🛡️</span>
+                            <span class="trust-label">Garantie<br>Allianz</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Artisans Recommandés -->
+            <div class="artisans-section">
+                <div class="section-header">
+                    <h2 class="section-title">Artisans près de chez vous</h2>
+                    <span class="see-all" onclick="showToast('Voir tous les artisans')">Tout voir</span>
+                </div>
+
+                <div class="artisan-filters">
+                    <button class="filter-chip active" onclick="filterArtisans(this, 'all')">
+                        <span>🔧</span>
+                        <span>Tous</span>
+                    </button>
+                    <button class="filter-chip" onclick="filterArtisans(this, 'plumber')">
+                        <span>🚰</span>
+                        <span>Plombier</span>
+                    </button>
+                    <button class="filter-chip" onclick="filterArtisans(this, 'electrician')">
+                        <span>⚡</span>
+                        <span>Électricien</span>
+                    </button>
+                    <button class="filter-chip" onclick="filterArtisans(this, 'heating')">
+                        <span>🔥</span>
+                        <span>Chauffage</span>
+                    </button>
+                    <button class="filter-chip" onclick="filterArtisans(this, 'locksmith')">
+                        <span>🔑</span>
+                        <span>Serrurier</span>
+                    </button>
+                </div>
+
+                <div class="artisan-cards">
+                    <!-- Artisan 1 - Premium -->
+                    <div class="artisan-profile-card premium" data-category="plumber" onclick="showToast('Profil Plomberie Laurent ouvert')">
+                        <div class="premium-badge">
+                            <span>⭐</span>
+                            <span>Premium</span>
+                        </div>
+                        
+                        <div class="artisan-profile-header">
+                            <div class="artisan-profile-avatar">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%2300BFA6'/%3E%3Ctext x='50' y='50' font-size='40' fill='white' text-anchor='middle' dy='.3em' font-weight='bold'%3EPL%3C/text%3E%3C/svg%3E" alt="PL">
+                            </div>
+                            <div class="artisan-profile-info">
+                                <div class="artisan-profile-name">Plomberie Laurent</div>
+                                <div class="artisan-profile-specialty">🚰 Plombier • Chauffagiste</div>
+                                <div class="artisan-profile-location">📍 2,3 km • Montpellier</div>
+                            </div>
+                        </div>
+
+                        <div class="artisan-profile-stats">
+                            <div class="stat-item">
+                                <div class="stat-value">4.9</div>
+                                <div class="stat-label">⭐ Note</div>
+                            </div>
+                            <div class="stat-divider"></div>
+                            <div class="stat-item">
+                                <div class="stat-value">247</div>
+                                <div class="stat-label">✅ Interventions</div>
+                            </div>
+                            <div class="stat-divider"></div>
+                            <div class="stat-item">
+                                <div class="stat-value">< 2h</div>
+                                <div class="stat-label">⚡ Dispo</div>
+                            </div>
+                        </div>
+
+                        <div class="artisan-profile-badges">
+                            <span class="mini-badge verified">✓ Vérifié</span>
+                            <span class="mini-badge insurance">🛡️ Assuré</span>
+                            <span class="mini-badge available">⚡ Dispo rapide</span>
+                        </div>
+
+                        <div class="artisan-profile-specialties">
+                            <span class="specialty-tag">Fuite d'eau</span>
+                            <span class="specialty-tag">Chaudière</span>
+                            <span class="specialty-tag">Dépannage urgent</span>
+                        </div>
+
+                        <div class="artisan-profile-actions">
+                            <button class="action-btn secondary" onclick="event.stopPropagation(); showToast('Profil détaillé ouvert')">
+                                <span>👁️</span>
+                                <span>Voir profil</span>
+                            </button>
+                            <button class="action-btn primary" onclick="event.stopPropagation(); showToast('Demande envoyée à Plomberie Laurent')">
+                                <span>📩</span>
+                                <span>Contacter</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Artisan 2 -->
+                    <div class="artisan-profile-card" data-category="electrician" onclick="showToast('Profil Élec Pro 34 ouvert')">
+                        <div class="artisan-profile-header">
+                            <div class="artisan-profile-avatar">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23F59E0B'/%3E%3Ctext x='50' y='50' font-size='40' fill='white' text-anchor='middle' dy='.3em' font-weight='bold'%3EEP%3C/text%3E%3C/svg%3E" alt="EP">
+                            </div>
+                            <div class="artisan-profile-info">
+                                <div class="artisan-profile-name">Élec Pro 34</div>
+                                <div class="artisan-profile-specialty">⚡ Électricien général</div>
+                                <div class="artisan-profile-location">📍 3,7 km • Castelnau-le-Lez</div>
+                            </div>
+                        </div>
+
+                        <div class="artisan-profile-stats">
+                            <div class="stat-item">
+                                <div class="stat-value">4.8</div>
+                                <div class="stat-label">⭐ Note</div>
+                            </div>
+                            <div class="stat-divider"></div>
+                            <div class="stat-item">
+                                <div class="stat-value">189</div>
+                                <div class="stat-label">✅ Interventions</div>
+                            </div>
+                            <div class="stat-divider"></div>
+                            <div class="stat-item">
+                                <div class="stat-value">< 4h</div>
+                                <div class="stat-label">⚡ Dispo</div>
+                            </div>
+                        </div>
+
+                        <div class="artisan-profile-badges">
+                            <span class="mini-badge verified">✓ Vérifié</span>
+                            <span class="mini-badge insurance">🛡️ Assuré</span>
+                        </div>
+
+                        <div class="artisan-profile-specialties">
+                            <span class="specialty-tag">Panne électrique</span>
+                            <span class="specialty-tag">Tableau électrique</span>
+                            <span class="specialty-tag">Installation</span>
+                        </div>
+
+                        <div class="artisan-profile-actions">
+                            <button class="action-btn secondary" onclick="event.stopPropagation(); showToast('Profil détaillé ouvert')">
+                                <span>👁️</span>
+                                <span>Voir profil</span>
+                            </button>
+                            <button class="action-btn primary" onclick="event.stopPropagation(); showToast('Demande envoyée à Élec Pro 34')">
+                                <span>📩</span>
+                                <span>Contacter</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Artisan 3 -->
+                    <div class="artisan-profile-card" data-category="heating" onclick="showToast('Profil Chauffage Plus ouvert')">
+                        <div class="artisan-profile-header">
+                            <div class="artisan-profile-avatar">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23EF4444'/%3E%3Ctext x='50' y='50' font-size='40' fill='white' text-anchor='middle' dy='.3em' font-weight='bold'%3ECP%3C/text%3E%3C/svg%3E" alt="CP">
+                            </div>
+                            <div class="artisan-profile-info">
+                                <div class="artisan-profile-name">Chauffage Plus</div>
+                                <div class="artisan-profile-specialty">🔥 Chauffagiste • Climatisation</div>
+                                <div class="artisan-profile-location">📍 1,8 km • Montpellier</div>
+                            </div>
+                        </div>
+
+                        <div class="artisan-profile-stats">
+                            <div class="stat-item">
+                                <div class="stat-value">4.9</div>
+                                <div class="stat-label">⭐ Note</div>
+                            </div>
+                            <div class="stat-divider"></div>
+                            <div class="stat-item">
+                                <div class="stat-value">312</div>
+                                <div class="stat-label">✅ Interventions</div>
+                            </div>
+                            <div class="stat-divider"></div>
+                            <div class="stat-item">
+                                <div class="stat-value">Demain</div>
+                                <div class="stat-label">📅 Dispo</div>
+                            </div>
+                        </div>
+
+                        <div class="artisan-profile-badges">
+                            <span class="mini-badge verified">✓ Vérifié</span>
+                            <span class="mini-badge insurance">🛡️ Assuré</span>
+                            <span class="mini-badge certified">🏆 RGE</span>
+                        </div>
+
+                        <div class="artisan-profile-specialties">
+                            <span class="specialty-tag">Chaudière gaz</span>
+                            <span class="specialty-tag">Pompe à chaleur</span>
+                            <span class="specialty-tag">Entretien</span>
+                        </div>
+
+                        <div class="artisan-profile-actions">
+                            <button class="action-btn secondary" onclick="event.stopPropagation(); showToast('Profil détaillé ouvert')">
+                                <span>👁️</span>
+                                <span>Voir profil</span>
+                            </button>
+                            <button class="action-btn primary" onclick="event.stopPropagation(); showToast('Demande envoyée à Chauffage Plus')">
+                                <span>📩</span>
+                                <span>Contacter</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Artisan 4 -->
+                    <div class="artisan-profile-card" data-category="locksmith" onclick="showToast('Profil Serrurerie Rapide ouvert')">
+                        <div class="urgent-corner">🚨 URGENT</div>
+                        
+                        <div class="artisan-profile-header">
+                            <div class="artisan-profile-avatar">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%236366F1'/%3E%3Ctext x='50' y='50' font-size='40' fill='white' text-anchor='middle' dy='.3em' font-weight='bold'%3ESR%3C/text%3E%3C/svg%3E" alt="SR">
+                            </div>
+                            <div class="artisan-profile-info">
+                                <div class="artisan-profile-name">Serrurerie Rapide</div>
+                                <div class="artisan-profile-specialty">🔑 Serrurier 24/7</div>
+                                <div class="artisan-profile-location">📍 4,2 km • Lattes</div>
+                            </div>
+                        </div>
+
+                        <div class="artisan-profile-stats">
+                            <div class="stat-item">
+                                <div class="stat-value">4.7</div>
+                                <div class="stat-label">⭐ Note</div>
+                            </div>
+                            <div class="stat-divider"></div>
+                            <div class="stat-item">
+                                <div class="stat-value">156</div>
+                                <div class="stat-label">✅ Interventions</div>
+                            </div>
+                            <div class="stat-divider"></div>
+                            <div class="stat-item">
+                                <div class="stat-value">24/7</div>
+                                <div class="stat-label">🕐 Dispo</div>
+                            </div>
+                        </div>
+
+                        <div class="artisan-profile-badges">
+                            <span class="mini-badge verified">✓ Vérifié</span>
+                            <span class="mini-badge insurance">🛡️ Assuré</span>
+                            <span class="mini-badge emergency">⚡ Urgence 24h</span>
+                        </div>
+
+                        <div class="artisan-profile-specialties">
+                            <span class="specialty-tag">Porte claquée</span>
+                            <span class="specialty-tag">Changement serrure</span>
+                            <span class="specialty-tag">Dépannage nuit</span>
+                        </div>
+
+                        <div class="artisan-profile-actions">
+                            <button class="action-btn secondary" onclick="event.stopPropagation(); showToast('Profil détaillé ouvert')">
+                                <span>👁️</span>
+                                <span>Voir profil</span>
+                            </button>
+                            <button class="action-btn primary urgent-btn" onclick="event.stopPropagation(); showToast('Appel urgent lancé')">
+                                <span>📞</span>
+                                <span>Appel urgent</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="view-more-btn" onclick="showToast('Chargement de plus d\'artisans...')">
+                    <span>Voir plus d'artisans près de chez vous</span>
+                    <span>→</span>
+                </button>
+            </div>
+
+            <!-- Featured -->
+            <div class="featured-section">
+                <h2 class="featured-title">Pour vous aider</h2>
+                
+                <div class="featured-cards">
+                    <div class="featured-card" onclick="showToast('Guide ouvert')">
+                        <div class="featured-image">📖</div>
+                        <div class="featured-content">
+                            <div class="featured-label">Comment ça marche ?</div>
+                            <div class="featured-text">Découvrez comment trouver votre artisan en 3 étapes simples</div>
+                        </div>
+                    </div>
+
+                    <div class="featured-card" onclick="showToast('Tarifs affichés')">
+                        <div class="featured-image">💰</div>
+                        <div class="featured-content">
+                            <div class="featured-label">Tarifs transparents</div>
+                            <div class="featured-text">Comparez plusieurs devis avant de choisir</div>
+                        </div>
+                    </div>
+
+                    <div class="featured-card" onclick="showToast('Support contacté')">
+                        <div class="featured-image">💬</div>
+                        <div class="featured-content">
+                            <div class="featured-label">Besoin d'aide ?</div>
+                            <div class="featured-text">Notre équipe répond du lundi au vendredi, 9h-17h</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <div class="nav-item active">
+                <span class="nav-icon">🏠</span>
+                <span class="nav-label">Accueil</span>
+            </div>
+            <div class="nav-item" onclick="showToast('Services')">
+                <span class="nav-icon">🔧</span>
+                <span class="nav-label">Services</span>
+            </div>
+            <div class="nav-item" onclick="showToast('Mes demandes')">
+                <span class="nav-icon">📋</span>
+                <span class="nav-label">Activité</span>
+            </div>
+            <div class="nav-item" onclick="showToast('Mon compte')">
+                <span class="nav-icon">👤</span>
+                <span class="nav-label">Compte</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2500);
+        }
+
+        // Filter artisans by category
+        function filterArtisans(button, category) {
+            // Update active filter
+            document.querySelectorAll('.filter-chip').forEach(chip => {
+                chip.classList.remove('active');
+            });
+            button.classList.add('active');
+
+            // Filter cards
+            const cards = document.querySelectorAll('.artisan-profile-card');
+            cards.forEach(card => {
+                if (category === 'all') {
+                    card.style.display = 'block';
+                } else {
+                    if (card.dataset.category === category) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                }
+            });
+
+            // Animate cards
+            cards.forEach((card, index) => {
+                if (card.style.display !== 'none') {
+                    card.style.animation = 'none';
+                    setTimeout(() => {
+                        card.style.animation = `fadeInUp 0.4s ease backwards ${index * 0.1}s`;
+                    }, 10);
+                }
+            });
+
+            showToast(`Filtré: ${button.textContent.trim()}`);
+        }
+
+        // Simulate active state for bottom nav
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

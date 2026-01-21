@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kelkun - Alternatives au Stepper</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Bricolage+Grotesque:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --kelkun-primary: #00BFA6;
+            --kelkun-primary-dark: #00a891;
+            --kelkun-primary-light: #e6f9f6;
+            --blue-light: #EEF2FF;
+            --blue-medium: #818CF8;
+            --blue-dark: #4F46E5;
+            --gray-50: #F9FAFB;
+            --gray-100: #F3F4F6;
+            --gray-200: #E5E7EB;
+            --gray-400: #9CA3AF;
+            --gray-600: #4B5563;
+            --gray-700: #374151;
+            --gray-900: #111827;
+            --red-50: #FEF2F2;
+            --red-500: #EF4444;
+            --orange-500: #F97316;
+            --amber-100: #FEF3C7;
+        }
+
+        body {
+            font-family: 'DM Sans', -apple-system, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
+            padding: 40px 20px;
+            color: var(--gray-900);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+            animation: fadeInDown 0.6s ease;
+        }
+
+        .header h1 {
+            font-family: 'Bricolage Grotesque', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 12px;
+        }
+
+        .header p {
+            font-size: 1.125rem;
+            color: var(--gray-600);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-bottom: 40px;
+            animation: fadeIn 0.8s ease 0.2s both;
+        }
+
+        .tab-btn {
+            padding: 12px 24px;
+            border: 2px solid var(--gray-200);
+            background: white;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.938rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--gray-700);
+        }
+
+        .tab-btn:hover {
+            border-color: var(--kelkun-primary);
+            color: var(--kelkun-primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .tab-btn.active {
+            background: var(--kelkun-primary);
+            border-color: var(--kelkun-primary);
+            color: white;
+            box-shadow: 0 4px 12px rgba(0, 191, 166, 0.3);
+        }
+
+        .example-container {
+            display: none;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        .example-container.active {
+            display: block;
+        }
+
+        .example-card {
+            background: white;
+            border-radius: 24px;
+            padding: 48px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+            margin-bottom: 40px;
+        }
+
+        .example-title {
+            font-family: 'Bricolage Grotesque', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 8px;
+        }
+
+        .example-subtitle {
+            font-size: 1rem;
+            color: var(--gray-600);
+            margin-bottom: 32px;
+        }
+
+        /* Option 1: Task Card + Checklist */
+        .task-urgent-card {
+            background: linear-gradient(135deg, var(--kelkun-primary) 0%, var(--kelkun-primary-dark) 100%);
+            border-radius: 20px;
+            padding: 32px;
+            color: white;
+            box-shadow: 0 12px 32px rgba(0, 191, 166, 0.3);
+            margin-bottom: 32px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .task-urgent-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 40px rgba(0, 191, 166, 0.4);
+        }
+
+        .task-urgent-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .task-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .task-icon-wrapper {
+            width: 56px;
+            height: 56px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+        }
+
+        .deadline-badge {
+            background: var(--red-500);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .task-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .task-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .task-description {
+            font-size: 0.938rem;
+            opacity: 0.9;
+            margin-bottom: 24px;
+        }
+
+        .task-cta {
+            background: white;
+            color: var(--kelkun-primary-dark);
+            border: none;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .task-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .checklist-section {
+            margin-top: 24px;
+        }
+
+        .checklist-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--gray-700);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .checklist-item {
+            background: var(--gray-50);
+            border: 2px solid var(--gray-200);
+            border-radius: 14px;
+            padding: 20px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            opacity: 0.6;
+            transition: all 0.3s ease;
+        }
+
+        .checklist-item:hover {
+            opacity: 0.8;
+        }
+
+        .checklist-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--gray-200);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .checklist-content {
+            flex: 1;
+        }
+
+        .checklist-item-title {
+            font-weight: 600;
+            color: var(--gray-700);
+            margin-bottom: 4px;
+        }
+
+        .checklist-item-desc {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+        }
+
+        .lock-icon {
+            color: var(--gray-400);
+            font-size: 20px;
+        }
+
+        /* Option 2: Status Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 80px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 28px;
+            top: 60px;
+            bottom: 60px;
+            width: 3px;
+            background: linear-gradient(to bottom, 
+                var(--kelkun-primary) 0%, 
+                var(--kelkun-primary) 30%, 
+                var(--gray-200) 30%, 
+                var(--gray-200) 100%
+            );
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 32px;
+            padding: 28px;
+            background: white;
+            border-radius: 16px;
+            border: 2px solid var(--gray-200);
+            transition: all 0.3s ease;
+        }
+
+        .timeline-item.active {
+            background: linear-gradient(135deg, var(--kelkun-primary-light) 0%, #f0fdfb 100%);
+            border-color: var(--kelkun-primary);
+            box-shadow: 0 8px 24px rgba(0, 191, 166, 0.15);
+            transform: translateX(8px);
+        }
+
+        .timeline-item.locked {
+            opacity: 0.5;
+        }
+
+        .timeline-icon {
+            position: absolute;
+            left: -52px;
+            top: 28px;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            border: 4px solid white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .timeline-icon.active {
+            background: var(--kelkun-primary);
+            color: white;
+            animation: glow 2s infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 4px 12px rgba(0, 191, 166, 0.3); }
+            50% { box-shadow: 0 4px 24px rgba(0, 191, 166, 0.6); }
+        }
+
+        .timeline-icon.completed {
+            background: var(--gray-400);
+            color: white;
+        }
+
+        .timeline-icon.locked {
+            background: var(--gray-200);
+            color: var(--gray-400);
+        }
+
+        .timeline-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .timeline-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .timeline-description {
+            color: var(--gray-600);
+            margin-bottom: 16px;
+        }
+
+        .timeline-action {
+            background: var(--kelkun-primary);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .timeline-action:hover {
+            background: var(--kelkun-primary-dark);
+            transform: translateY(-2px);
+        }
+
+        /* Option 3: Kanban Cards */
+        .kanban-board {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .kanban-column {
+            background: var(--gray-50);
+            border-radius: 16px;
+            padding: 20px;
+            border: 2px solid var(--gray-200);
+        }
+
+        .kanban-column-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--gray-200);
+        }
+
+        .kanban-column-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .kanban-column.now .kanban-column-icon {
+            background: var(--red-50);
+            color: var(--red-500);
+        }
+
+        .kanban-column.waiting .kanban-column-icon {
+            background: var(--amber-100);
+            color: var(--orange-500);
+        }
+
+        .kanban-column.done .kanban-column-icon {
+            background: var(--kelkun-primary-light);
+            color: var(--kelkun-primary-dark);
+        }
+
+        .kanban-column-title {
+            font-weight: 700;
+            font-size: 1.125rem;
+            color: var(--gray-900);
+        }
+
+        .kanban-card {
+            background: white;
+            border-radius: 14px;
+            padding: 20px;
+            margin-bottom: 12px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .kanban-card:hover {
+            border-color: var(--kelkun-primary);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .kanban-card.urgent {
+            border-color: var(--red-500);
+            background: linear-gradient(to right, var(--red-50), white);
+        }
+
+        .kanban-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 12px;
+        }
+
+        .kanban-card-title {
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: 6px;
+        }
+
+        .kanban-card-desc {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            margin-bottom: 16px;
+        }
+
+        .kanban-badge {
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+
+        .kanban-badge.urgent {
+            background: var(--red-500);
+            color: white;
+        }
+
+        .kanban-badge.locked {
+            background: var(--gray-200);
+            color: var(--gray-600);
+        }
+
+        .kanban-card-action {
+            width: 100%;
+            background: var(--kelkun-primary);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .kanban-card-action:hover {
+            background: var(--kelkun-primary-dark);
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .pros-cons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-top: 32px;
+            padding-top: 32px;
+            border-top: 2px solid var(--gray-200);
+        }
+
+        .pros, .cons {
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        .pros {
+            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+        }
+
+        .cons {
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+        }
+
+        .pros h3, .cons h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .pros h3 {
+            color: #065f46;
+        }
+
+        .cons h3 {
+            color: #991b1b;
+        }
+
+        .pros ul, .cons ul {
+            list-style: none;
+            font-size: 0.938rem;
+        }
+
+        .pros li, .cons li {
+            margin-bottom: 8px;
+            padding-left: 24px;
+            position: relative;
+        }
+
+        .pros li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: bold;
+        }
+
+        .cons li::before {
+            content: '✗';
+            position: absolute;
+            left: 0;
+            color: #ef4444;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .example-card {
+                padding: 24px;
+            }
+
+            .tabs {
+                flex-direction: column;
+            }
+
+            .timeline {
+                padding-left: 60px;
+            }
+
+            .kanban-board {
+                grid-template-columns: 1fr;
+            }
+
+            .pros-cons {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>3 Alternatives au Stepper Classique</h1>
+            <p>Designs optimisés pour mettre en avant l'action immédiate avec deadline</p>
+        </div>
+
+        <div class="tabs">
+            <button class="tab-btn active" onclick="showExample(1)">Option 1: Task Card</button>
+            <button class="tab-btn" onclick="showExample(2)">Option 2: Timeline</button>
+            <button class="tab-btn" onclick="showExample(3)">Option 3: Kanban</button>
+        </div>
+
+        <!-- Option 1: Task Card + Checklist -->
+        <div id="example1" class="example-container active">
+            <div class="example-card">
+                <h2 class="example-title">Option 1 : Task Card + Checklist</h2>
+                <p class="example-subtitle">Carte urgente proéminente + étapes futures désactivées</p>
+
+                <div class="task-urgent-card">
+                    <div class="task-header">
+                        <div class="task-icon-wrapper">📝</div>
+                        <div class="deadline-badge">
+                            ⏰ Avant le 12 déc. 2025
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <div class="task-title">Devis à envoyer</div>
+                        <div class="task-description">
+                            Votre devis doit être envoyé au client avant la date limite pour que le projet puisse avancer.
+                        </div>
+                        <button class="task-cta">
+                            <span>Envoyer mon devis</span>
+                            <span>→</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="checklist-section">
+                    <div class="checklist-title">
+                        <span>⏭️</span>
+                        <span>Prochaines étapes</span>
+                    </div>
+
+                    <div class="checklist-item">
+                        <div class="checklist-icon">🔨</div>
+                        <div class="checklist-content">
+                            <div class="checklist-item-title">Réalisation des travaux</div>
+                            <div class="checklist-item-desc">Cette étape sera disponible après la complétion des étapes précédentes.</div>
+                        </div>
+                        <div class="lock-icon">🔒</div>
+                    </div>
+
+                    <div class="checklist-item">
+                        <div class="checklist-icon">✅</div>
+                        <div class="checklist-content">
+                            <div class="checklist-item-title">Clôture du projet</div>
+                            <div class="checklist-item-desc">Cette étape sera disponible après la complétion des étapes précédentes.</div>
+                        </div>
+                        <div class="lock-icon">🔒</div>
+                    </div>
+                </div>
+
+                <div class="pros-cons">
+                    <div class="pros">
+                        <h3>✓ Avantages</h3>
+                        <ul>
+                            <li>Focus visuel immédiat sur l'action urgente</li>
+                            <li>Deadline très visible</li>
+                            <li>CTA clair et proéminent</li>
+                            <li>Hiérarchie visuelle forte</li>
+                            <li>Réduit l'anxiété (une seule chose à faire)</li>
+                        </ul>
+                    </div>
+                    <div class="cons">
+                        <h3>✗ Inconvénients</h3>
+                        <ul>
+                            <li>Moins de contexte sur le parcours global</li>
+                            <li>Peut sembler « agressif » avec l'urgence</li>
+                            <li>Prend plus d'espace vertical</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Option 2: Status Timeline -->
+        <div id="example2" class="example-container">
+            <div class="example-card">
+                <h2 class="example-title">Option 2 : Timeline avec États</h2>
+                <p class="example-subtitle">Timeline verticale avec focus sur l'étape active</p>
+
+                <div class="timeline">
+                    <div class="timeline-item active">
+                        <div class="timeline-icon active">📝</div>
+                        <div class="timeline-header">
+                            <div class="timeline-title">Devis</div>
+                            <div class="deadline-badge">⏰ 12 déc. 2025</div>
+                        </div>
+                        <div class="timeline-description">
+                            Envoyez votre devis au client pour faire avancer le projet.
+                        </div>
+                        <button class="timeline-action">
+                            <span>Envoyer mon devis</span>
+                            <span>→</span>
+                        </button>
+                    </div>
+
+                    <div class="timeline-item locked">
+                        <div class="timeline-icon locked">🔒</div>
+                        <div class="timeline-header">
+                            <div class="timeline-title">Réalisation des travaux</div>
+                            <span class="kanban-badge locked">À venir</span>
+                        </div>
+                        <div class="timeline-description">
+                            Cette étape sera disponible après validation du devis.
+                        </div>
+                    </div>
+
+                    <div class="timeline-item locked">
+                        <div class="timeline-icon locked">🔒</div>
+                        <div class="timeline-header">
+                            <div class="timeline-title">Clôture du projet</div>
+                            <span class="kanban-badge locked">À venir</span>
+                        </div>
+                        <div class="timeline-description">
+                            Cette étape sera disponible après la complétion des travaux.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pros-cons">
+                    <div class="pros">
+                        <h3>✓ Avantages</h3>
+                        <ul>
+                            <li>Vue d'ensemble du parcours</li>
+                            <li>Progression claire et visuelle</li>
+                            <li>Familier (comme tracking colis)</li>
+                            <li>Bon équilibre action/contexte</li>
+                            <li>Mobile-friendly</li>
+                        </ul>
+                    </div>
+                    <div class="cons">
+                        <h3>✗ Inconvénients</h3>
+                        <ul>
+                            <li>Moins de focus sur l'urgence</li>
+                            <li>Peut diluer l'attention</li>
+                            <li>Prend de l'espace vertical</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Option 3: Kanban Cards -->
+        <div id="example3" class="example-container">
+            <div class="example-card">
+                <h2 class="example-title">Option 3 : Kanban Cards</h2>
+                <p class="example-subtitle">Organisation par statut : À faire / En attente / Terminé</p>
+
+                <div class="kanban-board">
+                    <div class="kanban-column now">
+                        <div class="kanban-column-header">
+                            <div class="kanban-column-icon">🎯</div>
+                            <div class="kanban-column-title">À faire maintenant</div>
+                        </div>
+
+                        <div class="kanban-card urgent">
+                            <div class="kanban-card-header">
+                                <div>
+                                    <div class="kanban-card-title">Envoyer le devis</div>
+                                </div>
+                                <span class="kanban-badge urgent">12 déc.</span>
+                            </div>
+                            <div class="kanban-card-desc">
+                                Le client attend votre devis pour valider le projet.
+                            </div>
+                            <button class="kanban-card-action">
+                                Envoyer →
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="kanban-column waiting">
+                        <div class="kanban-column-header">
+                            <div class="kanban-column-icon">⏳</div>
+                            <div class="kanban-column-title">En attente</div>
+                        </div>
+
+                        <div class="kanban-card">
+                            <div class="kanban-card-header">
+                                <div>
+                                    <div class="kanban-card-title">Réalisation des travaux</div>
+                                </div>
+                                <span class="kanban-badge locked">🔒</span>
+                            </div>
+                            <div class="kanban-card-desc">
+                                Bloqué jusqu'à validation du devis
+                            </div>
+                        </div>
+
+                        <div class="kanban-card">
+                            <div class="kanban-card-header">
+                                <div>
+                                    <div class="kanban-card-title">Clôture du projet</div>
+                                </div>
+                                <span class="kanban-badge locked">🔒</span>
+                            </div>
+                            <div class="kanban-card-desc">
+                                Bloqué jusqu'à fin des travaux
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="kanban-column done">
+                        <div class="kanban-column-header">
+                            <div class="kanban-column-icon">✓</div>
+                            <div class="kanban-column-title">Terminé</div>
+                        </div>
+
+                        <div class="kanban-card">
+                            <div class="kanban-card-title">Aucune étape terminée</div>
+                            <div class="kanban-card-desc">
+                                Les étapes complétées apparaîtront ici
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pros-cons">
+                    <div class="pros">
+                        <h3>✓ Avantages</h3>
+                        <ul>
+                            <li>Organisation claire par statut</li>
+                            <li>Vue globale du workflow</li>
+                            <li>Familier pour utilisateurs B2B</li>
+                            <li>Facilite la gestion multi-projets</li>
+                            <li>Évolutif (ajout d'étapes facile)</li>
+                        </ul>
+                    </div>
+                    <div class="cons">
+                        <h3>✗ Inconvénients</h3>
+                        <ul>
+                            <li>Moins adapté mobile (3 colonnes)</li>
+                            <li>Urgence moins marquée</li>
+                            <li>Peut sembler complexe pour 3 étapes</li>
+                            <li>Prend beaucoup d'espace horizontal</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showExample(num) {
+            // Hide all examples
+            document.querySelectorAll('.example-container').forEach(container => {
+                container.classList.remove('active');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected example
+            document.getElementById('example' + num).classList.add('active');
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>

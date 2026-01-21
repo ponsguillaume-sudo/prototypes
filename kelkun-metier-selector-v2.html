@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kelkun - Préciser votre besoin</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Bricolage+Grotesque:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --kelkun-primary: #00BFA6;
+            --kelkun-primary-dark: #00a891;
+            --kelkun-primary-light: #e6f9f6;
+            --gray-50: #F9FAFB;
+            --gray-100: #F3F4F6;
+            --gray-200: #E5E7EB;
+            --gray-300: #D1D5DB;
+            --gray-400: #9CA3AF;
+            --gray-500: #6B7280;
+            --gray-600: #4B5563;
+            --gray-700: #374151;
+            --gray-900: #111827;
+            --blue-50: #EEF2FF;
+            --blue-500: #818CF8;
+        }
+
+        body {
+            font-family: 'DM Sans', -apple-system, sans-serif;
+            background: rgba(0, 0, 0, 0.5);
+            color: var(--gray-900);
+            line-height: 1.5;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* Modal Container */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 50;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-container {
+            position: relative;
+            background: white;
+            border-radius: 24px;
+            max-width: 480px;
+            width: 100%;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.2);
+            animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 51;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px) scale(0.96);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Header */
+        .modal-header {
+            padding: 24px 24px 20px;
+            border-bottom: 1px solid var(--gray-200);
+            position: relative;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            border: none;
+            background: var(--gray-100);
+            color: var(--gray-600);
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .close-btn:hover {
+            background: var(--gray-200);
+            color: var(--gray-900);
+        }
+
+        .modal-title {
+            font-family: 'Bricolage Grotesque', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 8px;
+            padding-right: 40px;
+        }
+
+        .modal-subtitle {
+            font-size: 0.938rem;
+            color: var(--gray-600);
+            line-height: 1.5;
+        }
+
+        /* Toggle Mode */
+        .mode-toggle {
+            display: flex;
+            gap: 8px;
+            background: var(--gray-100);
+            padding: 4px;
+            border-radius: 12px;
+            margin-top: 16px;
+        }
+
+        .mode-btn {
+            flex: 1;
+            padding: 10px 16px;
+            border: none;
+            background: transparent;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .mode-btn.active {
+            background: white;
+            color: var(--gray-900);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Content */
+        .modal-content {
+            padding: 20px 24px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        /* Search */
+        .search-box {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-400);
+            font-size: 18px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 14px 16px 14px 48px;
+            border: 2px solid var(--gray-200);
+            border-radius: 12px;
+            font-size: 0.938rem;
+            font-family: 'DM Sans', sans-serif;
+            transition: all 0.2s;
+            background: white;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--kelkun-primary);
+            box-shadow: 0 0 0 3px var(--kelkun-primary-light);
+        }
+
+        .search-input::placeholder {
+            color: var(--gray-400);
+        }
+
+        /* Problem Cards (Mode 1) */
+        .problems-grid {
+            display: grid;
+            gap: 12px;
+        }
+
+        .problem-card {
+            background: white;
+            border: 2px solid var(--gray-200);
+            border-radius: 14px;
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .problem-card:hover {
+            border-color: var(--kelkun-primary);
+            background: var(--kelkun-primary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 191, 166, 0.15);
+        }
+
+        .problem-card:active {
+            transform: translateY(0);
+        }
+
+        .problem-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--gray-100);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .problem-card:hover .problem-icon {
+            background: white;
+        }
+
+        .problem-info {
+            flex: 1;
+        }
+
+        .problem-title {
+            font-weight: 700;
+            font-size: 0.938rem;
+            color: var(--gray-900);
+            margin-bottom: 4px;
+        }
+
+        .problem-desc {
+            font-size: 0.813rem;
+            color: var(--gray-600);
+            line-height: 1.4;
+        }
+
+        .problem-arrow {
+            color: var(--gray-400);
+            font-size: 20px;
+        }
+
+        .problem-card:hover .problem-arrow {
+            color: var(--kelkun-primary);
+        }
+
+        /* Trade List (Mode 2) */
+        .trades-list {
+            display: grid;
+            gap: 8px;
+        }
+
+        .trade-item {
+            background: white;
+            border: 2px solid var(--gray-200);
+            border-radius: 12px;
+            padding: 14px 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 600;
+            font-size: 0.938rem;
+            color: var(--gray-900);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .trade-item:hover {
+            border-color: var(--kelkun-primary);
+            background: var(--kelkun-primary-light);
+        }
+
+        .trade-item:active {
+            transform: scale(0.98);
+        }
+
+        .trade-check {
+            color: var(--kelkun-primary);
+            font-size: 18px;
+            opacity: 0;
+        }
+
+        .trade-item:hover .trade-check {
+            opacity: 1;
+        }
+
+        /* Category Headers */
+        .category-header {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--gray-500);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin: 20px 0 12px;
+        }
+
+        .category-header:first-child {
+            margin-top: 0;
+        }
+
+        /* Help Card */
+        .help-card {
+            background: var(--blue-50);
+            border: 2px solid var(--blue-500);
+            border-radius: 14px;
+            padding: 16px;
+            margin-top: 20px;
+            display: flex;
+            align-items: start;
+            gap: 12px;
+        }
+
+        .help-icon {
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .help-content {
+            flex: 1;
+        }
+
+        .help-title {
+            font-weight: 700;
+            font-size: 0.875rem;
+            color: var(--gray-900);
+            margin-bottom: 4px;
+        }
+
+        .help-text {
+            font-size: 0.813rem;
+            color: var(--gray-700);
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+
+        .help-phone {
+            font-weight: 600;
+            color: var(--blue-500);
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+        }
+
+        /* Footer */
+        .modal-footer {
+            padding: 16px 24px;
+            border-top: 1px solid var(--gray-200);
+            background: var(--gray-50);
+        }
+
+        .footer-note {
+            font-size: 0.813rem;
+            color: var(--gray-600);
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        /* Hidden state */
+        .hidden {
+            display: none;
+        }
+
+        /* Scrollbar */
+        .modal-content::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .modal-content::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .modal-content::-webkit-scrollbar-thumb {
+            background: var(--gray-300);
+            border-radius: 10px;
+        }
+
+        .modal-content::-webkit-scrollbar-thumb:hover {
+            background: var(--gray-400);
+        }
+
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .empty-icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+
+        .empty-title {
+            font-weight: 700;
+            font-size: 1.125rem;
+            color: var(--gray-900);
+            margin-bottom: 8px;
+        }
+
+        .empty-desc {
+            font-size: 0.938rem;
+            color: var(--gray-600);
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="modal-overlay"></div>
+    
+    <div class="modal-container">
+        <!-- Header -->
+        <div class="modal-header">
+            <button class="close-btn" onclick="closeModal()">✕</button>
+            <h2 class="modal-title">Aidez-nous à mieux vous orienter</h2>
+            <p class="modal-subtitle">
+                Décrivez votre problème ou choisissez directement le type d'artisan
+            </p>
+            
+            <!-- Toggle Mode -->
+            <div class="mode-toggle">
+                <button class="mode-btn active" id="problemBtn" onclick="switchMode('problem')">
+                    <span>🔧</span>
+                    <span>Par problème</span>
+                </button>
+                <button class="mode-btn" id="tradeBtn" onclick="switchMode('trade')">
+                    <span>👷</span>
+                    <span>Par métier</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="modal-content">
+            <!-- Mode 1: Par problème (Default) -->
+            <div id="problemMode">
+                <div class="search-box">
+                    <span class="search-icon">🔍</span>
+                    <input 
+                        type="text" 
+                        class="search-input" 
+                        placeholder="Ex : fuite d'eau, panne électrique..."
+                        id="problemSearch"
+                        oninput="filterProblems(this.value)"
+                    >
+                </div>
+
+                <div class="problems-grid" id="problemsList">
+                    <div class="problem-card" onclick="selectProblem('Plomberie')">
+                        <div class="problem-icon">💧</div>
+                        <div class="problem-info">
+                            <div class="problem-title">Fuite ou problème d'eau</div>
+                            <div class="problem-desc">Robinet, WC, canalisation, chauffe-eau...</div>
+                        </div>
+                        <span class="problem-arrow">→</span>
+                    </div>
+
+                    <div class="problem-card" onclick="selectProblem('Électricité')">
+                        <div class="problem-icon">⚡</div>
+                        <div class="problem-info">
+                            <div class="problem-title">Panne électrique</div>
+                            <div class="problem-desc">Disjoncteur, prise, éclairage, tableau électrique...</div>
+                        </div>
+                        <span class="problem-arrow">→</span>
+                    </div>
+
+                    <div class="problem-card" onclick="selectProblem('Serrurerie')">
+                        <div class="problem-icon">🔑</div>
+                        <div class="problem-info">
+                            <div class="problem-title">Porte bloquée ou serrure</div>
+                            <div class="problem-desc">Clé cassée, serrure coincée, porte claquée...</div>
+                        </div>
+                        <span class="problem-arrow">→</span>
+                    </div>
+
+                    <div class="problem-card" onclick="selectProblem('Chauffage')">
+                        <div class="problem-icon">🔥</div>
+                        <div class="problem-info">
+                            <div class="problem-title">Problème de chauffage</div>
+                            <div class="problem-desc">Radiateur, chaudière, pompe à chaleur...</div>
+                        </div>
+                        <span class="problem-arrow">→</span>
+                    </div>
+
+                    <div class="problem-card" onclick="selectProblem('Vitrage')">
+                        <div class="problem-icon">🪟</div>
+                        <div class="problem-info">
+                            <div class="problem-title">Vitre ou fenêtre cassée</div>
+                            <div class="problem-desc">Bris de glace, fenêtre bloquée, volet...</div>
+                        </div>
+                        <span class="problem-arrow">→</span>
+                    </div>
+
+                    <div class="problem-card" onclick="selectProblem('Toiture')">
+                        <div class="problem-icon">🏠</div>
+                        <div class="problem-info">
+                            <div class="problem-title">Infiltration ou toiture</div>
+                            <div class="problem-desc">Fuite de toit, tuiles endommagées, gouttière...</div>
+                        </div>
+                        <span class="problem-arrow">→</span>
+                    </div>
+
+                    <div class="problem-card" onclick="selectProblem('Autre')">
+                        <div class="problem-icon">🔨</div>
+                        <div class="problem-info">
+                            <div class="problem-title">Autre problème</div>
+                            <div class="problem-desc">Peinture, carrelage, menuiserie...</div>
+                        </div>
+                        <span class="problem-arrow">→</span>
+                    </div>
+                </div>
+
+                <div class="empty-state hidden" id="problemEmpty">
+                    <div class="empty-icon">🔍</div>
+                    <div class="empty-title">Aucun résultat</div>
+                    <div class="empty-desc">
+                        Essayez avec d'autres mots, ou contactez-nous pour être guidé
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mode 2: Par métier -->
+            <div id="tradeMode" class="hidden">
+                <div class="search-box">
+                    <span class="search-icon">🔍</span>
+                    <input 
+                        type="text" 
+                        class="search-input" 
+                        placeholder="Rechercher un métier..."
+                        id="tradeSearch"
+                        oninput="filterTrades(this.value)"
+                    >
+                </div>
+
+                <div class="trades-list" id="tradesList">
+                    <div class="category-header">Métiers les plus demandés</div>
+                    <div class="trade-item" onclick="selectTrade('Plombier')">
+                        <span>Plombier</span>
+                        <span class="trade-check">✓</span>
+                    </div>
+                    <div class="trade-item" onclick="selectTrade('Électricien')">
+                        <span>Électricien</span>
+                        <span class="trade-check">✓</span>
+                    </div>
+                    <div class="trade-item" onclick="selectTrade('Serrurier')">
+                        <span>Serrurier</span>
+                        <span class="trade-check">✓</span>
+                    </div>
+                    <div class="trade-item" onclick="selectTrade('Chauffagiste')">
+                        <span>Chauffagiste</span>
+                        <span class="trade-check">✓</span>
+                    </div>
+
+                    <div class="category-header">Tous les métiers (A-Z)</div>
+                    <div class="trade-item" onclick="selectTrade('Antenniste')">
+                        <span>Antenniste</span>
+                        <span class="trade-check">✓</span>
+                    </div>
+                    <div class="trade-item" onclick="selectTrade('Architecte')">
+                        <span>Architecte</span>
+                        <span class="trade-check">✓</span>
+                    </div>
+                    <div class="trade-item" onclick="selectTrade('Assainisseur')">
+                        <span>Assainisseur</span>
+                        <span class="trade-check">✓</span>
+                    </div>
+                    <div class="trade-item" onclick="selectTrade('Calorifugeur')">
+                        <span>Calorifugeur</span>
+                        <span class="trade-check">✓</span>
+                    </div>
+                    <div class="trade-item" onclick="selectTrade('Canalisateur')">
+                        <span>Canalisateur</span>
+                        <span class="trade-check">✓</span>
+                    </div>
+                    <div class="trade-item" onclick="selectTrade('Carreleur')">
+                        <span>Carreleur</span>
+                        <span class="trade-check">✓</span>
+                    </div>
+                    <div class="trade-item" onclick="selectTrade('Charpentier')">
+                        <span>Charpentier</span>
+                        <span class="trade-check">✓</span>
+                    </div>
+                    <div class="trade-item" onclick="selectTrade('Couvreur')">
+                        <span>Couvreur</span>
+                        <span class="trade-check">✓</span>
+                    </div>
+                    <div class="trade-item" onclick="selectTrade('Façadier')">
+                        <span>Façadier</span>
+                        <span class="trade-check">✓</span>
+                    </div>
+                    <div class="trade-item" onclick="selectTrade('Maçon')">
+                        <span>Maçon</span>
+                        <span class="trade-check">✓</span>
+                    </div>
+                    <div class="trade-item" onclick="selectTrade('Menuisier')">
+                        <span>Menuisier</span>
+                        <span class="trade-check">✓</span>
+                    </div>
+                    <div class="trade-item" onclick="selectTrade('Peintre')">
+                        <span>Peintre</span>
+                        <span class="trade-check">✓</span>
+                    </div>
+                    <div class="trade-item" onclick="selectTrade('Pisciniste')">
+                        <span>Pisciniste</span>
+                        <span class="trade-check">✓</span>
+                    </div>
+                    <div class="trade-item" onclick="selectTrade('Vitrier')">
+                        <span>Vitrier</span>
+                        <span class="trade-check">✓</span>
+                    </div>
+                </div>
+
+                <div class="empty-state hidden" id="tradeEmpty">
+                    <div class="empty-icon">👷</div>
+                    <div class="empty-title">Métier introuvable</div>
+                    <div class="empty-desc">
+                        Ce métier n'est peut-être pas encore disponible. Contactez-nous pour être orienté.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Help Card -->
+            <div class="help-card">
+                <span class="help-icon">💬</span>
+                <div class="help-content">
+                    <div class="help-title">Besoin d'aide pour choisir ?</div>
+                    <div class="help-text">
+                        Notre équipe vous oriente gratuitement vers le bon professionnel
+                    </div>
+                    <a href="tel:0978452740" class="help-phone">
+                        <span>📞</span>
+                        <span>09 78 45 27 40</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="modal-footer">
+            <div class="footer-note">
+                <span>ℹ️</span>
+                <span>Nous affinerons votre demande à l'étape suivante</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mode switching
+        function switchMode(mode) {
+            const problemMode = document.getElementById('problemMode');
+            const tradeMode = document.getElementById('tradeMode');
+            const problemBtn = document.getElementById('problemBtn');
+            const tradeBtn = document.getElementById('tradeBtn');
+
+            if (mode === 'problem') {
+                problemMode.classList.remove('hidden');
+                tradeMode.classList.add('hidden');
+                problemBtn.classList.add('active');
+                tradeBtn.classList.remove('active');
+            } else {
+                problemMode.classList.add('hidden');
+                tradeMode.classList.remove('hidden');
+                problemBtn.classList.remove('active');
+                tradeBtn.classList.add('active');
+            }
+        }
+
+        // Filter problems
+        function filterProblems(query) {
+            const cards = document.querySelectorAll('.problem-card');
+            const emptyState = document.getElementById('problemEmpty');
+            let hasResults = false;
+
+            query = query.toLowerCase();
+
+            cards.forEach(card => {
+                const title = card.querySelector('.problem-title').textContent.toLowerCase();
+                const desc = card.querySelector('.problem-desc').textContent.toLowerCase();
+                
+                if (title.includes(query) || desc.includes(query) || query === '') {
+                    card.style.display = 'flex';
+                    hasResults = true;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            emptyState.classList.toggle('hidden', hasResults || query === '');
+            document.getElementById('problemsList').classList.toggle('hidden', !hasResults && query !== '');
+        }
+
+        // Filter trades
+        function filterTrades(query) {
+            const items = document.querySelectorAll('.trade-item');
+            const headers = document.querySelectorAll('.category-header');
+            const emptyState = document.getElementById('tradeEmpty');
+            let hasResults = false;
+
+            query = query.toLowerCase();
+
+            items.forEach(item => {
+                const text = item.textContent.toLowerCase();
+                
+                if (text.includes(query) || query === '') {
+                    item.style.display = 'flex';
+                    hasResults = true;
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+
+            // Hide/show category headers based on results
+            headers.forEach(header => {
+                header.style.display = query === '' ? 'block' : 'none';
+            });
+
+            emptyState.classList.toggle('hidden', hasResults || query === '');
+            document.getElementById('tradesList').classList.toggle('hidden', !hasResults && query !== '');
+        }
+
+        // Selection handlers
+        function selectProblem(type) {
+            console.log('Problème sélectionné:', type);
+            // Here you would typically:
+            // 1. Store the selection
+            // 2. Close modal or proceed to next step
+            showToast(`Recherche d'artisans pour : ${type}`);
+            setTimeout(() => closeModal(), 800);
+        }
+
+        function selectTrade(trade) {
+            console.log('Métier sélectionné:', trade);
+            showToast(`Recherche de : ${trade}`);
+            setTimeout(() => closeModal(), 800);
+        }
+
+        function closeModal() {
+            console.log('Modal fermée');
+            // Animation or navigation logic
+        }
+
+        // Toast notification
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position: fixed;
+                bottom: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: #111827;
+                color: white;
+                padding: 14px 24px;
+                border-radius: 12px;
+                font-weight: 600;
+                font-size: 0.938rem;
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+                z-index: 100;
+                animation: slideUp 0.3s ease;
+            `;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.animation = 'fadeOut 0.3s ease forwards';
+                setTimeout(() => toast.remove(), 300);
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

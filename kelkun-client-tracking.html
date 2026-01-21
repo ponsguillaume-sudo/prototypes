@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kelkun - Suivi de votre demande</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Bricolage+Grotesque:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --kelkun-primary: #00BFA6;
+            --kelkun-primary-dark: #00a891;
+            --kelkun-primary-light: #e6f9f6;
+            --blue-light: #EEF2FF;
+            --blue-medium: #818CF8;
+            --gray-50: #F9FAFB;
+            --gray-100: #F3F4F6;
+            --gray-200: #E5E7EB;
+            --gray-300: #D1D5DB;
+            --gray-400: #9CA3AF;
+            --gray-500: #6B7280;
+            --gray-600: #4B5563;
+            --gray-700: #374151;
+            --gray-900: #111827;
+            --orange-500: #F97316;
+            --orange-50: #FFF7ED;
+            --green-500: #10B981;
+            --green-50: #ECFDF5;
+            --yellow-500: #EAB308;
+            --yellow-50: #FEFCE8;
+        }
+
+        body {
+            font-family: 'DM Sans', -apple-system, sans-serif;
+            background: var(--gray-50);
+            color: var(--gray-900);
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+
+        /* Mobile Container */
+        .mobile-frame {
+            max-width: 430px;
+            margin: 40px auto;
+            background: white;
+            border-radius: 40px;
+            box-shadow: 0 20px 80px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            border: 12px solid #1f2937;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--kelkun-primary) 0%, var(--kelkun-primary-dark) 100%);
+            padding: 20px 20px 100px;
+            position: relative;
+            color: white;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -20%;
+            right: -5%;
+            width: 250px;
+            height: 250px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .back-btn {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .help-btn {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            padding: 8px 14px;
+            border-radius: 10px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background: #fff;
+            border-radius: 50%;
+            animation: pulse-dot 2s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+
+        .header-content h1 {
+            font-family: 'Bricolage Grotesque', sans-serif;
+            font-size: 1.875rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .header-subtitle {
+            font-size: 1rem;
+            opacity: 0.95;
+            line-height: 1.5;
+        }
+
+        /* Content */
+        .content {
+            padding: 0 20px 24px;
+            margin-top: -80px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Progress Card - Current Status */
+        .progress-overview {
+            background: white;
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+            border: 2px solid var(--gray-200);
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .progress-step {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            font-weight: 600;
+        }
+
+        .progress-percentage {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--kelkun-primary);
+        }
+
+        .progress-bar-container {
+            height: 8px;
+            background: var(--gray-200);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 16px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--kelkun-primary), var(--kelkun-primary-dark));
+            border-radius: 10px;
+            width: 25%;
+            animation: progressGrow 1s ease;
+        }
+
+        @keyframes progressGrow {
+            from { width: 0%; }
+        }
+
+        .progress-label {
+            font-size: 0.938rem;
+            color: var(--gray-700);
+            font-weight: 600;
+        }
+
+        /* Current Action Card */
+        .current-action-card {
+            background: linear-gradient(135deg, var(--yellow-50) 0%, #fef9e7 100%);
+            border: 2px solid var(--yellow-500);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .current-action-card::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            right: -15%;
+            width: 180px;
+            height: 180px;
+            background: radial-gradient(circle, rgba(234, 179, 8, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .action-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .action-icon {
+            width: 48px;
+            height: 48px;
+            background: white;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .action-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .action-label {
+            font-size: 0.813rem;
+            color: var(--gray-600);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .action-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 8px;
+        }
+
+        .action-description {
+            font-size: 0.938rem;
+            color: var(--gray-700);
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .eta-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--gray-700);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        }
+
+        /* Artisan Card */
+        .artisan-card {
+            background: var(--kelkun-primary-light);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 2px solid var(--kelkun-primary);
+        }
+
+        .artisan-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .artisan-avatar {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, var(--kelkun-primary), var(--kelkun-primary-dark));
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .artisan-info {
+            flex: 1;
+        }
+
+        .artisan-name {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 4px;
+        }
+
+        .artisan-specialty {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .verified-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: white;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--kelkun-primary-dark);
+        }
+
+        .artisan-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .artisan-btn {
+            background: white;
+            border: 2px solid var(--gray-200);
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .artisan-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Request Details */
+        .request-details {
+            background: white;
+            border: 2px solid var(--gray-200);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .details-title {
+            font-size: 0.938rem;
+            font-weight: 700;
+            color: var(--gray-700);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+        }
+
+        .detail-value {
+            font-size: 0.938rem;
+            font-weight: 600;
+            color: var(--gray-900);
+            text-align: right;
+        }
+
+        /* Timeline / Next Steps */
+        .timeline-section {
+            background: white;
+            border: 2px solid var(--gray-200);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .timeline-title {
+            font-size: 0.938rem;
+            font-weight: 700;
+            color: var(--gray-700);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .timeline-items {
+            position: relative;
+            padding-left: 40px;
+        }
+
+        .timeline-items::before {
+            content: '';
+            position: absolute;
+            left: 16px;
+            top: 16px;
+            bottom: 16px;
+            width: 2px;
+            background: linear-gradient(to bottom,
+                var(--kelkun-primary) 0%,
+                var(--kelkun-primary) 25%,
+                var(--gray-200) 25%,
+                var(--gray-200) 100%
+            );
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 28px;
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -28px;
+            top: 4px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 0 0 2px var(--gray-200);
+        }
+
+        .timeline-dot.completed {
+            background: var(--kelkun-primary);
+            box-shadow: 0 0 0 2px var(--kelkun-primary);
+        }
+
+        .timeline-dot.active {
+            background: var(--yellow-500);
+            box-shadow: 0 0 0 2px var(--yellow-500);
+            animation: pulse-timeline 2s infinite;
+        }
+
+        @keyframes pulse-timeline {
+            0%, 100% { 
+                transform: scale(1);
+                box-shadow: 0 0 0 2px var(--yellow-500);
+            }
+            50% { 
+                transform: scale(1.2);
+                box-shadow: 0 0 0 4px var(--yellow-500);
+            }
+        }
+
+        .timeline-dot.pending {
+            background: var(--gray-200);
+        }
+
+        .timeline-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 6px;
+        }
+
+        .timeline-item-title {
+            font-size: 0.938rem;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .timeline-item-title.pending {
+            color: var(--gray-500);
+        }
+
+        .timeline-status {
+            font-size: 0.75rem;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+
+        .timeline-status.completed {
+            background: var(--green-50);
+            color: var(--green-500);
+        }
+
+        .timeline-status.active {
+            background: var(--yellow-50);
+            color: var(--yellow-500);
+        }
+
+        .timeline-status.pending {
+            background: var(--gray-100);
+            color: var(--gray-500);
+        }
+
+        .timeline-item-desc {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            line-height: 1.5;
+        }
+
+        .timeline-item-desc.pending {
+            color: var(--gray-400);
+        }
+
+        /* Support Card */
+        .support-card {
+            background: linear-gradient(135deg, var(--blue-light) 0%, #e0e7ff 100%);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .support-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+        }
+
+        .support-title {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 8px;
+        }
+
+        .support-desc {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+
+        .support-btn {
+            background: white;
+            color: var(--gray-900);
+            border: none;
+            padding: 14px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.938rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .support-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Bottom Action */
+        .bottom-action {
+            position: sticky;
+            bottom: 0;
+            background: white;
+            border-top: 1px solid var(--gray-200);
+            padding: 16px 20px;
+        }
+
+        .primary-action-btn {
+            width: 100%;
+            background: var(--kelkun-primary);
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .primary-action-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--gray-900);
+            color: white;
+            padding: 14px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.938rem;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 100;
+        }
+
+        .toast.show {
+            opacity: 1;
+        }
+
+        /* Animations */
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .content > * {
+            animation: slideInUp 0.5s ease backwards;
+        }
+
+        .content > *:nth-child(1) { animation-delay: 0.1s; }
+        .content > *:nth-child(2) { animation-delay: 0.2s; }
+        .content > *:nth-child(3) { animation-delay: 0.3s; }
+        .content > *:nth-child(4) { animation-delay: 0.4s; }
+        .content > *:nth-child(5) { animation-delay: 0.5s; }
+        .content > *:nth-child(6) { animation-delay: 0.6s; }
+    </style>
+</head>
+<body>
+    <div class="mobile-frame">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-top">
+                <button class="back-btn">←</button>
+                <button class="help-btn">?</button>
+            </div>
+            <div class="header-content">
+                <div class="status-badge">
+                    <span class="pulse-dot"></span>
+                    <span>En cours</span>
+                </div>
+                <h1>Votre intervention</h1>
+                <p class="header-subtitle">Nous recherchons le meilleur artisan pour votre dépannage</p>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <!-- Progress Overview -->
+            <div class="progress-overview">
+                <div class="progress-header">
+                    <span class="progress-step">Étape 1 sur 4</span>
+                    <span class="progress-percentage">25%</span>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar"></div>
+                </div>
+                <div class="progress-label">Recherche d'artisan en cours</div>
+            </div>
+
+            <!-- Current Action Card -->
+            <div class="current-action-card">
+                <div class="action-header">
+                    <div class="action-icon">🔍</div>
+                </div>
+                <div class="action-content">
+                    <div class="action-label">Étape en cours</div>
+                    <div class="action-title">Recherche d'artisan</div>
+                    <div class="action-description">
+                        Notre équipe analyse votre demande et contacte les artisans disponibles dans votre secteur pour une intervention rapide.
+                    </div>
+                    <div class="eta-info">
+                        <span>⏱️</span>
+                        <span>Réponse estimée : dans les 2 prochaines heures</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Artisan Card (if assigned) -->
+            <div class="artisan-card">
+                <div class="artisan-header">
+                    <div class="artisan-avatar">PL</div>
+                    <div class="artisan-info">
+                        <div class="artisan-name">Plomberie Laurent</div>
+                        <div class="artisan-specialty">
+                            🔧 Plombier
+                            <span class="verified-badge">✓ Vérifié</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="artisan-actions">
+                    <button class="artisan-btn" onclick="showToast('Profil ouvert')">
+                        👤 Voir le profil
+                    </button>
+                    <button class="artisan-btn" onclick="showToast('Message envoyé')">
+                        💬 Contacter
+                    </button>
+                </div>
+            </div>
+
+            <!-- Request Details -->
+            <div class="request-details">
+                <div class="details-title">
+                    📋 Détails de votre demande
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">N° de demande</span>
+                    <span class="detail-value">#KLK-2025-0142</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Type d'intervention</span>
+                    <span class="detail-value">Dépannage urgent</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Créée le</span>
+                    <span class="detail-value">09 janv. 2026, 14:30</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Localisation</span>
+                    <span class="detail-value">Montpellier (34)</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Référence magasin</span>
+                    <span class="detail-value">Gedimat Montpellier Sud</span>
+                </div>
+            </div>
+
+            <!-- Timeline -->
+            <div class="timeline-section">
+                <div class="timeline-title">
+                    📍 Suivi de votre intervention
+                </div>
+                <div class="timeline-items">
+                    <!-- Step 1 - Active -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot active"></div>
+                        <div class="timeline-item-header">
+                            <div class="timeline-item-title">Recherche d'artisan</div>
+                            <span class="timeline-status active">En cours</span>
+                        </div>
+                        <div class="timeline-item-desc">
+                            Nous contactons les artisans qualifiés disponibles dans votre zone.
+                        </div>
+                    </div>
+
+                    <!-- Step 2 - Pending -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot pending"></div>
+                        <div class="timeline-item-header">
+                            <div class="timeline-item-title pending">Réception du devis</div>
+                            <span class="timeline-status pending">À venir</span>
+                        </div>
+                        <div class="timeline-item-desc pending">
+                            Vous recevrez un ou plusieurs devis pour comparer et choisir.
+                        </div>
+                    </div>
+
+                    <!-- Step 3 - Pending -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot pending"></div>
+                        <div class="timeline-item-header">
+                            <div class="timeline-item-title pending">Intervention planifiée</div>
+                            <span class="timeline-status pending">À venir</span>
+                        </div>
+                        <div class="timeline-item-desc pending">
+                            Confirmation de la date et heure d'intervention avec l'artisan.
+                        </div>
+                    </div>
+
+                    <!-- Step 4 - Pending -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot pending"></div>
+                        <div class="timeline-item-header">
+                            <div class="timeline-item-title pending">Intervention terminée</div>
+                            <span class="timeline-status pending">À venir</span>
+                        </div>
+                        <div class="timeline-item-desc pending">
+                            Validation des travaux et paiement sécurisé.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Support Card -->
+            <div class="support-card">
+                <div class="support-icon">💬</div>
+                <div class="support-title">Besoin d'aide ?</div>
+                <div class="support-desc">
+                    Notre équipe est disponible du lundi au vendredi, de 9h à 17h pour répondre à toutes vos questions.
+                </div>
+                <button class="support-btn" onclick="showToast('Service client : 09 78 45 27 40')">
+                    <span>📞</span>
+                    <span>Contacter le support</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Bottom Action -->
+        <div class="bottom-action">
+            <button class="primary-action-btn" onclick="showToast('Modification en cours...')">
+                <span>✏️</span>
+                <span>Modifier ma demande</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2500);
+        }
+    </script>
+</body>
+</html>

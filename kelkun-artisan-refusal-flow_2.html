@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kelkun Pro - Refus d'intervention</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Bricolage+Grotesque:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --kelkun-primary: #00BFA6;
+            --kelkun-primary-dark: #00a891;
+            --gray-50: #F9FAFB;
+            --gray-100: #F3F4F6;
+            --gray-200: #E5E7EB;
+            --gray-300: #D1D5DB;
+            --gray-400: #9CA3AF;
+            --gray-500: #6B7280;
+            --gray-600: #4B5563;
+            --gray-700: #374151;
+            --gray-900: #111827;
+            --red-500: #EF4444;
+            --red-600: #DC2626;
+            --blue-500: #3B82F6;
+            --blue-50: #EFF6FF;
+        }
+
+        body {
+            font-family: 'DM Sans', -apple-system, sans-serif;
+            background: var(--gray-50);
+            color: var(--gray-900);
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+
+        /* Mobile Container */
+        .mobile-frame {
+            max-width: 430px;
+            margin: 40px auto;
+            background: white;
+            border-radius: 40px;
+            box-shadow: 0 20px 80px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            border: 12px solid #1f2937;
+            position: relative;
+        }
+
+        /* Initial Notification */
+        .notification-card {
+            background: white;
+            padding: 24px;
+        }
+
+        .notification-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+            background: #1e3a8a;
+            color: white;
+        }
+
+        .store-name {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+        }
+
+        .store-icon {
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: #1e3a8a;
+        }
+
+        .refresh-icon {
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .dossier-number {
+            background: var(--gray-100);
+            padding: 16px 20px;
+            margin: 20px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .dossier-label {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+        }
+
+        .dossier-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .intervention-card {
+            background: #1e3a8a;
+            color: white;
+            padding: 24px 20px;
+            margin: 20px;
+            border-radius: 16px;
+        }
+
+        .intervention-label {
+            font-size: 0.875rem;
+            margin-bottom: 8px;
+            opacity: 0.9;
+        }
+
+        .intervention-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .intervention-desc {
+            font-size: 0.938rem;
+            line-height: 1.6;
+            opacity: 0.95;
+        }
+
+        .action-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            padding: 0 20px 24px;
+        }
+
+        .btn-refuse {
+            background: white;
+            color: var(--gray-900);
+            border: 2px solid var(--gray-200);
+            padding: 14px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.938rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .btn-refuse:active {
+            transform: scale(0.98);
+        }
+
+        .btn-accept {
+            background: var(--kelkun-primary);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.938rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .btn-accept:active {
+            transform: scale(0.98);
+        }
+
+        /* Modal Overlay */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 100;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Modal */
+        .modal {
+            background: white;
+            border-radius: 24px 24px 0 0;
+            padding: 32px 24px;
+            max-width: 430px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .modal-title {
+            font-size: 1.375rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 8px;
+        }
+
+        .modal-subtitle {
+            font-size: 0.938rem;
+            color: var(--gray-500);
+            line-height: 1.5;
+        }
+
+        /* Radio Options */
+        .radio-options {
+            margin-bottom: 24px;
+        }
+
+        .radio-option {
+            background: white;
+            border: 2px solid var(--gray-200);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .radio-option:hover {
+            border-color: var(--gray-300);
+        }
+
+        .radio-option.selected {
+            border-color: var(--kelkun-primary);
+            background: #f0fdfb;
+        }
+
+        .radio-circle {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--gray-300);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .radio-option.selected .radio-circle {
+            border-color: var(--kelkun-primary);
+        }
+
+        .radio-circle-inner {
+            width: 10px;
+            height: 10px;
+            background: var(--kelkun-primary);
+            border-radius: 50%;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .radio-option.selected .radio-circle-inner {
+            opacity: 1;
+        }
+
+        .radio-label {
+            font-size: 0.938rem;
+            font-weight: 500;
+            color: var(--gray-700);
+        }
+
+        /* Textarea */
+        .textarea-container {
+            margin-bottom: 16px;
+            display: none;
+        }
+
+        .textarea-container.active {
+            display: block;
+        }
+
+        .textarea-label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--gray-700);
+            margin-bottom: 8px;
+        }
+
+        .textarea {
+            width: 100%;
+            background: var(--gray-50);
+            border: 2px solid var(--gray-200);
+            border-radius: 12px;
+            padding: 16px;
+            font-family: inherit;
+            font-size: 0.938rem;
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .textarea:focus {
+            outline: none;
+            border-color: var(--kelkun-primary);
+        }
+
+        .textarea-hint {
+            font-size: 0.813rem;
+            color: var(--gray-500);
+            margin-top: 8px;
+        }
+
+        /* Modal Buttons */
+        .modal-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .btn-confirm {
+            width: 100%;
+            background: var(--red-500);
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-confirm:hover {
+            background: var(--red-600);
+        }
+
+        .btn-confirm:active {
+            transform: scale(0.98);
+        }
+
+        .btn-cancel {
+            width: 100%;
+            background: transparent;
+            color: var(--gray-600);
+            border: 2px solid var(--gray-200);
+            padding: 16px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.938rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-cancel:active {
+            transform: scale(0.98);
+        }
+
+        /* Confirmation Screen */
+        .confirmation-screen {
+            padding: 40px 24px;
+            text-align: center;
+            display: none;
+        }
+
+        .confirmation-screen.active {
+            display: block;
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: #dcfce7;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            margin: 0 auto 24px;
+            animation: successPop 0.5s ease;
+        }
+
+        @keyframes successPop {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .confirmation-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 12px;
+        }
+
+        .confirmation-desc {
+            font-size: 0.938rem;
+            color: var(--gray-600);
+            line-height: 1.6;
+            margin-bottom: 32px;
+        }
+
+        /* Info Card */
+        .info-card {
+            background: var(--blue-50);
+            border: 2px solid var(--blue-500);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 24px;
+            text-align: left;
+        }
+
+        .info-card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .info-card-icon {
+            font-size: 24px;
+        }
+
+        .info-card-title {
+            font-size: 0.938rem;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .info-card-desc {
+            font-size: 0.875rem;
+            color: var(--gray-700);
+            line-height: 1.6;
+        }
+
+        .info-card-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--blue-500);
+            font-weight: 600;
+            font-size: 0.875rem;
+            margin-top: 12px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        /* Suggestion Cards */
+        .suggestion-card {
+            background: white;
+            border: 2px solid var(--gray-200);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .suggestion-card:hover {
+            border-color: var(--kelkun-primary);
+            box-shadow: 0 4px 12px rgba(0, 191, 166, 0.15);
+        }
+
+        .suggestion-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .suggestion-icon {
+            font-size: 20px;
+        }
+
+        .suggestion-title {
+            font-size: 0.938rem;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .suggestion-meta {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            margin-bottom: 12px;
+        }
+
+        .suggestion-btn {
+            width: 100%;
+            background: var(--gray-100);
+            color: var(--gray-900);
+            border: none;
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .suggestion-btn:hover {
+            background: var(--gray-200);
+        }
+
+        /* Action Buttons */
+        .action-buttons-confirm {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .btn-primary {
+            width: 100%;
+            background: var(--kelkun-primary);
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary:active {
+            transform: scale(0.98);
+        }
+
+        .btn-secondary {
+            width: 100%;
+            background: white;
+            color: var(--gray-700);
+            border: 2px solid var(--gray-200);
+            padding: 16px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.938rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-secondary:active {
+            transform: scale(0.98);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.5s ease backwards;
+        }
+
+        .fade-in-up:nth-child(1) { animation-delay: 0.1s; }
+        .fade-in-up:nth-child(2) { animation-delay: 0.2s; }
+        .fade-in-up:nth-child(3) { animation-delay: 0.3s; }
+        .fade-in-up:nth-child(4) { animation-delay: 0.4s; }
+    </style>
+</head>
+<body>
+    <div class="mobile-frame">
+        <!-- Initial Notification -->
+        <div id="initialNotification">
+            <div class="notification-header">
+                <div class="store-name">
+                    <div class="store-icon">G</div>
+                    <span>Gedimat Montpellier Sud</span>
+                </div>
+                <div class="refresh-icon">🔄</div>
+            </div>
+
+            <div class="dossier-number">
+                <div>
+                    <div class="dossier-label">N° de dossier</div>
+                    <div class="dossier-value">6VHTD</div>
+                </div>
+                <div style="font-size: 24px;">📋</div>
+            </div>
+
+            <div class="intervention-card">
+                <div class="intervention-label">Intervention à planifier • Montpellier</div>
+                <div class="intervention-title">Nouvelle intervention</div>
+                <div class="intervention-desc">
+                    Confirmez votre disponibilité pour cette intervention. Le client attend votre réponse rapidement.
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn-refuse" onclick="showRefusalModal()">
+                    ⊗ Refuser
+                </button>
+                <button class="btn-accept" onclick="showToast('Redirection vers acceptation...')">
+                    ✓ Accepter
+                </button>
+            </div>
+        </div>
+
+        <!-- Confirmation Screen (hidden by default) -->
+        <div id="confirmationScreen" class="confirmation-screen">
+            <div class="success-icon">✓</div>
+            <div class="confirmation-title">Intervention refusée</div>
+            <div class="confirmation-desc">
+                Elle sera proposée à un autre artisan de votre secteur
+            </div>
+
+            <div class="info-card fade-in-up">
+                <div class="info-card-header">
+                    <div class="info-card-icon">💡</div>
+                    <div class="info-card-title">Astuce</div>
+                </div>
+                <div class="info-card-desc">
+                    Vous pouvez ajuster votre zone d'intervention dans vos réglages pour recevoir des demandes plus proches de chez vous
+                </div>
+                <a href="#" class="info-card-link" onclick="showToast('Ouverture des paramètres...')">
+                    ⚙️ Modifier mes préférences
+                </a>
+            </div>
+
+            <div id="suggestions">
+                <div class="suggestion-card fade-in-up">
+                    <div class="suggestion-header">
+                        <div class="suggestion-icon">🔧</div>
+                        <div class="suggestion-title">Plomberie • Montpellier</div>
+                    </div>
+                    <div class="suggestion-meta">
+                        Installation lavabo • 8 km • Budget ~350€
+                    </div>
+                    <button class="suggestion-btn" onclick="showToast('Ouverture des détails...')">
+                        Voir les détails
+                    </button>
+                </div>
+
+                <div class="suggestion-card fade-in-up">
+                    <div class="suggestion-header">
+                        <div class="suggestion-icon">🔧</div>
+                        <div class="suggestion-title">Plomberie • Lattes</div>
+                    </div>
+                    <div class="suggestion-meta">
+                        Réparation fuite • 5 km • Urgent
+                    </div>
+                    <button class="suggestion-btn" onclick="showToast('Ouverture des détails...')">
+                        Voir les détails
+                    </button>
+                </div>
+            </div>
+
+            <div class="action-buttons-confirm fade-in-up">
+                <button class="btn-primary" onclick="showToast('Affichage des autres interventions...')">
+                    Voir d'autres interventions
+                </button>
+                <button class="btn-secondary" onclick="showToast('Retour à l\'accueil...')">
+                    Retour à l'accueil
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Refusal Modal -->
+    <div class="modal-overlay" id="refusalModal">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-title">Pourquoi refusez-vous ?</div>
+                <div class="modal-subtitle">
+                    Cela nous aide à vous proposer des interventions plus adaptées
+                </div>
+            </div>
+
+            <div class="radio-options">
+                <div class="radio-option" onclick="selectReason('distance')">
+                    <div class="radio-circle">
+                        <div class="radio-circle-inner"></div>
+                    </div>
+                    <div class="radio-label">Trop loin de chez moi</div>
+                </div>
+
+                <div class="radio-option" onclick="selectReason('unavailable')">
+                    <div class="radio-circle">
+                        <div class="radio-circle-inner"></div>
+                    </div>
+                    <div class="radio-label">Pas disponible sur ce créneau</div>
+                </div>
+
+                <div class="radio-option" onclick="selectReason('skill')">
+                    <div class="radio-circle">
+                        <div class="radio-circle-inner"></div>
+                    </div>
+                    <div class="radio-label">Pas mon domaine de compétence</div>
+                </div>
+
+                <div class="radio-option" onclick="selectReason('budget')">
+                    <div class="radio-circle">
+                        <div class="radio-circle-inner"></div>
+                    </div>
+                    <div class="radio-label">Budget estimé trop faible</div>
+                </div>
+
+                <div class="radio-option" onclick="selectReason('other')">
+                    <div class="radio-circle">
+                        <div class="radio-circle-inner"></div>
+                    </div>
+                    <div class="radio-label">Autre raison</div>
+                </div>
+            </div>
+
+            <div class="textarea-container" id="otherReasonContainer">
+                <div class="textarea-label">Précisez la raison (optionnel)</div>
+                <textarea 
+                    class="textarea" 
+                    placeholder="Ex: Photos pas assez claires, description trop vague..."
+                    id="otherReasonText"
+                ></textarea>
+                <div class="textarea-hint">
+                    Votre retour nous aide à améliorer la qualité des demandes
+                </div>
+            </div>
+
+            <div class="modal-buttons">
+                <button class="btn-confirm" id="confirmBtn" disabled onclick="confirmRefusal()">
+                    Confirmer le refus
+                </button>
+                <button class="btn-cancel" onclick="closeRefusalModal()">
+                    Annuler
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let selectedReason = null;
+
+        function showRefusalModal() {
+            document.getElementById('refusalModal').classList.add('active');
+        }
+
+        function closeRefusalModal() {
+            document.getElementById('refusalModal').classList.remove('active');
+            selectedReason = null;
+            document.querySelectorAll('.radio-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            document.getElementById('confirmBtn').disabled = true;
+            document.getElementById('otherReasonContainer').classList.remove('active');
+        }
+
+        function selectReason(reason) {
+            selectedReason = reason;
+            
+            // Update UI
+            document.querySelectorAll('.radio-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            event.currentTarget.classList.add('selected');
+            
+            // Enable confirm button
+            document.getElementById('confirmBtn').disabled = false;
+            
+            // Show textarea for "other" reason
+            if (reason === 'other') {
+                document.getElementById('otherReasonContainer').classList.add('active');
+            } else {
+                document.getElementById('otherReasonContainer').classList.remove('active');
+            }
+        }
+
+        function confirmRefusal() {
+            // Hide modal
+            closeRefusalModal();
+            
+            // Hide initial notification
+            document.getElementById('initialNotification').style.display = 'none';
+            
+            // Show confirmation screen
+            document.getElementById('confirmationScreen').classList.add('active');
+            
+            // Log reason (in real app, this would be sent to backend)
+            console.log('Refusal reason:', selectedReason);
+            if (selectedReason === 'other') {
+                console.log('Details:', document.getElementById('otherReasonText').value);
+            }
+        }
+
+        function showToast(message) {
+            alert(message); // In production, use proper toast notification
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kelkun - Mon devis minute</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Bricolage+Grotesque:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --kelkun-primary: #00BFA6;
+            --kelkun-primary-dark: #00a891;
+            --blue-dark: #1e3a5f;
+            --blue-medium: #2d5a8a;
+            --gray-50: #F9FAFB;
+            --gray-100: #F3F4F6;
+            --gray-200: #E5E7EB;
+            --gray-600: #4B5563;
+            --gray-700: #374151;
+            --gray-900: #111827;
+            --green-500: #10B981;
+            --green-50: #ECFDF5;
+            --orange-500: #F97316;
+            --yellow-500: #EAB308;
+            --yellow-50: #FEFCE8;
+        }
+
+        body {
+            font-family: 'DM Sans', -apple-system, sans-serif;
+            background: white;
+            color: var(--gray-900);
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+
+        .mobile-frame {
+            max-width: 430px;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+            padding-bottom: 180px;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .back-btn {
+            width: 40px;
+            height: 40px;
+            background: none;
+            border: none;
+            color: var(--kelkun-primary);
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .header-title {
+            flex: 1;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+
+        .help-btn {
+            width: 40px;
+            height: 40px;
+            background: none;
+            border: none;
+            color: var(--kelkun-primary);
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        /* Content */
+        .content {
+            padding: 20px;
+        }
+
+        /* Warning Banner */
+        .warning-banner {
+            background: var(--yellow-50);
+            border: 2px solid var(--yellow-500);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: start;
+            gap: 12px;
+        }
+
+        .warning-icon {
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .warning-text {
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+
+        .warning-text strong {
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        /* Client Card */
+        .client-card {
+            background: var(--gray-50);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .client-avatar {
+            width: 48px;
+            height: 48px;
+            background: var(--blue-medium);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: white;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .client-info {
+            flex: 1;
+        }
+
+        .client-name {
+            font-size: 0.938rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 2px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .verified-badge {
+            background: var(--green-50);
+            color: var(--green-500);
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .client-badge {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.75rem;
+            color: var(--gray-600);
+            margin-bottom: 2px;
+        }
+
+        .client-address {
+            font-size: 0.813rem;
+            color: var(--gray-600);
+        }
+
+        .modify-client-btn {
+            background: none;
+            border: none;
+            color: var(--kelkun-primary);
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* Template Badge */
+        .template-info {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .template-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.813rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Lines Section */
+        .lines-section {
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--gray-700);
+            margin-bottom: 12px;
+        }
+
+        /* Line Card - Simplified */
+        .line-card {
+            background: white;
+            border: 2px solid var(--gray-200);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            transition: all 0.2s;
+        }
+
+        .line-card.has-value {
+            border-color: var(--kelkun-primary);
+            background: var(--gray-50);
+        }
+
+        .line-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .line-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .line-icon.fourniture {
+            background: #FFF7ED;
+        }
+
+        .line-icon.main-oeuvre {
+            background: #EEF2FF;
+        }
+
+        .line-icon.remise {
+            background: #FEF3F2;
+        }
+
+        .line-title {
+            flex: 1;
+            font-size: 0.938rem;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .line-advanced {
+            background: none;
+            border: none;
+            color: var(--gray-600);
+            font-size: 0.75rem;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .line-advanced:hover {
+            background: var(--gray-100);
+        }
+
+        .line-remove {
+            background: none;
+            border: none;
+            color: var(--gray-600);
+            font-size: 20px;
+            cursor: pointer;
+            padding: 4px;
+            opacity: 0.5;
+            transition: opacity 0.2s;
+        }
+
+        .line-card:hover .line-remove {
+            opacity: 1;
+        }
+
+        /* Simple Input - 2 fields only */
+        .simple-input {
+            display: grid;
+            grid-template-columns: 1fr 110px;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--gray-200);
+            border-radius: 10px;
+            font-size: 0.875rem;
+            font-family: inherit;
+            background: white;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--kelkun-primary);
+        }
+
+        .input-field::placeholder {
+            color: var(--gray-600);
+        }
+
+        .amount-wrapper {
+            position: relative;
+        }
+
+        .amount-input {
+            width: 100%;
+            padding: 12px 32px 12px 12px;
+            border: 2px solid var(--gray-200);
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 700;
+            font-family: inherit;
+            text-align: right;
+            background: white;
+        }
+
+        .amount-input:focus {
+            outline: none;
+            border-color: var(--kelkun-primary);
+        }
+
+        .currency {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--gray-600);
+            pointer-events: none;
+        }
+
+        /* Add Line Buttons */
+        .add-line-buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .add-btn {
+            background: var(--blue-dark);
+            color: white;
+            border: none;
+            padding: 14px 12px;
+            border-radius: 12px;
+            font-size: 0.813rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+
+        .add-btn:active {
+            transform: scale(0.98);
+        }
+
+        .add-btn-icon {
+            font-size: 24px;
+        }
+
+        /* Total Summary */
+        .total-summary {
+            background: var(--gray-50);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            font-size: 0.875rem;
+        }
+
+        .total-label {
+            color: var(--gray-600);
+        }
+
+        .total-value {
+            color: var(--gray-900);
+            font-weight: 600;
+        }
+
+        .total-row.final {
+            border-top: 2px solid var(--gray-200);
+            margin-top: 8px;
+            padding-top: 12px;
+            font-size: 1.125rem;
+            font-weight: 700;
+        }
+
+        .total-row.final .total-value {
+            color: var(--kelkun-primary);
+        }
+
+        /* Media Section */
+        .media-section {
+            margin-bottom: 24px;
+        }
+
+        .media-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 12px;
+        }
+
+        .media-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .media-btn {
+            background: var(--blue-dark);
+            color: white;
+            border: none;
+            padding: 48px 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.2s;
+        }
+
+        .media-btn:active {
+            transform: scale(0.98);
+        }
+
+        .media-btn-icon {
+            font-size: 32px;
+        }
+
+        .media-btn-title {
+            font-size: 0.938rem;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .media-btn-subtitle {
+            font-size: 0.75rem;
+            opacity: 0.8;
+        }
+
+        /* Bottom Actions */
+        .bottom-actions {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            padding: 16px 20px 24px;
+            border-top: 1px solid var(--gray-200);
+            max-width: 430px;
+            margin: 0 auto;
+        }
+
+        .send-btn {
+            width: 100%;
+            background: var(--kelkun-primary);
+            color: white;
+            border: none;
+            padding: 18px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-bottom: 8px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .send-btn:disabled {
+            background: var(--gray-600);
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .send-btn:not(:disabled):active {
+            transform: scale(0.98);
+        }
+
+        .options-link {
+            text-align: center;
+        }
+
+        .options-link button {
+            background: none;
+            border: none;
+            color: var(--gray-600);
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        /* Advanced Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: flex-end;
+            z-index: 100;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 24px 24px 0 0;
+            padding: 24px 20px;
+            width: 100%;
+            max-width: 430px;
+            margin: 0 auto;
+            max-height: 80vh;
+            overflow-y: auto;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--gray-200);
+        }
+
+        .modal-title {
+            font-size: 1.125rem;
+            font-weight: 700;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--gray-600);
+            cursor: pointer;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--gray-700);
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--gray-200);
+            border-radius: 10px;
+            font-size: 0.938rem;
+            font-family: inherit;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--kelkun-primary);
+        }
+
+        .tva-pills {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .tva-pill {
+            padding: 8px 16px;
+            border: 2px solid var(--gray-200);
+            border-radius: 20px;
+            background: white;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tva-pill.active {
+            background: var(--blue-dark);
+            color: white;
+            border-color: var(--blue-dark);
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .qty-btn {
+            width: 40px;
+            height: 40px;
+            background: var(--kelkun-primary);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .qty-input {
+            flex: 1;
+            text-align: center;
+            padding: 12px;
+            border: 2px solid var(--gray-200);
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .save-btn {
+            width: 100%;
+            background: var(--kelkun-primary);
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 120px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 14px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.938rem;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 200;
+            max-width: 90%;
+        }
+
+        .toast.show {
+            opacity: 1;
+        }
+
+        /* Animations */
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .line-card {
+            animation: slideInUp 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="mobile-frame">
+        <!-- Header -->
+        <div class="header">
+            <button class="back-btn">←</button>
+            <div class="header-title">Mon devis minute</div>
+            <button class="help-btn">?</button>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <!-- Warning Banner -->
+            <div class="warning-banner">
+                <div class="warning-icon">⚠️</div>
+                <div class="warning-text">
+                    <strong>Le devis doit être validé par votre client AVANT l'intervention.</strong>
+                </div>
+            </div>
+
+            <!-- Client Card -->
+            <div class="client-card">
+                <div class="client-avatar">MD</div>
+                <div class="client-info">
+                    <div class="client-name">
+                        Michel Durand
+                        <span class="verified-badge">✓ Vérifié</span>
+                    </div>
+                    <div class="client-badge">
+                        <span>🏢</span>
+                        <span>Client Gédimat</span>
+                    </div>
+                    <div class="client-address">456 Av. des lavandes, 34970 Lattes</div>
+                </div>
+                <button class="modify-client-btn" onclick="showToast('Modification du client...')">Modifier</button>
+            </div>
+
+            <!-- Template Info -->
+            <div class="template-info">
+                <span class="template-badge">✨ Template "Dépannage"</span>
+            </div>
+
+            <!-- Lines Section -->
+            <div class="lines-section">
+                <div class="section-title">Lignes du devis</div>
+
+                <!-- Lines Container -->
+                <div id="linesContainer">
+                    <!-- Initial Fourniture Line -->
+                    <div class="line-card has-value" data-type="fourniture">
+                        <div class="line-header">
+                            <div class="line-icon fourniture">🔧</div>
+                            <div class="line-title">Fournitures</div>
+                            <button class="line-advanced" onclick="openAdvancedModal(0)">Détails</button>
+                            <button class="line-remove" onclick="removeLine(this)">×</button>
+                        </div>
+                        <div class="simple-input">
+                            <input 
+                                type="text" 
+                                class="input-field" 
+                                placeholder="Ex: Tuyau PVC diam 40, 40m"
+                                value="Tuyau PVC diam 40, 40m"
+                                oninput="updateLine(this)"
+                            >
+                            <div class="amount-wrapper">
+                                <input 
+                                    type="number" 
+                                    class="amount-input" 
+                                    placeholder="0"
+                                    value="320"
+                                    step="0.01"
+                                    oninput="calculateTotal()"
+                                >
+                                <span class="currency">€</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Initial Main d'œuvre Line -->
+                    <div class="line-card has-value" data-type="main-oeuvre">
+                        <div class="line-header">
+                            <div class="line-icon main-oeuvre">👷</div>
+                            <div class="line-title">Main d'œuvre</div>
+                            <button class="line-advanced" onclick="openAdvancedModal(1)">Détails</button>
+                            <button class="line-remove" onclick="removeLine(this)">×</button>
+                        </div>
+                        <div class="simple-input">
+                            <input 
+                                type="text" 
+                                class="input-field" 
+                                placeholder="Ex: Installation et tests, 2h"
+                                value="Installation et tests, 2h"
+                                oninput="updateLine(this)"
+                            >
+                            <div class="amount-wrapper">
+                                <input 
+                                    type="number" 
+                                    class="amount-input" 
+                                    placeholder="0"
+                                    value="80"
+                                    step="0.01"
+                                    oninput="calculateTotal()"
+                                >
+                                <span class="currency">€</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add Line Buttons -->
+                <div class="add-line-buttons">
+                    <button class="add-btn" onclick="addLine('fourniture')">
+                        <span class="add-btn-icon">🔧</span>
+                        <span>Pièces</span>
+                    </button>
+                    <button class="add-btn" onclick="addLine('main-oeuvre')">
+                        <span class="add-btn-icon">👷</span>
+                        <span>M.O.</span>
+                    </button>
+                    <button class="add-btn" onclick="addLine('remise')">
+                        <span class="add-btn-icon">🎁</span>
+                        <span>Remise</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Total Summary -->
+            <div class="total-summary">
+                <div class="total-row">
+                    <span class="total-label">Total HT</span>
+                    <span class="total-value" id="totalHT">400,00 €</span>
+                </div>
+                <div class="total-row">
+                    <span class="total-label">TVA (20%)</span>
+                    <span class="total-value" id="totalTVA">80,00 €</span>
+                </div>
+                <div class="total-row final">
+                    <span class="total-label">Total TTC</span>
+                    <span class="total-value" id="totalTTC">480,00 €</span>
+                </div>
+            </div>
+
+            <!-- Media Section -->
+            <div class="media-section">
+                <div class="media-title">Quelques photos pour que l'on comprenne bien !</div>
+                <div class="media-buttons">
+                    <button class="media-btn" onclick="importMedia()">
+                        <div class="media-btn-icon">📱</div>
+                        <div class="media-btn-title">Importer depuis mon smartphone</div>
+                        <div class="media-btn-subtitle">PDF, JPG, PNG</div>
+                    </button>
+                    <button class="media-btn" onclick="takePhoto()">
+                        <div class="media-btn-icon">📸</div>
+                        <div class="media-btn-title">Prendre une photo</div>
+                        <div class="media-btn-subtitle">10 photos maximum</div>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Actions -->
+        <div class="bottom-actions">
+            <button class="send-btn" id="sendBtn" onclick="sendDevis()">
+                <span>📨</span>
+                <span>Envoyer le devis au client</span>
+            </button>
+            <div class="options-link">
+                <button onclick="showToast('Options : validité 30j, acompte, IBAN...')">
+                    Options avancées
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Advanced Modal -->
+    <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+        <div class="modal" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <div class="modal-title">Détails avancés</div>
+                <button class="modal-close" onclick="closeModal()">×</button>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Dénomination</label>
+                <input type="text" class="form-input" id="advName" placeholder="Ex: Tuyau diam 40 (au mètre)">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Prix unitaire HT</label>
+                <input type="number" class="form-input" id="advPrice" placeholder="0,00" step="0.01">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">TVA</label>
+                <div class="tva-pills">
+                    <button class="tva-pill" onclick="selectTVA(this, 0)">0,00 %</button>
+                    <button class="tva-pill" onclick="selectTVA(this, 5.5)">5,50 %</button>
+                    <button class="tva-pill" onclick="selectTVA(this, 10)">10,00 %</button>
+                    <button class="tva-pill active" onclick="selectTVA(this, 20)">20,00 %</button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Quantité</label>
+                <div class="quantity-controls">
+                    <button class="qty-btn" onclick="changeQuantity(-1)">−</button>
+                    <input type="number" class="qty-input" id="advQty" value="10" min="1">
+                    <button class="qty-btn" onclick="changeQuantity(1)">+</button>
+                </div>
+            </div>
+
+            <button class="save-btn" onclick="saveAdvanced()">Enregistrer</button>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        let currentEditIndex = -1;
+        let selectedTVA = 20;
+
+        function addLine(type) {
+            const container = document.getElementById('linesContainer');
+            const icon = type === 'fourniture' ? '🔧' : type === 'main-oeuvre' ? '👷' : '🎁';
+            const title = type === 'fourniture' ? 'Fournitures' : type === 'main-oeuvre' ? 'Main d\'œuvre' : 'Remise';
+            const placeholder = type === 'fourniture' 
+                ? 'Ex: Tuyau PVC diam 40, 40m'
+                : type === 'main-oeuvre'
+                ? 'Ex: Installation et tests, 2h'
+                : 'Ex: Remise client fidèle';
+
+            const lineCard = document.createElement('div');
+            lineCard.className = 'line-card';
+            lineCard.setAttribute('data-type', type);
+            
+            const lineCount = container.children.length;
+            
+            lineCard.innerHTML = `
+                <div class="line-header">
+                    <div class="line-icon ${type}">${icon}</div>
+                    <div class="line-title">${title}</div>
+                    <button class="line-advanced" onclick="openAdvancedModal(${lineCount})">Détails</button>
+                    <button class="line-remove" onclick="removeLine(this)">×</button>
+                </div>
+                <div class="simple-input">
+                    <input 
+                        type="text" 
+                        class="input-field" 
+                        placeholder="${placeholder}"
+                        oninput="updateLine(this)"
+                    >
+                    <div class="amount-wrapper">
+                        <input 
+                            type="number" 
+                            class="amount-input" 
+                            placeholder="0"
+                            step="0.01"
+                            oninput="calculateTotal()"
+                        >
+                        <span class="currency">€</span>
+                    </div>
+                </div>
+            `;
+
+            container.appendChild(lineCard);
+            lineCard.querySelector('.input-field').focus();
+            
+            showToast(`✅ Ligne ${title} ajoutée`);
+        }
+
+        function removeLine(btn) {
+            const lineCard = btn.closest('.line-card');
+            const linesCount = document.querySelectorAll('.line-card').length;
+            
+            if (linesCount <= 1) {
+                showToast('⚠️ Le devis doit contenir au moins une ligne');
+                return;
+            }
+            
+            lineCard.style.opacity = '0';
+            lineCard.style.transform = 'translateX(-20px)';
+            
+            setTimeout(() => {
+                lineCard.remove();
+                calculateTotal();
+                showToast('Ligne supprimée');
+            }, 200);
+        }
+
+        function updateLine(input) {
+            const lineCard = input.closest('.line-card');
+            const description = lineCard.querySelector('.input-field').value;
+            const amount = lineCard.querySelector('.amount-input').value;
+            
+            if (description && amount && parseFloat(amount) > 0) {
+                lineCard.classList.add('has-value');
+            } else {
+                lineCard.classList.remove('has-value');
+            }
+        }
+
+        function calculateTotal() {
+            let total = 0;
+            const lines = document.querySelectorAll('.line-card');
+            
+            lines.forEach(line => {
+                const amount = parseFloat(line.querySelector('.amount-input').value) || 0;
+                const type = line.getAttribute('data-type');
+                
+                if (type === 'remise') {
+                    total -= amount;
+                } else {
+                    total += amount;
+                }
+            });
+            
+            const totalHT = Math.max(0, total);
+            const totalTVA = totalHT * 0.20;
+            const totalTTC = totalHT * 1.20;
+            
+            document.getElementById('totalHT').textContent = totalHT.toFixed(2) + ' €';
+            document.getElementById('totalTVA').textContent = totalTVA.toFixed(2) + ' €';
+            document.getElementById('totalTTC').textContent = totalTTC.toFixed(2) + ' €';
+        }
+
+        function openAdvancedModal(index) {
+            currentEditIndex = index;
+            const lines = document.querySelectorAll('.line-card');
+            const line = lines[index];
+            
+            const description = line.querySelector('.input-field').value;
+            const amount = parseFloat(line.querySelector('.amount-input').value) || 0;
+            
+            document.getElementById('advName').value = description;
+            document.getElementById('advPrice').value = amount;
+            document.getElementById('advQty').value = '1';
+            
+            document.getElementById('modalOverlay').classList.add('show');
+        }
+
+        function closeModal(event) {
+            if (event && event.target !== document.getElementById('modalOverlay')) return;
+            document.getElementById('modalOverlay').classList.remove('show');
+        }
+
+        function selectTVA(button, tva) {
+            document.querySelectorAll('.tva-pill').forEach(pill => {
+                pill.classList.remove('active');
+            });
+            button.classList.add('active');
+            selectedTVA = tva;
+        }
+
+        function changeQuantity(delta) {
+            const input = document.getElementById('advQty');
+            let value = parseInt(input.value) || 1;
+            value = Math.max(1, value + delta);
+            input.value = value;
+        }
+
+        function saveAdvanced() {
+            const name = document.getElementById('advName').value.trim();
+            const price = parseFloat(document.getElementById('advPrice').value) || 0;
+            const qty = parseInt(document.getElementById('advQty').value) || 1;
+            
+            if (!name || price <= 0) {
+                showToast('⚠️ Veuillez remplir tous les champs');
+                return;
+            }
+            
+            const lines = document.querySelectorAll('.line-card');
+            if (currentEditIndex >= 0 && currentEditIndex < lines.length) {
+                const line = lines[currentEditIndex];
+                line.querySelector('.input-field').value = name;
+                
+                const totalAmount = (price * qty * (1 + selectedTVA / 100)).toFixed(2);
+                line.querySelector('.amount-input').value = totalAmount;
+                
+                updateLine(line.querySelector('.input-field'));
+                calculateTotal();
+            }
+            
+            closeModal();
+            showToast('✅ Détails enregistrés');
+        }
+
+        function importMedia() {
+            showToast('📱 Import depuis smartphone...');
+        }
+
+        function takePhoto() {
+            showToast('📸 Appareil photo ouvert...');
+        }
+
+        function sendDevis() {
+            const lines = document.querySelectorAll('.line-card');
+            let hasValidLine = false;
+            
+            lines.forEach(line => {
+                const description = line.querySelector('.input-field').value.trim();
+                const amount = parseFloat(line.querySelector('.amount-input').value) || 0;
+                
+                if (description && amount > 0) {
+                    hasValidLine = true;
+                }
+            });
+            
+            if (!hasValidLine) {
+                showToast('⚠️ Ajoutez au moins une ligne valide');
+                return;
+            }
+            
+            const sendBtn = document.getElementById('sendBtn');
+            sendBtn.disabled = true;
+            sendBtn.innerHTML = '<span>⏳</span><span>Génération du devis...</span>';
+            
+            setTimeout(() => {
+                showToast('✅ Devis envoyé avec succès !');
+                setTimeout(() => {
+                    alert('Redirection vers le suivi de la demande...');
+                }, 1500);
+            }, 1500);
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2500);
+        }
+
+        // Initialize
+        calculateTotal();
+    </script>
+</body>
+</html>

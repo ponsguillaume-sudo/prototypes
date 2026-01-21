@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kelkun - Mon devis minute</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Bricolage+Grotesque:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --kelkun-primary: #00BFA6;
+            --kelkun-primary-dark: #00a891;
+            --blue-dark: #1e3a5f;
+            --blue-medium: #2d5a8a;
+            --gray-50: #F9FAFB;
+            --gray-100: #F3F4F6;
+            --gray-200: #E5E7EB;
+            --gray-600: #4B5563;
+            --gray-700: #374151;
+            --gray-900: #111827;
+            --green-500: #10B981;
+            --orange-500: #F97316;
+            --yellow-500: #EAB308;
+            --yellow-50: #FEFCE8;
+        }
+
+        body {
+            font-family: 'DM Sans', -apple-system, sans-serif;
+            background: white;
+            color: var(--gray-900);
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+
+        .mobile-frame {
+            max-width: 430px;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+            padding-bottom: 100px;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .back-btn {
+            width: 40px;
+            height: 40px;
+            background: none;
+            border: none;
+            color: var(--kelkun-primary);
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .header-title {
+            flex: 1;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+
+        .help-btn {
+            width: 40px;
+            height: 40px;
+            background: none;
+            border: none;
+            color: var(--kelkun-primary);
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        /* Content */
+        .content {
+            padding: 20px;
+        }
+
+        /* Warning Banner */
+        .warning-banner {
+            background: var(--yellow-50);
+            border: 2px solid var(--yellow-500);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: start;
+            gap: 12px;
+        }
+
+        .warning-icon {
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .warning-text {
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+
+        .warning-text strong {
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .action-btn {
+            background: var(--blue-dark);
+            color: white;
+            border: none;
+            padding: 16px 20px;
+            border-radius: 12px;
+            font-size: 0.938rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.2s;
+        }
+
+        .action-btn:active {
+            transform: scale(0.98);
+        }
+
+        .action-btn-icon {
+            font-size: 20px;
+        }
+
+        /* Devis Provisoire */
+        .devis-summary {
+            background: var(--gray-50);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .summary-title {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .summary-amount {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--gray-900);
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+        }
+
+        .currency {
+            font-size: 1.5rem;
+            color: var(--gray-600);
+        }
+
+        /* Items List */
+        .items-list {
+            margin-bottom: 20px;
+        }
+
+        .item-card {
+            background: white;
+            border: 2px solid var(--gray-200);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .item-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--blue-dark);
+            color: white;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .item-info {
+            flex: 1;
+        }
+
+        .item-name {
+            font-size: 0.938rem;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: 2px;
+        }
+
+        .item-amount {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+        }
+
+        .item-edit {
+            background: none;
+            border: none;
+            color: var(--kelkun-primary);
+            font-size: 20px;
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        /* Media Section */
+        .media-section {
+            margin-bottom: 24px;
+        }
+
+        .section-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 12px;
+        }
+
+        .media-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .media-btn {
+            background: var(--blue-dark);
+            color: white;
+            border: none;
+            padding: 48px 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.2s;
+        }
+
+        .media-btn:active {
+            transform: scale(0.98);
+        }
+
+        .media-btn-icon {
+            font-size: 32px;
+        }
+
+        .media-btn-title {
+            font-size: 0.938rem;
+            font-weight: 600;
+        }
+
+        .media-btn-subtitle {
+            font-size: 0.75rem;
+            opacity: 0.8;
+        }
+
+        /* Bottom Actions */
+        .bottom-actions {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            padding: 16px 20px 24px;
+            border-top: 1px solid var(--gray-200);
+            max-width: 430px;
+            margin: 0 auto;
+        }
+
+        .send-btn {
+            width: 100%;
+            background: var(--kelkun-primary);
+            color: white;
+            border: none;
+            padding: 18px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-bottom: 12px;
+            transition: all 0.2s;
+        }
+
+        .send-btn:active {
+            transform: scale(0.98);
+        }
+
+        .modify-btn {
+            width: 100%;
+            background: var(--yellow-500);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.938rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .modify-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: flex-end;
+            z-index: 100;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 24px 24px 0 0;
+            padding: 24px 20px;
+            width: 100%;
+            max-width: 430px;
+            margin: 0 auto;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(100%);
+            }
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--gray-200);
+        }
+
+        .modal-title {
+            font-size: 1.125rem;
+            font-weight: 700;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--gray-600);
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        /* Form Fields */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--gray-700);
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--gray-200);
+            border-radius: 10px;
+            font-size: 0.938rem;
+            font-family: inherit;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--kelkun-primary);
+        }
+
+        /* TVA Pills */
+        .tva-pills {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .tva-pill {
+            padding: 8px 16px;
+            border: 2px solid var(--gray-200);
+            border-radius: 20px;
+            background: white;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tva-pill.active {
+            background: var(--blue-dark);
+            color: white;
+            border-color: var(--blue-dark);
+        }
+
+        /* Quantity Controls */
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .qty-btn {
+            width: 40px;
+            height: 40px;
+            background: var(--kelkun-primary);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .qty-input {
+            flex: 1;
+            text-align: center;
+            padding: 12px;
+            border: 2px solid var(--gray-200);
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        /* Save Button */
+        .save-btn {
+            width: 100%;
+            background: var(--kelkun-primary);
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .delete-btn {
+            width: 100%;
+            background: white;
+            color: var(--gray-600);
+            border: 2px solid var(--gray-200);
+            padding: 14px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.938rem;
+            cursor: pointer;
+            margin-top: 12px;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 120px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 14px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.938rem;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 200;
+        }
+
+        .toast.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="mobile-frame">
+        <!-- Header -->
+        <div class="header">
+            <button class="back-btn">←</button>
+            <div class="header-title">Mon devis minute</div>
+            <button class="help-btn">?</button>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <!-- Warning Banner -->
+            <div class="warning-banner">
+                <div class="warning-icon">⚠️</div>
+                <div class="warning-text">
+                    <strong>Le devis doit être validé par votre client AVANT l'intervention.</strong>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="action-btn" onclick="openAddModal('piece')">
+                    <span class="action-btn-icon">🔧</span>
+                    <span>Ajouter des pièces</span>
+                </button>
+                <button class="action-btn" onclick="openAddModal('main-oeuvre')">
+                    <span class="action-btn-icon">👷</span>
+                    <span>Ajouter de la main d'œuvre</span>
+                </button>
+                <button class="action-btn" onclick="openAddModal('remise')">
+                    <span class="action-btn-icon">🎁</span>
+                    <span>Ajouter une remise</span>
+                </button>
+            </div>
+
+            <!-- Devis Summary -->
+            <div class="devis-summary">
+                <div class="summary-title">Devis provisoire HT</div>
+                <div class="summary-amount">
+                    <span id="totalAmount">45,00</span>
+                    <span class="currency">€</span>
+                </div>
+            </div>
+
+            <!-- Items List -->
+            <div class="items-list" id="itemsList">
+                <div class="item-card">
+                    <div class="item-icon">🔧</div>
+                    <div class="item-info">
+                        <div class="item-name">Tuyau diam 40 (au mètre)</div>
+                        <div class="item-amount">45,00 €</div>
+                    </div>
+                    <button class="item-edit" onclick="editItem(0)">✏️</button>
+                </div>
+            </div>
+
+            <!-- Media Section -->
+            <div class="media-section">
+                <div class="section-title">Quelques photos pour que l'on comprenne bien !</div>
+                <div class="media-buttons">
+                    <button class="media-btn" onclick="importMedia()">
+                        <div class="media-btn-icon">📱</div>
+                        <div class="media-btn-title">Importer depuis mon smartphone</div>
+                        <div class="media-btn-subtitle">PDF, JPG, PNG</div>
+                    </button>
+                    <button class="media-btn" onclick="takePhoto()">
+                        <div class="media-btn-icon">📸</div>
+                        <div class="media-btn-title">Prendre une photo</div>
+                        <div class="media-btn-subtitle">10 photos maximum</div>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Actions -->
+        <div class="bottom-actions">
+            <button class="send-btn" onclick="sendDevis()">
+                Envoyer le devis au client
+            </button>
+            <button class="modify-btn" onclick="showToast('Modification du devis...')">
+                Modifier une entrée
+            </button>
+        </div>
+    </div>
+
+    <!-- Add/Edit Modal -->
+    <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+        <div class="modal" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <div class="modal-title" id="modalTitle">Modifier</div>
+                <button class="modal-close" onclick="closeModal()">×</button>
+            </div>
+
+            <div class="modal-content">
+                <!-- Piece Form -->
+                <div id="pieceForm">
+                    <div class="form-group">
+                        <label class="form-label">Pièce n°1</label>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Dénomination de la pièce</label>
+                        <input type="text" class="form-input" id="pieceName" placeholder="Ex: Tuyau diam 40 (au mètre)">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Prix unitaire HT</label>
+                        <input type="number" class="form-input" id="piecePrice" placeholder="0,00" step="0.01">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">TVA</label>
+                        <div class="tva-pills">
+                            <button class="tva-pill" onclick="selectTVA(this, 0)">0,00 %</button>
+                            <button class="tva-pill" onclick="selectTVA(this, 5.5)">5,50 %</button>
+                            <button class="tva-pill" onclick="selectTVA(this, 10)">10,00 %</button>
+                            <button class="tva-pill active" onclick="selectTVA(this, 20)">20,00 %</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Quantité</label>
+                        <div class="quantity-controls">
+                            <button class="qty-btn" onclick="changeQuantity(-1)">−</button>
+                            <input type="number" class="qty-input" id="pieceQty" value="10" min="1">
+                            <button class="qty-btn" onclick="changeQuantity(1)">+</button>
+                        </div>
+                    </div>
+
+                    <button class="save-btn" onclick="saveItem()">Enregistrer</button>
+                    <button class="delete-btn" onclick="deleteItem()">Supprimer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        let currentItems = [
+            { type: 'piece', name: 'Tuyau diam 40 (au mètre)', price: 4.50, qty: 10, tva: 20 }
+        ];
+
+        let selectedTVA = 20;
+        let editingIndex = -1;
+
+        function calculateTotal() {
+            let total = 0;
+            currentItems.forEach(item => {
+                total += item.price * item.qty;
+            });
+            document.getElementById('totalAmount').textContent = total.toFixed(2);
+        }
+
+        function renderItems() {
+            const container = document.getElementById('itemsList');
+            container.innerHTML = '';
+
+            currentItems.forEach((item, index) => {
+                const icon = item.type === 'piece' ? '🔧' : item.type === 'main-oeuvre' ? '👷' : '🎁';
+                const amount = (item.price * item.qty).toFixed(2);
+
+                const card = document.createElement('div');
+                card.className = 'item-card';
+                card.innerHTML = `
+                    <div class="item-icon">${icon}</div>
+                    <div class="item-info">
+                        <div class="item-name">${item.name}</div>
+                        <div class="item-amount">${amount} €</div>
+                    </div>
+                    <button class="item-edit" onclick="editItem(${index})">✏️</button>
+                `;
+                container.appendChild(card);
+            });
+
+            calculateTotal();
+        }
+
+        function openAddModal(type) {
+            editingIndex = -1;
+            selectedTVA = 20;
+
+            const titles = {
+                'piece': 'Ajouter des pièces',
+                'main-oeuvre': 'Ajouter de la main d\'œuvre',
+                'remise': 'Ajouter une remise'
+            };
+
+            document.getElementById('modalTitle').textContent = titles[type];
+            document.getElementById('pieceName').value = '';
+            document.getElementById('piecePrice').value = '';
+            document.getElementById('pieceQty').value = '1';
+            
+            // Reset TVA selection
+            document.querySelectorAll('.tva-pill').forEach(pill => {
+                pill.classList.remove('active');
+                if (pill.textContent.includes('20,00')) {
+                    pill.classList.add('active');
+                }
+            });
+
+            document.getElementById('modalOverlay').classList.add('show');
+        }
+
+        function editItem(index) {
+            editingIndex = index;
+            const item = currentItems[index];
+
+            document.getElementById('modalTitle').textContent = 'Modifier';
+            document.getElementById('pieceName').value = item.name;
+            document.getElementById('piecePrice').value = item.price;
+            document.getElementById('pieceQty').value = item.qty;
+            selectedTVA = item.tva;
+
+            // Set TVA selection
+            document.querySelectorAll('.tva-pill').forEach(pill => {
+                pill.classList.remove('active');
+                if (pill.textContent.includes(item.tva.toFixed(2))) {
+                    pill.classList.add('active');
+                }
+            });
+
+            document.getElementById('modalOverlay').classList.add('show');
+        }
+
+        function closeModal(event) {
+            if (event && event.target !== document.getElementById('modalOverlay')) return;
+            document.getElementById('modalOverlay').classList.remove('show');
+        }
+
+        function selectTVA(button, tva) {
+            document.querySelectorAll('.tva-pill').forEach(pill => {
+                pill.classList.remove('active');
+            });
+            button.classList.add('active');
+            selectedTVA = tva;
+        }
+
+        function changeQuantity(delta) {
+            const input = document.getElementById('pieceQty');
+            let value = parseInt(input.value) || 1;
+            value = Math.max(1, value + delta);
+            input.value = value;
+        }
+
+        function saveItem() {
+            const name = document.getElementById('pieceName').value.trim();
+            const price = parseFloat(document.getElementById('piecePrice').value) || 0;
+            const qty = parseInt(document.getElementById('pieceQty').value) || 1;
+
+            if (!name || price <= 0) {
+                showToast('⚠️ Veuillez remplir tous les champs');
+                return;
+            }
+
+            const item = {
+                type: 'piece',
+                name: name,
+                price: price,
+                qty: qty,
+                tva: selectedTVA
+            };
+
+            if (editingIndex >= 0) {
+                currentItems[editingIndex] = item;
+                showToast('✅ Ligne modifiée');
+            } else {
+                currentItems.push(item);
+                showToast('✅ Ligne ajoutée');
+            }
+
+            renderItems();
+            closeModal();
+        }
+
+        function deleteItem() {
+            if (editingIndex >= 0) {
+                currentItems.splice(editingIndex, 1);
+                renderItems();
+                closeModal();
+                showToast('🗑️ Ligne supprimée');
+            }
+        }
+
+        function importMedia() {
+            showToast('📱 Import depuis smartphone...');
+        }
+
+        function takePhoto() {
+            showToast('📸 Appareil photo ouvert...');
+        }
+
+        function sendDevis() {
+            if (currentItems.length === 0) {
+                showToast('⚠️ Ajoutez au moins une ligne');
+                return;
+            }
+
+            showToast('📨 Envoi du devis en cours...');
+            setTimeout(() => {
+                showToast('✅ Devis envoyé avec succès !');
+            }, 1500);
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2500);
+        }
+
+        // Initialize
+        renderItems();
+    </script>
+</body>
+</html>

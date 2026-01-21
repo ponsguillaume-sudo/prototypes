@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kelkun - Nouveau devis (Version optimisée)</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Bricolage+Grotesque:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --kelkun-primary: #00BFA6;
+            --kelkun-primary-dark: #00a891;
+            --kelkun-primary-light: #e6f9f6;
+            --blue-dark: #1e3a5f;
+            --blue-medium: #2d5a8a;
+            --gray-50: #F9FAFB;
+            --gray-100: #F3F4F6;
+            --gray-200: #E5E7EB;
+            --gray-300: #D1D5DB;
+            --gray-400: #9CA3AF;
+            --gray-500: #6B7280;
+            --gray-600: #4B5563;
+            --gray-700: #374151;
+            --gray-900: #111827;
+            --green-500: #10B981;
+            --green-50: #ECFDF5;
+        }
+
+        body {
+            font-family: 'DM Sans', -apple-system, sans-serif;
+            background: var(--gray-50);
+            color: white;
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+
+        /* Mobile Container */
+        .mobile-frame {
+            max-width: 430px;
+            margin: 0 auto;
+            background: var(--blue-dark);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: var(--blue-dark);
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .back-btn {
+            width: 48px;
+            height: 48px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header-title {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .header-title h1 {
+            font-size: 1.125rem;
+            font-weight: 600;
+        }
+
+        /* Content */
+        .content {
+            background: var(--blue-dark);
+            padding: 0 20px 100px;
+        }
+
+        .page-title {
+            font-family: 'Bricolage Grotesque', sans-serif;
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .page-subtitle {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-bottom: 32px;
+        }
+
+        /* Client Card */
+        .client-card {
+            background: white;
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .client-avatar {
+            width: 48px;
+            height: 48px;
+            background: var(--blue-medium);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: white;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .client-info {
+            flex: 1;
+        }
+
+        .client-name {
+            font-size: 0.938rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 2px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .verified-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: var(--green-50);
+            color: var(--green-500);
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .client-badge {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.75rem;
+            color: var(--gray-600);
+        }
+
+        .client-address {
+            font-size: 0.813rem;
+            color: var(--gray-600);
+        }
+
+        .modify-btn {
+            background: none;
+            border: none;
+            color: var(--kelkun-primary);
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        /* Quick Mode */
+        .quick-mode {
+            margin-bottom: 24px;
+        }
+
+        .mode-label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            opacity: 0.8;
+        }
+
+        .quick-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 12px;
+        }
+
+        .quick-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .quick-title {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .template-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .edit-btn {
+            background: none;
+            border: none;
+            color: var(--kelkun-primary);
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .quick-preview {
+            background: var(--gray-50);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .preview-line {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--gray-200);
+            font-size: 0.875rem;
+        }
+
+        .preview-line:last-child {
+            border-bottom: none;
+            font-weight: 700;
+            color: var(--gray-900);
+            font-size: 1rem;
+        }
+
+        .preview-label {
+            color: var(--gray-600);
+        }
+
+        .preview-value {
+            color: var(--gray-900);
+            font-weight: 600;
+        }
+
+        /* Amount Input */
+        .amount-input-wrapper {
+            position: relative;
+            margin-bottom: 16px;
+        }
+
+        .amount-label {
+            font-size: 0.875rem;
+            color: var(--gray-700);
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .amount-input {
+            width: 100%;
+            padding: 16px 48px 16px 16px;
+            border: 2px solid var(--gray-200);
+            border-radius: 12px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            font-family: inherit;
+            text-align: right;
+            background: white;
+        }
+
+        .amount-input:focus {
+            outline: none;
+            border-color: var(--kelkun-primary);
+        }
+
+        .currency-symbol {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-10%);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--gray-400);
+            pointer-events: none;
+        }
+
+        /* Alternative Link */
+        .alternative {
+            text-align: center;
+            padding: 16px 0;
+            margin-bottom: 20px;
+        }
+
+        .alternative-text {
+            font-size: 0.875rem;
+            opacity: 0.7;
+            margin-bottom: 12px;
+        }
+
+        .line-builder-btn {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 14px 24px;
+            border-radius: 12px;
+            font-size: 0.938rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .line-builder-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Bottom Action */
+        .bottom-action {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--blue-dark);
+            padding: 16px 20px 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 430px;
+            margin: 0 auto;
+        }
+
+        .send-btn {
+            width: 100%;
+            background: var(--kelkun-primary);
+            color: white;
+            border: none;
+            padding: 18px;
+            border-radius: 16px;
+            font-weight: 700;
+            font-size: 1.125rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 8px 24px rgba(0, 191, 166, 0.3);
+            margin-bottom: 12px;
+        }
+
+        .send-btn:active {
+            transform: scale(0.98);
+        }
+
+        .advanced-link {
+            text-align: center;
+        }
+
+        .advanced-link button {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 120px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 14px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.938rem;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 100;
+            max-width: 90%;
+        }
+
+        .toast.show {
+            opacity: 1;
+        }
+
+        /* Animations */
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .content > * {
+            animation: slideInUp 0.5s ease backwards;
+        }
+
+        .content > *:nth-child(1) { animation-delay: 0.1s; }
+        .content > *:nth-child(2) { animation-delay: 0.15s; }
+        .content > *:nth-child(3) { animation-delay: 0.2s; }
+        .content > *:nth-child(4) { animation-delay: 0.25s; }
+    </style>
+</head>
+<body>
+    <div class="mobile-frame">
+        <!-- Header -->
+        <div class="header">
+            <button class="back-btn">←</button>
+            <button class="back-btn" style="opacity: 0; pointer-events: none;">←</button>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <h1 class="page-title">Nouveau devis</h1>
+            <p class="page-subtitle">Remplissez quelques infos, on s'occupe du reste</p>
+
+            <!-- Client Card -->
+            <div class="client-card">
+                <div class="client-avatar">MD</div>
+                <div class="client-info">
+                    <div class="client-name">
+                        Michel Durand
+                        <span class="verified-badge">✓ Vérifié</span>
+                    </div>
+                    <div class="client-badge">
+                        <span>🏢</span>
+                        <span>Client Gédimat</span>
+                    </div>
+                    <div class="client-address">456 Av. des lavandes, 34970 Lattes</div>
+                </div>
+                <button class="modify-btn">Modifier</button>
+            </div>
+
+            <!-- Quick Mode -->
+            <div class="quick-mode">
+                <div class="mode-label">⚡ DEVIS EXPRESS (recommandé)</div>
+                
+                <div class="quick-card">
+                    <div class="quick-header">
+                        <div class="quick-title">
+                            Dépannage plomberie
+                            <span class="template-badge">✨ Template</span>
+                        </div>
+                        <button class="edit-btn" onclick="showToast('Edition du template...')">Modifier</button>
+                    </div>
+
+                    <div class="quick-preview">
+                        <div class="preview-line">
+                            <span class="preview-label">Type</span>
+                            <span class="preview-value">Intervention urgente</span>
+                        </div>
+                        <div class="preview-line">
+                            <span class="preview-label">Catégorie</span>
+                            <span class="preview-value">Plomberie</span>
+                        </div>
+                        <div class="preview-line">
+                            <span class="preview-label">Conditions</span>
+                            <span class="preview-value">Standards Kelkun</span>
+                        </div>
+                        <div class="preview-line">
+                            <span class="preview-label">Montant à saisir</span>
+                            <span class="preview-value">→</span>
+                        </div>
+                    </div>
+
+                    <div class="amount-input-wrapper">
+                        <label class="amount-label">Montant total TTC</label>
+                        <input 
+                            type="number" 
+                            class="amount-input" 
+                            id="quickAmount"
+                            placeholder="0"
+                            step="0.01"
+                        >
+                        <span class="currency-symbol">€</span>
+                    </div>
+
+                    <div style="font-size: 0.813rem; color: var(--gray-600); line-height: 1.5;">
+                        💡 <strong>Le devis professionnel complet</strong> sera généré automatiquement avec vos infos d'entreprise, conditions de paiement et numéro de devis.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Alternative -->
+            <div class="alternative">
+                <div class="alternative-text">Besoin de plus de détails ?</div>
+                <button class="line-builder-btn" onclick="showLineBuilder()">
+                    <span>🔧</span>
+                    <span>Construire ligne par ligne</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Bottom Action -->
+        <div class="bottom-action">
+            <button class="send-btn" onclick="sendQuickDevis()">
+                <span>📨</span>
+                <span>Envoyer le devis</span>
+            </button>
+            <div class="advanced-link">
+                <button onclick="showToast('Options avancées : validité, IBAN personnalisé, etc.')">
+                    Options avancées
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        function sendQuickDevis() {
+            const amount = document.getElementById('quickAmount').value;
+            
+            if (!amount || parseFloat(amount) <= 0) {
+                showToast('⚠️ Veuillez saisir un montant');
+                return;
+            }
+
+            const btn = document.querySelector('.send-btn');
+            btn.disabled = true;
+            btn.innerHTML = '<span>⏳</span><span>Génération du devis...</span>';
+            
+            setTimeout(() => {
+                showToast('✅ Devis envoyé avec succès !');
+                setTimeout(() => {
+                    alert('Redirection vers le suivi...');
+                }, 1500);
+            }, 1500);
+        }
+
+        function showLineBuilder() {
+            showToast('Ouverture du constructeur détaillé...');
+            setTimeout(() => {
+                alert('Dans la vraie app, cela afficherait l\'interface avec les boutons Fournitures / Main d\'œuvre / Remise pour construire le devis ligne par ligne.');
+            }, 500);
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2500);
+        }
+
+        // Auto-format amount
+        document.getElementById('quickAmount').addEventListener('blur', function() {
+            if (this.value) {
+                this.value = parseFloat(this.value).toFixed(2);
+            }
+        });
+    </script>
+</body>
+</html>

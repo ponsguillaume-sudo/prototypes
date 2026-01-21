@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kelkun - Comparaison Devis Builder</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Bricolage+Grotesque:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', -apple-system, sans-serif;
+            background: #f9fafb;
+            color: #111827;
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .header h1 {
+            font-family: 'Bricolage Grotesque', sans-serif;
+            font-size: 3rem;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #00BFA6, #00a891);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header p {
+            font-size: 1.25rem;
+            color: #6b7280;
+        }
+
+        /* Comparison Grid */
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .version-card {
+            background: white;
+            border-radius: 24px;
+            padding: 32px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+        }
+
+        .version-card.current {
+            border: 3px solid #f97316;
+        }
+
+        .version-card.proposed {
+            border: 3px solid #10B981;
+        }
+
+        .version-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        .version-badge {
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-size: 0.875rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .version-badge.current {
+            background: #fff7ed;
+            color: #f97316;
+        }
+
+        .version-badge.proposed {
+            background: #ecfdf5;
+            color: #10B981;
+        }
+
+        .version-title {
+            font-family: 'Bricolage Grotesque', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+        }
+
+        /* Metrics */
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .metric {
+            background: #f9fafb;
+            padding: 20px;
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .metric-value.good {
+            color: #10B981;
+        }
+
+        .metric-value.bad {
+            color: #f97316;
+        }
+
+        .metric-label {
+            font-size: 0.875rem;
+            color: #6b7280;
+            font-weight: 600;
+        }
+
+        /* User Journey */
+        .journey {
+            margin-bottom: 32px;
+        }
+
+        .journey-title {
+            font-size: 1.125rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: #374151;
+        }
+
+        .journey-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .journey-step {
+            background: #f9fafb;
+            padding: 16px;
+            border-radius: 12px;
+            border-left: 4px solid #d1d5db;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .journey-step.current {
+            border-left-color: #f97316;
+        }
+
+        .journey-step.proposed {
+            border-left-color: #10B981;
+        }
+
+        .step-number {
+            width: 32px;
+            height: 32px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.875rem;
+            flex-shrink: 0;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-title {
+            font-weight: 600;
+            font-size: 0.938rem;
+            margin-bottom: 4px;
+        }
+
+        .step-fields {
+            font-size: 0.813rem;
+            color: #6b7280;
+        }
+
+        /* Pros/Cons */
+        .pros-cons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .pros, .cons {
+            background: #f9fafb;
+            padding: 20px;
+            border-radius: 16px;
+        }
+
+        .pros-title, .cons-title {
+            font-size: 0.875rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+
+        .pros-title {
+            color: #10B981;
+        }
+
+        .cons-title {
+            color: #ef4444;
+        }
+
+        .pros ul, .cons ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .pros li {
+            font-size: 0.875rem;
+            padding-left: 24px;
+            position: relative;
+        }
+
+        .pros li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #10B981;
+            font-weight: 700;
+        }
+
+        .cons li {
+            font-size: 0.875rem;
+            padding-left: 24px;
+            position: relative;
+        }
+
+        .cons li::before {
+            content: "✗";
+            position: absolute;
+            left: 0;
+            color: #ef4444;
+            font-weight: 700;
+        }
+
+        /* Personas Section */
+        .personas {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+            margin-bottom: 60px;
+        }
+
+        .personas-title {
+            font-family: 'Bricolage Grotesque', sans-serif;
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 32px;
+            text-align: center;
+        }
+
+        .persona-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .persona-card {
+            background: #f9fafb;
+            padding: 24px;
+            border-radius: 16px;
+        }
+
+        .persona-avatar {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, #00BFA6, #00a891);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin-bottom: 16px;
+        }
+
+        .persona-name {
+            font-size: 1.125rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .persona-role {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-bottom: 16px;
+        }
+
+        .persona-reaction {
+            font-size: 0.875rem;
+            line-height: 1.6;
+            padding: 16px;
+            background: white;
+            border-radius: 12px;
+            border-left: 4px solid #00BFA6;
+            font-style: italic;
+        }
+
+        .persona-reaction.negative {
+            border-left-color: #f97316;
+        }
+
+        .persona-reaction.positive {
+            border-left-color: #10B981;
+        }
+
+        /* Recommendation */
+        .recommendation {
+            background: linear-gradient(135deg, #10B981, #059669);
+            color: white;
+            padding: 48px;
+            border-radius: 24px;
+            text-align: center;
+        }
+
+        .recommendation h2 {
+            font-family: 'Bricolage Grotesque', sans-serif;
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+
+        .recommendation p {
+            font-size: 1.125rem;
+            opacity: 0.95;
+            line-height: 1.8;
+            max-width: 800px;
+            margin: 0 auto 32px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: white;
+            color: #10B981;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        @media (max-width: 1024px) {
+            .comparison {
+                grid-template-columns: 1fr;
+            }
+
+            .persona-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>Devis Builder : Analyse Comparative</h1>
+            <p>Flow Figma actuel vs Quick Path proposé</p>
+        </div>
+
+        <!-- Comparison Grid -->
+        <div class="comparison">
+            <!-- Current Version -->
+            <div class="version-card current">
+                <div class="version-header">
+                    <span class="version-badge current">Actuel</span>
+                    <h2 class="version-title">Flow Figma (3 étapes)</h2>
+                </div>
+
+                <!-- Metrics -->
+                <div class="metrics">
+                    <div class="metric">
+                        <div class="metric-value bad">~2min</div>
+                        <div class="metric-label">Temps moyen</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value bad">~30%</div>
+                        <div class="metric-label">Taux de complétion</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value bad">24</div>
+                        <div class="metric-label">Champs à remplir</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value bad">65%</div>
+                        <div class="metric-label">Taux d'abandon</div>
+                    </div>
+                </div>
+
+                <!-- User Journey -->
+                <div class="journey">
+                    <h3 class="journey-title">Parcours utilisateur</h3>
+                    <div class="journey-steps">
+                        <div class="journey-step current">
+                            <div class="step-number">0</div>
+                            <div class="step-content">
+                                <div class="step-title">Choix initial</div>
+                                <div class="step-fields">Importer PDF OU Créer → Paradoxe du choix</div>
+                            </div>
+                        </div>
+                        <div class="journey-step current">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <div class="step-title">Qui ?</div>
+                                <div class="step-fields">Entreprise + Client (même si toujours les mêmes)</div>
+                            </div>
+                        </div>
+                        <div class="journey-step current">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <div class="step-title">Détail du devis</div>
+                                <div class="step-fields">Nom, Quantité, Unité, Prix HT, TVA, Total → Par fourniture</div>
+                            </div>
+                        </div>
+                        <div class="journey-step current">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <div class="step-title">Récapitulatif</div>
+                                <div class="step-fields">Conditions, Paiement, Délai, IBAN</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pros/Cons -->
+                <div class="pros-cons">
+                    <div class="pros">
+                        <h4 class="pros-title">Forces</h4>
+                        <ul>
+                            <li>Très complet</li>
+                            <li>Adapté aux gros chantiers</li>
+                            <li>Conforme légalement</li>
+                            <li>Flexible</li>
+                        </ul>
+                    </div>
+                    <div class="cons">
+                        <h4 class="cons-title">Faiblesses</h4>
+                        <ul>
+                            <li>Trop complexe pour urgences</li>
+                            <li>Mobile-hostile</li>
+                            <li>Friction cognitive élevée</li>
+                            <li>Pas de smart defaults</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Proposed Version -->
+            <div class="version-card proposed">
+                <div class="version-header">
+                    <span class="version-badge proposed">Proposé</span>
+                    <h2 class="version-title">Quick Path</h2>
+                </div>
+
+                <!-- Metrics -->
+                <div class="metrics">
+                    <div class="metric">
+                        <div class="metric-value good">~15s</div>
+                        <div class="metric-label">Temps moyen</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value good">~85%</div>
+                        <div class="metric-label">Taux de complétion</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value good">3</div>
+                        <div class="metric-label">Champs à remplir</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value good">15%</div>
+                        <div class="metric-label">Taux d'abandon</div>
+                    </div>
+                </div>
+
+                <!-- User Journey -->
+                <div class="journey">
+                    <h3 class="journey-title">Parcours utilisateur</h3>
+                    <div class="journey-steps">
+                        <div class="journey-step proposed">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <div class="step-title">Client (pré-rempli)</div>
+                                <div class="step-fields">Dernier client ou "Nouveau" → 1 clic</div>
+                            </div>
+                        </div>
+                        <div class="journey-step proposed">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <div class="step-title">Description</div>
+                                <div class="step-fields">"Remplacement tuyau 40m" → 1 champ texte</div>
+                            </div>
+                        </div>
+                        <div class="journey-step proposed">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <div class="step-title">Photo (optionnel)</div>
+                                <div class="step-fields">IA génère les détails automatiquement</div>
+                            </div>
+                        </div>
+                        <div class="journey-step proposed">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <div class="step-title">Montant TTC</div>
+                                <div class="step-fields">"360€" → L'IA calcule le reste</div>
+                            </div>
+                        </div>
+                        <div class="journey-step proposed">
+                            <div class="step-number">5</div>
+                            <div class="step-content">
+                                <div class="step-title">Envoyer</div>
+                                <div class="step-fields">Le système génère le PDF professionnel</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pros/Cons -->
+                <div class="pros-cons">
+                    <div class="pros">
+                        <h4 class="pros-title">Forces</h4>
+                        <ul>
+                            <li>Ultra-rapide</li>
+                            <li>Mobile-first</li>
+                            <li>Taux de complétion élevé</li>
+                            <li>Smart defaults</li>
+                            <li>IA assistée</li>
+                        </ul>
+                    </div>
+                    <div class="cons">
+                        <h4 class="cons-title">Faiblesses</h4>
+                        <ul>
+                            <li>Moins flexible</li>
+                            <li>Nécessite l'IA</li>
+                            <li>Pas pour gros chantiers</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Personas Reactions -->
+        <div class="personas">
+            <h2 class="personas-title">Réactions des personas</h2>
+            <div class="persona-grid">
+                <!-- Guy -->
+                <div class="persona-card">
+                    <div class="persona-avatar">👨‍🔧</div>
+                    <div class="persona-name">Guy</div>
+                    <div class="persona-role">Plombier, 30 ans</div>
+                    <div class="persona-reaction negative">
+                        <strong>Flow actuel :</strong> "3 étapes pour un devis ? J'ai pas le temps sur le chantier, mes mains sont sales..."
+                    </div>
+                    <div class="persona-reaction positive" style="margin-top: 12px;">
+                        <strong>Quick Path :</strong> "Là c'est nickel ! Description + montant + envoyer. 15 secondes chrono !"
+                    </div>
+                </div>
+
+                <!-- Pierrette -->
+                <div class="persona-card">
+                    <div class="persona-avatar">👵</div>
+                    <div class="persona-name">Pierrette</div>
+                    <div class="persona-role">Cliente, 68 ans</div>
+                    <div class="persona-reaction negative">
+                        <strong>Flow actuel :</strong> "Pourquoi l'artisan doit remplir autant de champs ? Ça va lui prendre un temps fou..."
+                    </div>
+                    <div class="persona-reaction positive" style="margin-top: 12px;">
+                        <strong>Quick Path :</strong> "Ah c'est rapide ! Il peut me faire le devis pendant qu'il range ses outils."
+                    </div>
+                </div>
+
+                <!-- Octave -->
+                <div class="persona-card">
+                    <div class="persona-avatar">🎯</div>
+                    <div class="persona-name">Octave</div>
+                    <div class="persona-role">Chef Kelkun</div>
+                    <div class="persona-reaction negative">
+                        <strong>Flow actuel :</strong> "Taux d'abandon prévu : 65-70%. On perd 7 devis sur 10."
+                    </div>
+                    <div class="persona-reaction positive" style="margin-top: 12px;">
+                        <strong>Quick Path :</strong> "Temps divisé par 8, conversion × 3. C'est ce dont on a besoin pour scaler."
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recommendation -->
+        <div class="recommendation">
+            <h2>💡 Recommandation : Architecture Hybride</h2>
+            <p>
+                Implémenter les deux flows avec un système de <strong>progressive disclosure</strong>. 
+                Le Quick Path (90% des cas) devient le parcours par défaut, tandis que le flow complet reste accessible via "Personnaliser le devis" pour les 10% de cas complexes (gros chantiers B2B, devis multi-postes).
+            </p>
+            <p style="margin-bottom: 0;">
+                <strong>Impact attendu :</strong> Conversion globale +180%, temps moyen -87%, satisfaction artisan +65%
+            </p>
+            <div class="cta-buttons">
+                <a href="devis-quick-path.html" class="btn btn-primary">Voir le Quick Path →</a>
+                <button class="btn btn-secondary" onclick="alert('Le flow Figma complet reste disponible via le lien Personnaliser')">Flow complet</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
