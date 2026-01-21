@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kelkun - Style Uber</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --black: #000000;
+            --gray-900: #111827;
+            --gray-800: #1f2937;
+            --gray-700: #374151;
+            --gray-600: #4b5563;
+            --gray-500: #6b7280;
+            --gray-400: #9ca3af;
+            --gray-300: #d1d5db;
+            --gray-200: #e5e7eb;
+            --gray-100: #f3f4f6;
+            --gray-50: #f9fafb;
+            --white: #ffffff;
+            --kelkun: #00BFA6;
+            --kelkun-dark: #00a891;
+            --urgence: #ef4444;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', 'DM Sans', -apple-system, sans-serif;
+            background: #1a1a2e;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        .mobile-frame {
+            width: 390px;
+            height: 844px;
+            background: var(--white);
+            border-radius: 44px;
+            box-shadow: 0 30px 100px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
+            border: 10px solid var(--black);
+            position: relative;
+        }
+
+        .screen {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Map Background */
+        .map-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 55%;
+            background: 
+                linear-gradient(to bottom, rgba(255,255,255,0) 60%, rgba(255,255,255,1) 100%),
+                url("data:image/svg+xml,%3Csvg width='400' height='400' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='grid' width='40' height='40' patternUnits='userSpaceOnUse'%3E%3Cpath d='M 40 0 L 0 0 0 40' fill='none' stroke='%23e5e7eb' stroke-width='1'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='%23f9fafb'/%3E%3Crect width='100%25' height='100%25' fill='url(%23grid)'/%3E%3C/svg%3E");
+            background-size: cover;
+        }
+
+        /* Fake streets on map */
+        .map-bg::before {
+            content: '';
+            position: absolute;
+            top: 30%;
+            left: 10%;
+            width: 80%;
+            height: 3px;
+            background: var(--gray-300);
+            border-radius: 2px;
+        }
+
+        .map-bg::after {
+            content: '';
+            position: absolute;
+            top: 15%;
+            left: 40%;
+            width: 3px;
+            height: 60%;
+            background: var(--gray-300);
+            border-radius: 2px;
+        }
+
+        /* Artisan markers on map */
+        .artisan-marker {
+            position: absolute;
+            width: 36px;
+            height: 36px;
+            background: var(--white);
+            border-radius: 50%;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            z-index: 2;
+        }
+
+        .artisan-marker.m1 { top: 18%; left: 20%; }
+        .artisan-marker.m2 { top: 35%; left: 65%; }
+        .artisan-marker.m3 { top: 25%; left: 45%; }
+        .artisan-marker.m4 { top: 40%; left: 25%; }
+
+        /* User location */
+        .user-location {
+            position: absolute;
+            top: 32%;
+            left: 48%;
+            z-index: 3;
+        }
+
+        .user-dot {
+            width: 16px;
+            height: 16px;
+            background: var(--kelkun);
+            border-radius: 50%;
+            border: 3px solid var(--white);
+            box-shadow: 0 2px 8px rgba(0, 191, 166, 0.4);
+            position: relative;
+        }
+
+        .user-dot::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            background: rgba(0, 191, 166, 0.15);
+            border-radius: 50%;
+            animation: pulse-ring 2s infinite;
+        }
+
+        @keyframes pulse-ring {
+            0% { transform: translate(-50%, -50%) scale(0.8); opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(1.5); opacity: 0; }
+        }
+
+        /* Header */
+        .header {
+            position: relative;
+            z-index: 10;
+            padding: 56px 20px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: var(--black);
+            letter-spacing: -0.5px;
+        }
+
+        .menu-btn {
+            width: 44px;
+            height: 44px;
+            background: var(--white);
+            border: none;
+            border-radius: 50%;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            font-size: 1.25rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Search Bar */
+        .search-container {
+            position: relative;
+            z-index: 10;
+            padding: 0 20px;
+            margin-top: 8px;
+        }
+
+        .search-bar {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .search-bar:hover {
+            box-shadow: 0 6px 25px rgba(0,0,0,0.15);
+        }
+
+        .search-arrow {
+            font-size: 1.25rem;
+            color: var(--black);
+        }
+
+        .search-text {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--gray-500);
+        }
+
+        /* Bottom Panel */
+        .bottom-panel {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--white);
+            border-radius: 28px 28px 0 0;
+            padding: 24px 20px 40px;
+            box-shadow: 0 -10px 40px rgba(0,0,0,0.1);
+            z-index: 20;
+        }
+
+        /* Service Card Featured */
+        .service-featured {
+            background: linear-gradient(135deg, var(--gray-900) 0%, var(--black) 100%);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-featured::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, rgba(0, 191, 166, 0.2) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .service-image {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--kelkun), var(--kelkun-dark));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            flex-shrink: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .service-info {
+            flex: 1;
+            position: relative;
+            z-index: 1;
+        }
+
+        .service-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 4px;
+        }
+
+        .service-stats {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .stat {
+            font-size: 0.813rem;
+            color: var(--gray-400);
+        }
+
+        .stat-highlight {
+            color: var(--kelkun);
+            font-weight: 600;
+        }
+
+        .service-eta {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--white);
+        }
+
+        /* Service Options */
+        .service-options {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .service-option {
+            flex: 1;
+            background: var(--gray-50);
+            border: 2px solid var(--gray-200);
+            border-radius: 16px;
+            padding: 16px 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .service-option:hover {
+            border-color: var(--kelkun);
+            background: rgba(0, 191, 166, 0.05);
+        }
+
+        .service-option.active {
+            border-color: var(--black);
+            background: var(--white);
+        }
+
+        .option-icon {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+
+        .option-name {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--black);
+            margin-bottom: 2px;
+        }
+
+        .option-desc {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+        }
+
+        /* Urgence Banner */
+        .urgence-banner {
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+            border: 1px solid #fecaca;
+            border-radius: 14px;
+            padding: 14px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 20px;
+        }
+
+        .urgence-banner:hover {
+            background: #fee2e2;
+        }
+
+        .urgence-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--urgence);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.125rem;
+            flex-shrink: 0;
+        }
+
+        .urgence-content {
+            flex: 1;
+        }
+
+        .urgence-title {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .urgence-desc {
+            font-size: 0.75rem;
+            color: var(--gray-600);
+        }
+
+        .urgence-arrow {
+            font-size: 1.25rem;
+            color: var(--urgence);
+        }
+
+        /* Bottom Tabs */
+        .bottom-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            padding-top: 8px;
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .tab {
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--gray-500);
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tab.active {
+            background: var(--black);
+            color: var(--white);
+        }
+
+        .tab:hover:not(.active) {
+            background: var(--gray-100);
+        }
+
+        /* Trust Badge */
+        .trust-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px;
+            background: var(--gray-50);
+            border-radius: 12px;
+            margin-bottom: 16px;
+        }
+
+        .trust-badge span {
+            font-size: 0.813rem;
+            color: var(--gray-600);
+        }
+
+        .trust-badge strong {
+            color: var(--black);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .bottom-panel > * {
+            animation: fadeInUp 0.5s ease backwards;
+        }
+
+        .bottom-panel > *:nth-child(1) { animation-delay: 0.1s; }
+        .bottom-panel > *:nth-child(2) { animation-delay: 0.15s; }
+        .bottom-panel > *:nth-child(3) { animation-delay: 0.2s; }
+        .bottom-panel > *:nth-child(4) { animation-delay: 0.25s; }
+        .bottom-panel > *:nth-child(5) { animation-delay: 0.3s; }
+
+        .artisan-marker {
+            animation: fadeInUp 0.4s ease backwards;
+        }
+        .artisan-marker.m1 { animation-delay: 0.3s; }
+        .artisan-marker.m2 { animation-delay: 0.4s; }
+        .artisan-marker.m3 { animation-delay: 0.5s; }
+        .artisan-marker.m4 { animation-delay: 0.6s; }
+    </style>
+</head>
+<body>
+    <div class="mobile-frame">
+        <div class="screen">
+            <!-- Map Background -->
+            <div class="map-bg">
+                <!-- Artisan markers -->
+                <div class="artisan-marker m1">🔧</div>
+                <div class="artisan-marker m2">⚡</div>
+                <div class="artisan-marker m3">🔨</div>
+                <div class="artisan-marker m4">🚿</div>
+                
+                <!-- User location -->
+                <div class="user-location">
+                    <div class="user-dot"></div>
+                </div>
+            </div>
+
+            <!-- Header -->
+            <div class="header">
+                <div class="logo">Kelkun</div>
+                <button class="menu-btn">☰</button>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="search-container">
+                <div class="search-bar">
+                    <span class="search-arrow">→</span>
+                    <span class="search-text">Quel est votre besoin ?</span>
+                </div>
+            </div>
+
+            <!-- Bottom Panel -->
+            <div class="bottom-panel">
+                <!-- Featured Service Card -->
+                <div class="service-featured">
+                    <div class="service-image">🛠️</div>
+                    <div class="service-info">
+                        <div class="service-title">Dépannage</div>
+                        <div class="service-stats">
+                            <span class="stat"><span class="stat-highlight">12</span> artisans disponibles</span>
+                        </div>
+                        <div class="service-eta">4-15 min</div>
+                    </div>
+                </div>
+
+                <!-- Trust Badge -->
+                <div class="trust-badge">
+                    <span>🛡️</span>
+                    <span><strong>+4 000</strong> artisans vérifiés • Garantie Allianz incluse</span>
+                </div>
+
+                <!-- Urgence Banner -->
+                <div class="urgence-banner">
+                    <div class="urgence-icon">🚨</div>
+                    <div class="urgence-content">
+                        <div class="urgence-title">C'est une urgence ?</div>
+                        <div class="urgence-desc">Fuite, panne électrique, serrure...</div>
+                    </div>
+                    <span class="urgence-arrow">→</span>
+                </div>
+
+                <!-- Service Options -->
+                <div class="service-options">
+                    <div class="service-option active">
+                        <div class="option-icon">🚿</div>
+                        <div class="option-name">Dépannage</div>
+                        <div class="option-desc">4-15 min</div>
+                    </div>
+                    <div class="service-option">
+                        <div class="option-icon">🏗️</div>
+                        <div class="option-name">Travaux</div>
+                        <div class="option-desc">Sur devis</div>
+                    </div>
+                    <div class="service-option">
+                        <div class="option-icon">🧹</div>
+                        <div class="option-name">Entretien</div>
+                        <div class="option-desc">Régulier</div>
+                    </div>
+                </div>
+
+                <!-- Bottom Tabs -->
+                <div class="bottom-tabs">
+                    <button class="tab active">Accueil</button>
+                    <button class="tab">Mes demandes</button>
+                    <button class="tab">Compte</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
