@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kelkun - Détails du devis (Optimisé)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --kelkun-primary: #00BFA6;
+            --kelkun-primary-dark: #00a891;
+            --gray-50: #F9FAFB;
+            --gray-100: #F3F4F6;
+            --gray-200: #E5E7EB;
+            --gray-300: #D1D5DB;
+            --gray-400: #9CA3AF;
+            --gray-500: #6B7280;
+            --gray-600: #4B5563;
+            --gray-700: #374151;
+            --gray-900: #111827;
+            --green-500: #10B981;
+            --green-50: #ECFDF5;
+            --blue-500: #3B82F6;
+            --yellow-500: #F59E0B;
+        }
+
+        body {
+            font-family: 'DM Sans', -apple-system, sans-serif;
+            background: rgba(0, 0, 0, 0.5);
+            color: var(--gray-900);
+            line-height: 1.5;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* Modal */
+        .modal {
+            background: white;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Modal Header */
+        .modal-header {
+            position: sticky;
+            top: 0;
+            background: white;
+            padding: 20px;
+            border-bottom: 2px solid var(--gray-200);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .modal-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .close-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: none;
+            background: var(--gray-100);
+            color: var(--gray-600);
+            font-size: 1.25rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-btn:hover {
+            background: var(--gray-200);
+        }
+
+        /* Modal Content */
+        .modal-content {
+            padding: 20px;
+        }
+
+        /* Artisan Card */
+        .artisan-card {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px;
+            background: var(--gray-50);
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .artisan-avatar {
+            width: 56px;
+            height: 56px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--kelkun-primary), var(--kelkun-primary-dark));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+
+        .artisan-info h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .artisan-meta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.875rem;
+            color: var(--gray-600);
+        }
+
+        .verified-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--kelkun-primary);
+            font-weight: 600;
+        }
+
+        /* Price Highlight */
+        .price-highlight {
+            background: linear-gradient(135deg, var(--green-50) 0%, #f0fdf4 100%);
+            border: 2px solid var(--green-500);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .price-label {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .price-main {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--gray-900);
+            margin-bottom: 8px;
+        }
+
+        .price-breakdown {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+        }
+
+        /* Collapsible Section */
+        .collapsible {
+            background: white;
+            border: 2px solid var(--gray-200);
+            border-radius: 12px;
+            margin-bottom: 16px;
+            overflow: hidden;
+        }
+
+        .collapsible-header {
+            padding: 16px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+            transition: background 0.2s;
+        }
+
+        .collapsible-header:hover {
+            background: var(--gray-50);
+        }
+
+        .collapsible-title {
+            font-size: 1rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .collapsible-icon {
+            font-size: 1.25rem;
+            color: var(--kelkun-primary);
+            transition: transform 0.3s;
+        }
+
+        .collapsible.open .collapsible-icon {
+            transform: rotate(180deg);
+        }
+
+        .collapsible-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .collapsible.open .collapsible-content {
+            max-height: 2000px;
+        }
+
+        .collapsible-inner {
+            padding: 0 16px 16px;
+        }
+
+        /* Prestations List */
+        .prestation-item {
+            padding: 16px 0;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .prestation-item:last-child {
+            border-bottom: none;
+        }
+
+        .prestation-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 8px;
+        }
+
+        .prestation-name {
+            font-size: 0.938rem;
+            font-weight: 600;
+            color: var(--gray-900);
+            flex: 1;
+        }
+
+        .prestation-price {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .prestation-details {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            display: flex;
+            gap: 12px;
+        }
+
+        /* Financial Recap */
+        .financial-recap {
+            background: var(--gray-50);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .recap-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            font-size: 0.938rem;
+        }
+
+        .recap-row.total {
+            border-top: 2px solid var(--gray-300);
+            padding-top: 12px;
+            margin-top: 8px;
+            font-size: 1.125rem;
+            font-weight: 700;
+        }
+
+        .recap-label {
+            color: var(--gray-700);
+        }
+
+        .recap-value {
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+
+        /* Actions */
+        .actions {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 16px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--kelkun-primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--kelkun-primary-dark);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--kelkun-primary);
+            border: 2px solid var(--kelkun-primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--green-50);
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Contact Section */
+        .contact-section {
+            background: var(--blue-50);
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 20px;
+        }
+
+        .contact-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--gray-700);
+            margin-bottom: 12px;
+        }
+
+        .contact-items {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--gray-900);
+            text-decoration: none;
+            font-size: 0.938rem;
+            font-weight: 600;
+        }
+
+        .contact-icon {
+            width: 36px;
+            height: 36px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.125rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="modal">
+        <!-- Modal Header -->
+        <div class="modal-header">
+            <div class="modal-title">
+                <span>📄</span>
+                <span>Détails du devis</span>
+            </div>
+            <button class="close-btn" onclick="window.close()">✕</button>
+        </div>
+
+        <!-- Modal Content -->
+        <div class="modal-content">
+            <!-- Artisan Card -->
+            <div class="artisan-card">
+                <div class="artisan-avatar">SB</div>
+                <div class="artisan-info">
+                    <h3>Samuel Besson d'Amegon</h3>
+                    <div class="artisan-meta">
+                        <span>📍 Paris</span>
+                        <span class="verified-badge">✓ Vérifié</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Price Highlight -->
+            <div class="price-highlight">
+                <div class="price-label">Montant total</div>
+                <div class="price-main">220,00 €</div>
+                <div class="price-breakdown">
+                    (180,00 € HT + 40,00 € TVA)
+                </div>
+            </div>
+
+            <!-- Détail des prestations -->
+            <div class="collapsible open" id="prestationsSection">
+                <div class="collapsible-header" onclick="toggleSection('prestationsSection')">
+                    <div class="collapsible-title">
+                        <span>📋</span>
+                        <span>Détail des prestations</span>
+                    </div>
+                    <div class="collapsible-icon">▼</div>
+                </div>
+                <div class="collapsible-content">
+                    <div class="collapsible-inner">
+                        <!-- Prestation 1 -->
+                        <div class="prestation-item">
+                            <div class="prestation-header">
+                                <div class="prestation-name">Installation chauffe-eau électrique 200L</div>
+                                <div class="prestation-price">150,00 €</div>
+                            </div>
+                            <div class="prestation-details">
+                                <span>Quantité : 1</span>
+                                <span>TVA 20%</span>
+                            </div>
+                        </div>
+
+                        <!-- Prestation 2 -->
+                        <div class="prestation-item">
+                            <div class="prestation-header">
+                                <div class="prestation-name">Main d'œuvre</div>
+                                <div class="prestation-price">20,00 €</div>
+                            </div>
+                            <div class="prestation-details">
+                                <span>2 heures</span>
+                                <span>TVA 20%</span>
+                            </div>
+                        </div>
+
+                        <!-- Prestation 3 -->
+                        <div class="prestation-item">
+                            <div class="prestation-header">
+                                <div class="prestation-name">Dépose ancien appareil</div>
+                                <div class="prestation-price">10,00 €</div>
+                            </div>
+                            <div class="prestation-details">
+                                <span>Forfait</span>
+                                <span>TVA 20%</span>
+                            </div>
+                        </div>
+
+                        <!-- Financial Recap -->
+                        <div class="financial-recap" style="margin-top: 16px;">
+                            <div class="recap-row">
+                                <span class="recap-label">Sous-total HT</span>
+                                <span class="recap-value">180,00 €</span>
+                            </div>
+                            <div class="recap-row">
+                                <span class="recap-label">TVA (20%)</span>
+                                <span class="recap-value">+ 40,00 €</span>
+                            </div>
+                            <div class="recap-row total">
+                                <span class="recap-label">Total TTC</span>
+                                <span class="recap-value">220,00 €</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="actions">
+                <button class="btn btn-primary" onclick="acceptQuote()">
+                    <span>✓</span>
+                    <span>Accepter ce devis</span>
+                </button>
+                <button class="btn btn-secondary" onclick="downloadQuote()">
+                    <span>↓</span>
+                    <span>Télécharger le PDF</span>
+                </button>
+            </div>
+
+            <!-- Contact Section -->
+            <div class="contact-section">
+                <div class="contact-title">Une question sur ce devis ?</div>
+                <div class="contact-items">
+                    <a href="tel:0744406387" class="contact-item">
+                        <div class="contact-icon">📞</div>
+                        <span>07 44 40 63 87</span>
+                    </a>
+                    <a href="mailto:samuel.besson@exemple.fr" class="contact-item">
+                        <div class="contact-icon">✉️</div>
+                        <span>samuel.besson@exemple.fr</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            section.classList.toggle('open');
+        }
+
+        function acceptQuote() {
+            if (confirm('Confirmer l\'acceptation de ce devis de 220,00 € ?')) {
+                alert('✓ Devis accepté ! L\'artisan sera notifié.');
+                // Ici : logique d'acceptation
+            }
+        }
+
+        function downloadQuote() {
+            alert('📄 Téléchargement du devis en cours...');
+            // Ici : logique de téléchargement PDF
+        }
+    </script>
+</body>
+</html>
+```
+
+---
+
+## ✅ **Améliorations implémentées**
+
+### **1. Prix TTC en haut et très visible** ⭐⭐⭐⭐⭐
+```
+💰 220,00 € (gros, 2.5rem)
+(180,00 € HT + 40,00 € TVA)
+```
+**Pierrette :** *"Parfait ! Je vois direct combien ça coûte."*
+
+---
+
+### **2. Hiérarchie optimisée** ⭐⭐⭐⭐⭐
+```
+1. Artisan (nom + vérifié)
+2. Prix TTC (très visible)
+3. Détail prestations
+4. Bouton accepter
+5. Télécharger PDF
+6. Contact artisan
+```
+**Octave :** *"Hiérarchie logique. L'essentiel en premier."*
+
+---
+
+### **3. Analyse IA retirée** ⭐⭐⭐⭐⭐
+```
+❌ Supprimé :
+- Analyse IA
+- Risque modéré
+- Alertes rouges
+```
+**Guy :** *"Merci ! Plus de 'Risque modéré' devant le client."*
+
+---
+
+### **4. Prestations avec noms clairs** ⭐⭐⭐⭐⭐
+```
+✅ "Installation chauffe-eau électrique 200L"
+✅ "Main d'œuvre"
+✅ "Dépose ancien appareil"
+
+❌ "line 2", "test"
+```
+
+---
+
+### **5. Récap financier clair** ⭐⭐⭐⭐⭐
+```
+Sous-total HT    180,00 €
+TVA (20%)        + 40,00 €
+────────────────────────────
+Total TTC       220,00 €  ← Gros
+```
+
+---
+
+### **6. Actions claires** ⭐⭐⭐⭐⭐
+```
+[✓ Accepter ce devis] (Vert, gros)
+[↓ Télécharger le PDF] (Blanc, secondaire)
+```
+
+---
+
+### **7. Contact en bas** ⭐⭐⭐⭐⭐
+```
+Une question sur ce devis ?
+📞 07 44 40 63 87
+✉️ samuel.besson@exemple.fr
