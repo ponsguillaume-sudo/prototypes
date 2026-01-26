@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kelcare Retail - Intervention ORLUB</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --kelkun-primary: #00BFA6;
+            --kelkun-primary-dark: #00a891;
+            --kelcare-orange: #FF6B35;
+            --gray-50: #F9FAFB;
+            --gray-100: #F3F4F6;
+            --gray-200: #E5E7EB;
+            --gray-300: #D1D5DB;
+            --gray-400: #9CA3AF;
+            --gray-500: #6B7280;
+            --gray-600: #4B5563;
+            --gray-700: #374151;
+            --gray-900: #111827;
+            --green-500: #10B981;
+            --green-50: #ECFDF5;
+            --blue-500: #6366F1;
+            --blue-50: #EEF2FF;
+            --red-500: #EF4444;
+            --red-50: #FEF2F2;
+        }
+
+        body {
+            font-family: 'DM Sans', -apple-system, sans-serif;
+            background: var(--gray-50);
+            color: var(--gray-900);
+            line-height: 1.5;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 240px;
+            background: white;
+            border-right: 1px solid var(--gray-200);
+            padding: 20px 0;
+            flex-shrink: 0;
+        }
+
+        .logo {
+            padding: 0 20px 20px;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--kelcare-orange);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo-subtitle {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+            font-weight: 600;
+        }
+
+        .nav-item {
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--gray-700);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .nav-item:hover {
+            background: var(--gray-50);
+            color: var(--gray-900);
+        }
+
+        .nav-item.active {
+            background: var(--blue-50);
+            color: var(--blue-500);
+            border-right: 3px solid var(--blue-500);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Top Bar */
+        .top-bar {
+            background: white;
+            border-bottom: 1px solid var(--gray-200);
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.875rem;
+            color: var(--gray-600);
+        }
+
+        .breadcrumb a {
+            color: var(--blue-500);
+            text-decoration: none;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--kelcare-orange);
+        }
+
+        .user-name {
+            font-weight: 600;
+            font-size: 0.938rem;
+        }
+
+        .user-role {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+        }
+
+        .top-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-outline {
+            padding: 8px 16px;
+            border: 2px solid var(--kelkun-primary);
+            background: white;
+            color: var(--kelkun-primary);
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-primary {
+            padding: 8px 16px;
+            background: var(--kelkun-primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: white;
+            padding: 24px;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .page-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .status-badge.pending {
+            background: var(--blue-50);
+            color: var(--blue-500);
+        }
+
+        .status-badge.success {
+            background: var(--green-50);
+            color: var(--green-500);
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 4px;
+            margin-top: 16px;
+        }
+
+        .tab {
+            padding: 12px 20px;
+            background: transparent;
+            border: none;
+            border-bottom: 3px solid transparent;
+            color: var(--gray-600);
+            font-weight: 600;
+            font-size: 0.938rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .tab:hover {
+            color: var(--gray-900);
+            background: var(--gray-50);
+        }
+
+        .tab.active {
+            color: var(--blue-500);
+            border-bottom-color: var(--blue-500);
+            background: transparent;
+        }
+
+        /* Content Area */
+        .content-area {
+            display: flex;
+            gap: 24px;
+            padding: 24px;
+            flex: 1;
+        }
+
+        /* Main Column */
+        .main-column {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Card */
+        .card {
+            background: white;
+            border: 2px solid var(--gray-200);
+            border-radius: 16px;
+            padding: 24px;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 1.125rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-ref {
+            font-size: 0.875rem;
+            color: var(--blue-500);
+            font-weight: 600;
+        }
+
+        /* Info Grid */
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .info-section {
+            background: var(--gray-50);
+            padding: 16px;
+            border-radius: 12px;
+        }
+
+        .info-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--gray-600);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .info-value {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: 8px;
+        }
+
+        .info-value.large {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--kelkun-primary);
+        }
+
+        .info-details {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-top: 8px;
+        }
+
+        .info-detail {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.875rem;
+            color: var(--gray-700);
+        }
+
+        .verified {
+            color: var(--kelkun-primary);
+            font-weight: 600;
+        }
+
+        /* Status Card */
+        .status-card {
+            background: linear-gradient(135deg, var(--green-50) 0%, #f0fdf4 100%);
+            border: 2px solid var(--green-500);
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .status-icon {
+            width: 48px;
+            height: 48px;
+            background: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .status-content h3 {
+            font-size: 1.125rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+            color: var(--gray-900);
+        }
+
+        .status-content p {
+            font-size: 0.875rem;
+            color: var(--gray-700);
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .action-btn {
+            padding: 14px;
+            background: white;
+            border: 2px solid var(--gray-200);
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .action-btn:hover {
+            border-color: var(--kelkun-primary);
+            background: var(--green-50);
+        }
+
+        /* Devis Detail */
+        .prestation-item {
+            padding: 16px 0;
+            border-bottom: 1px solid var(--gray-200);
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+        }
+
+        .prestation-item:last-child {
+            border-bottom: none;
+        }
+
+        .prestation-info {
+            flex: 1;
+        }
+
+        .prestation-name {
+            font-size: 0.938rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .prestation-meta {
+            font-size: 0.813rem;
+            color: var(--gray-600);
+            display: flex;
+            gap: 12px;
+        }
+
+        .prestation-price {
+            text-align: right;
+        }
+
+        .price-main {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .price-detail {
+            font-size: 0.75rem;
+            color: var(--gray-600);
+        }
+
+        /* Financial Summary */
+        .financial-summary {
+            background: var(--green-50);
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 16px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            font-size: 0.938rem;
+        }
+
+        .summary-row.total {
+            border-top: 2px solid var(--green-500);
+            padding-top: 12px;
+            margin-top: 8px;
+        }
+
+        .summary-label {
+            color: var(--gray-700);
+        }
+
+        .summary-value {
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .summary-row.total .summary-value {
+            font-size: 1.5rem;
+            color: var(--kelkun-primary);
+        }
+
+        /* Sidebar Column */
+        .sidebar-column {
+            width: 380px;
+            flex-shrink: 0;
+        }
+
+        .sidebar-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .btn-large {
+            width: 100%;
+            padding: 16px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s;
+            border: none;
+        }
+
+        .btn-large.primary {
+            background: var(--blue-500);
+            color: white;
+        }
+
+        .btn-large.secondary {
+            background: white;
+            color: var(--gray-700);
+            border: 2px solid var(--gray-300);
+        }
+
+        .btn-large:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Info Alert */
+        .info-alert {
+            background: var(--blue-50);
+            border: 2px solid var(--blue-500);
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            gap: 12px;
+        }
+
+        .alert-icon {
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .alert-content {
+            flex: 1;
+        }
+
+        .alert-title {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 4px;
+        }
+
+        .alert-text {
+            font-size: 0.813rem;
+            color: var(--gray-700);
+            line-height: 1.5;
+        }
+
+        /* Collapsible */
+        .collapsible {
+            margin-top: 20px;
+        }
+
+        .collapsible-header {
+            padding: 12px 0;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .collapsible-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--gray-700);
+        }
+
+        .collapsible-icon {
+            font-size: 1rem;
+            color: var(--gray-400);
+            transition: transform 0.3s;
+        }
+
+        .collapsible.open .collapsible-icon {
+            transform: rotate(180deg);
+        }
+
+        .collapsible-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .collapsible.open .collapsible-content {
+            max-height: 500px;
+        }
+
+        .collapsible-inner {
+            padding: 16px 0;
+        }
+
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            font-size: 0.875rem;
+        }
+
+        .detail-label {
+            color: var(--gray-600);
+        }
+
+        .detail-value {
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="logo">
+            kelcare
+            <div class="logo-subtitle">RETAIL</div>
+        </div>
+        
+        <nav>
+            <a href="#" class="nav-item">
+                <span>📊</span>
+                <span>Dashboard</span>
+            </a>
+            <a href="#" class="nav-item">
+                <span>🏪</span>
+                <span>Sites</span>
+            </a>
+            <a href="#" class="nav-item active">
+                <span>🔧</span>
+                <span>Interventions</span>
+            </a>
+            <a href="#" class="nav-item">
+                <span>👷</span>
+                <span>Artisans</span>
+            </a>
+            <a href="#" class="nav-item">
+                <span>⚙️</span>
+                <span>Maintenance</span>
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Top Bar -->
+        <div class="top-bar">
+            <div class="breadcrumb">
+                <a href="#">Interventions</a>
+                <span>›</span>
+                <span>Intervention ORLUB</span>
+            </div>
+
+            <div class="user-info">
+                <div class="top-actions">
+                    <button class="btn-outline">
+                        <span>↑</span>
+                        <span>Importer</span>
+                    </button>
+                    <button class="btn-primary">
+                        <span>+</span>
+                        <span>Créer une intervention</span>
+                    </button>
+                </div>
+                <div class="user-avatar"></div>
+                <div>
+                    <div class="user-name">Jean Mercier</div>
+                    <div class="user-role">Directeur Gedimat</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="page-title">
+                <span>📋 Intervention #ORLUB</span>
+                <span class="status-badge pending">Devis en attente validation</span>
+            </div>
+
+            <!-- Tabs -->
+            <div class="tabs">
+                <button class="tab active">
+                    <span>👁️</span>
+                    <span>Vue d'ensemble</span>
+                </button>
+                <button class="tab">
+                    <span>📄</span>
+                    <span>Devis</span>
+                </button>
+                <button class="tab">
+                    <span>📊</span>
+                    <span>Suivi</span>
+                </button>
+                <button class="tab">
+                    <span>📁</span>
+                    <span>Documents</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Content Area -->
+        <div class="content-area">
+            <!-- Main Column -->
+            <div class="main-column">
+                <!-- Status Card -->
+                <div class="status-card">
+                    <div class="status-icon">✅</div>
+                    <div class="status-content">
+                        <h3>Tout se passe bien</h3>
+                        <p>Le devis a été envoyé au client le 15 janvier à 14h30. Vous serez notifié dès sa réponse.</p>
+                    </div>
+                </div>
+
+                <!-- Client & Artisan Info -->
+                <div class="card">
+                    <div class="info-grid">
+                        <!-- Client -->
+                        <div class="info-section">
+                            <div class="info-label">👤 Client</div>
+                            <div class="info-value">Michel Durand</div>
+                            <div class="info-details">
+                                <div class="info-detail">
+                                    <span>📞</span>
+                                    <span>06 51 45 95 77</span>
+                                </div>
+                                <div class="info-detail">
+                                    <span>📍</span>
+                                    <span>456 Av. des lavandes, Lattes (34)</span>
+                                </div>
+                                <div class="info-detail">
+                                    <span class="verified">✓ Client Gedimat vérifié</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Artisan -->
+                        <div class="info-section">
+                            <div class="info-label">🔧 Artisan</div>
+                            <div class="info-value">Plomberie Laurent</div>
+                            <div class="info-details">
+                                <div class="info-detail">
+                                    <span>📞</span>
+                                    <span>06 51 66 91 61</span>
+                                </div>
+                                <div class="info-detail">
+                                    <span>⭐</span>
+                                    <span>4.8/5 (127 avis)</span>
+                                </div>
+                                <div class="info-detail">
+                                    <span class="verified">✓ Artisan vérifié Kelkun</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Montant -->
+                        <div class="info-section">
+                            <div class="info-label">💰 Montant du devis</div>
+                            <div class="info-value large">966,00 €</div>
+                            <div class="info-details">
+                                <div class="info-detail">
+                                    <span>805,00 € HT + 161,00 € TVA</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Intervention -->
+                        <div class="info-section">
+                            <div class="info-label">📅 Intervention prévue</div>
+                            <div class="info-value">17 janvier 2026</div>
+                            <div class="info-details">
+                                <div class="info-detail">
+                                    <span>⏰</span>
+                                    <span>9h00 - 12h00</span>
+                                </div>
+                                <div class="info-detail">
+                                    <span>📍</span>
+                                    <span>Sur site client</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="card">
+                    <div class="card-title">🚀 Actions rapides</div>
+                    <div class="quick-actions">
+                        <button class="action-btn" onclick="alert('Appel client...')">
+                            <span>📞</span>
+                            <span>Appeler le client</span>
+                        </button>
+                        <button class="action-btn" onclick="alert('Appel artisan...')">
+                            <span>📞</span>
+                            <span>Appeler l'artisan</span>
+                        </button>
+                        <button class="action-btn" onclick="alert('Ouverture devis...')">
+                            <span>📄</span>
+                            <span>Voir le devis détaillé</span>
+                        </button>
+                        <button class="action-btn" onclick="alert('Historique...')">
+                            <span>📊</span>
+                            <span>Voir l'historique</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Devis Preview (Collapsible) -->
+                <div class="card">
+                    <div class="collapsible" id="devisCollapsible">
+                        <div class="collapsible-header" onclick="toggleCollapsible('devisCollapsible')">
+                            <div class="card-title">
+                                <span>📄</span>
+                                <span>Aperçu du devis</span>
+                                <span class="card-ref">Réf. 4328P</span>
+                            </div>
+                            <div class="collapsible-icon">▼</div>
+                        </div>
+                        <div class="collapsible-content">
+                            <div class="collapsible-inner">
+                                <!-- Prestations -->
+                                <div class="prestation-item">
+                                    <div class="prestation-info">
+                                        <div class="prestation-name">Poutre de bamako</div>
+                                        <div class="prestation-meta">
+                                            <span>Quantité : 15 unités</span>
+                                            <span>TVA 20%</span>
+                                        </div>
+                                    </div>
+                                    <div class="prestation-price">
+                                        <div class="price-main">750,00 €</div>
+                                        <div class="price-detail">50,00 € / unité HT</div>
+                                    </div>
+                                </div>
+
+                                <div class="prestation-item">
+                                    <div class="prestation-info">
+                                        <div class="prestation-name">Main d'œuvre</div>
+                                        <div class="prestation-meta">
+                                            <span>Quantité : 1 unité</span>
+                                            <span>TVA 20%</span>
+                                        </div>
+                                    </div>
+                                    <div class="prestation-price">
+                                        <div class="price-main">55,00 €</div>
+                                        <div class="price-detail">55,00 € / unité HT</div>
+                                    </div>
+                                </div>
+
+                                <!-- Financial Summary -->
+                                <div class="financial-summary">
+                                    <div class="summary-row">
+                                        <span class="summary-label">Total HT</span>
+                                        <span class="summary-value">805,00 €</span>
+                                    </div>
+                                    <div class="summary-row">
+                                        <span class="summary-label">TVA (20%)</span>
+                                        <span class="summary-value">+ 161,00 €</span>
+                                    </div>
+                                    <div class="summary-row total">
+                                        <span class="summary-label">Total TTC</span>
+                                        <span class="summary-value">966,00 €</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar Column -->
+            <div class="sidebar-column">
+                <!-- Action Buttons -->
+                <div class="sidebar-actions">
+                    <button class="btn-large primary" onclick="alert('Téléchargement PDF...')">
+                        <span>↓</span>
+                        <span>Télécharger le devis PDF</span>
+                    </button>
+                </div>
+
+                <!-- Info Alert -->
+                <div class="card">
+                    <div class="info-alert">
+                        <div class="alert-icon">ℹ️</div>
+                        <div class="alert-content">
+                            <div class="alert-title">Votre rôle</div>
+                            <div class="alert-text">
+                                En tant que partenaire retail, vous pouvez suivre l'intervention et contacter les parties si nécessaire. C'est le client qui valide ou refuse le devis.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Timeline Preview -->
+                <div class="card">
+                    <div class="card-title">📊 Chronologie</div>
+                    <div class="collapsible-inner">
+                        <div class="detail-item">
+                            <span class="detail-label">15 janv. 14h30</span>
+                            <span class="detail-value">Devis envoyé</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">15 janv. 12h15</span>
+                            <span class="detail-value">Artisan accepté</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">15 janv. 10h00</span>
+                            <span class="detail-value">Demande créée</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional Info (Collapsible) -->
+                <div class="card">
+                    <div class="collapsible" id="detailsCollapsible">
+                        <div class="collapsible-header" onclick="toggleCollapsible('detailsCollapsible')">
+                            <div class="collapsible-title">📋 Détails supplémentaires</div>
+                            <div class="collapsible-icon">▼</div>
+                        </div>
+                        <div class="collapsible-content">
+                            <div class="collapsible-inner">
+                                <div class="detail-item">
+                                    <span class="detail-label">Réf. intervention</span>
+                                    <span class="detail-value">ORLUB-2026-001</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Magasin</span>
+                                    <span class="detail-value">Gedimat Montpellier Sud</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Type</span>
+                                    <span class="detail-value">Plomberie</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Urgence</span>
+                                    <span class="detail-value">Normale</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleCollapsible(id) {
+            const element = document.getElementById(id);
+            element.classList.toggle('open');
+        }
+    </script>
+</body>
+</html>
