@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Besoin d'un artisan pour vos travaux ? — L'artisan idéal, trouvé pour vous | Kelkun</title>
+  <meta name="description" content="Kelkun met en relation particuliers et professionnels qualifiés. Décrivez votre projet, on s'occupe du reste : +5 000 artisans vérifiés, 85 métiers, protection juridique incluse, paiement sécurisé. Devis gratuit, sans engagement." />
+  <meta name="robots" content="noindex, nofollow" />
+  <!-- PROTOTYPE LP GENERIQUE — tous metiers, pas de geo. Contenu issu de kelkun.com. Formulaire (conversion decla) a cabler au portage. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" />
+  <link rel="stylesheet" href="tokens.css" />
+  <link rel="stylesheet" href="lp.css" />
+  <style>
+    .clarity-pill { display: inline-flex; align-items: center; gap: 8px; background: var(--color-secondary-2); color: var(--color-primary-600); border: 1px solid var(--color-primary-200); font-size: 13px; font-weight: 600; padding: 7px 14px; border-radius: 999px; margin-bottom: 18px; line-height: 1.2; }
+    /* formulaire */
+    .gen-needs { display: grid; gap: 8px; }
+    .gen-need { display: flex; align-items: center; gap: 10px; padding: 11px 14px; border: 1px solid var(--color-secondary-25); border-radius: var(--rounded-lg); cursor: pointer; font-size: 14px; font-weight: 500; color: var(--color-secondary-500); transition: border-color .15s, background .15s; }
+    .gen-need:hover { border-color: var(--color-primary-200); }
+    .gen-needs input[type="checkbox"] { appearance: none; -webkit-appearance: none; width: 22px; min-width: 22px; height: 22px; padding: 0; margin: 0; box-sizing: border-box; background: #fff; border: 2px solid var(--color-secondary-25); border-radius: 6px; flex-shrink: 0; display: grid; place-items: center; cursor: pointer; transition: all .15s; }
+    .gen-needs input[type="checkbox"]::after { content: ''; width: 10px; height: 6px; border-left: 2px solid #fff; border-bottom: 2px solid #fff; transform: rotate(-45deg) scale(0); margin-top: -2px; transition: transform .15s; }
+    .gen-needs input[type="checkbox"]:checked { background: var(--color-primary); border-color: var(--color-primary); }
+    .gen-needs input[type="checkbox"]:checked::after { transform: rotate(-45deg) scale(1); }
+    .gen-need:has(input:checked) { border-color: var(--color-primary); background: var(--color-secondary-2); }
+    .phone-row { display: flex; gap: 8px; }
+    .phone-row .cc { display: flex; align-items: center; gap: 6px; padding: 0 12px; height: 48px; border: 1px solid var(--color-secondary-25); border-radius: var(--rounded-lg); font-size: 14px; color: var(--color-secondary-500); flex-shrink: 0; }
+    .phone-row input { flex: 1; }
+    /* avantages */
+    .adv-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .adv-card { background: #fff; border: 1px solid var(--color-neutral-200); border-radius: var(--rounded-xl); padding: 24px 22px; }
+    .adv-card__ic { width: 48px; height: 48px; border-radius: 14px; background: var(--color-secondary-2); color: var(--color-primary-600); display: grid; place-items: center; margin-bottom: 14px; }
+    .adv-card h3 { font-size: 16px; font-weight: 700; color: var(--color-secondary); margin-bottom: 6px; }
+    .adv-card p { font-size: 14px; color: var(--color-neutral-600); line-height: 1.55; }
+    /* comparateur */
+    .compare__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .compare-card { text-align: center; padding: 24px 20px; background: #fff; border: 1px solid var(--color-neutral-200); border-radius: var(--rounded-xl); }
+    .compare-card__ic { width: 48px; height: 48px; border-radius: 14px; background: var(--color-secondary-2); color: var(--color-primary-600); display: grid; place-items: center; margin: 0 auto 12px; }
+    .compare-card h3 { font-size: 16px; font-weight: 700; color: var(--color-secondary); margin-bottom: 6px; }
+    .compare-card p { font-size: 14px; color: var(--color-neutral-600); line-height: 1.5; }
+    /* métiers */
+    .metiers-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
+    .metier-card { background: #fff; border: 1px solid var(--color-neutral-200); border-radius: var(--rounded-xl); padding: 20px 16px; text-align: center; }
+    .metier-card__ic { width: 44px; height: 44px; border-radius: 13px; background: var(--color-secondary-2); color: var(--color-primary-600); display: grid; place-items: center; margin: 0 auto 10px; }
+    .metier-card h3 { font-size: 15px; font-weight: 700; color: var(--color-secondary); margin-bottom: 6px; }
+    .metier-card p { font-size: 12.5px; color: var(--color-neutral-500); line-height: 1.5; }
+    /* réalisations */
+    .realz-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .realz-card { background: #fff; border: 1px solid var(--color-neutral-200); border-radius: var(--rounded-xl); overflow: hidden; display: flex; flex-direction: column; }
+    .realz-card__media { aspect-ratio: 4 / 3; }
+    .realz-card__body { padding: 16px 18px 20px; }
+    .realz-card__tags { display: flex; gap: 8px; align-items: center; margin-bottom: 9px; flex-wrap: wrap; }
+    .realz-tag { background: var(--color-secondary-2); color: var(--color-primary-600); font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 999px; }
+    .realz-loc { font-size: 12px; color: var(--color-neutral-500); font-weight: 500; }
+    .realz-card__title { font-size: 16px; font-weight: 700; color: var(--color-secondary); margin-bottom: 6px; line-height: 1.35; }
+    .realz-card__text { font-size: 14px; color: var(--color-neutral-600); line-height: 1.55; }
+    /* mobile */
+    @media (max-width: 980px) { .metiers-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 860px) { .adv-grid, .realz-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 700px) { .compare__grid { grid-template-columns: 1fr; } .metiers-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 600px) {
+      .adv-grid, .realz-grid { grid-template-columns: 1fr; }
+      .hero__layout { grid-template-columns: 1fr; }
+      .hero__intro, .hero__visual { min-width: 0; }
+    }
+  </style>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+</head>
+<body>
+  <a class="skip-link" href="#lead">Aller au formulaire</a>
+
+  <nav class="nav" id="nav">
+    <div class="container nav__inner">
+      <a href="https://www.kelkun.com/" target="_blank" rel="noopener noreferrer" aria-label="Accueil Kelkun" class="nav__logo-link"><img class="nav__logo" src="img/logo-kelkun.webp" width="111" height="40" alt="Kelkun — Le futur de l'artisanat" /></a>
+      <div class="nav__links">
+        <a class="nav__link" href="#metiers">Métiers</a>
+        <a class="nav__link" href="#realisations">Réalisations</a>
+        <a class="nav__link" href="#avantages">Avantages</a>
+        <a class="nav__link" href="#how">Comment ça marche</a>
+        <a class="nav__link" href="#faq">FAQ</a>
+      </div>
+      <a class="btn btn--primary nav__cta" href="#lead" data-cta="nav">Être rappelé</a>
+    </div>
+  </nav>
+
+  <main id="main">
+    <!-- ================= HERO ================= -->
+    <header class="hero" data-section="hero">
+      <div class="container hero__layout">
+        <div class="hero__intro">
+          <div class="clarity-pill">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Plateforme de mise en relation · +5 000 pros vérifiés
+          </div>
+          <h1 class="hero__title">Besoin d'un artisan pour vos travaux&nbsp;? <span class="accent">L'artisan idéal, <span class="accent-u">trouvé pour vous</span></span></h1>
+          <p class="hero__sub">Kelkun met en relation <strong>particuliers et professionnels qualifiés</strong>. Décrivez votre projet, on s'occupe du reste — c'est gratuit et sans engagement.</p>
+          <ul class="hero__points">
+            <li><span class="hero__points-ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span> Urgence, travaux, entretien, rénovation, déco : 85 métiers</li>
+            <li><span class="hero__points-ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span> +5 000 artisans vérifiés et assurés près de chez vous</li>
+            <li><span class="hero__points-ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> Protection juridique incluse · paiement sécurisé</li>
+          </ul>
+          <div class="hero__rating">
+            <span class="hero__rating-stars" aria-hidden="true">★★★★★</span>
+            <span class="hero__rating-text"><strong>4,7/5</strong> — +10 200 clients accompagnés</span>
+          </div>
+          <figure class="hero__media">
+            <img src="img/hero-generique.webp" width="1100" height="550" alt="Artisan Kelkun accueilli par un client à son domicile" />
+          </figure>
+        </div>
+
+        <div class="hero__visual">
+          <div class="hero__visual-blob" aria-hidden="true"></div>
+          <div class="lead-card" id="lead">
+            <div class="lead-card__head">
+              <p class="lead-card__title">Être rappelé rapidement</p>
+              <p class="lead-card__hint">Décrivez votre projet, un artisan vérifié vous recontacte. Gratuit et sans engagement.</p>
+            </div>
+            <form class="lead-form" onsubmit="return false">
+              <div class="field"><label for="firstname">Prénom <span class="req">*</span></label><input type="text" id="firstname" placeholder="Votre prénom" /></div>
+              <div class="field"><label for="lastname">Nom <span class="req">*</span></label><input type="text" id="lastname" placeholder="Votre nom" /></div>
+              <div class="field"><label for="phone">Téléphone <span class="req">*</span></label><div class="phone-row"><span class="cc">🇫🇷 +33</span><input type="tel" id="phone" inputmode="tel" placeholder="6 12 34 56 78" /></div></div>
+              <div class="field"><label>Votre besoin <span class="req">*</span> <span class="field__opt">(plusieurs choix possibles)</span></label>
+                <div class="gen-needs">
+                  <label class="gen-need"><input type="checkbox" name="besoin" value="urgence" /> <span>Urgence / dépannage</span></label>
+                  <label class="gen-need"><input type="checkbox" name="besoin" value="travaux" /> <span>Travaux &amp; rénovation</span></label>
+                  <label class="gen-need"><input type="checkbox" name="besoin" value="entretien" /> <span>Entretien</span></label>
+                  <label class="gen-need"><input type="checkbox" name="besoin" value="deco" /> <span>Décoration &amp; aménagement</span></label>
+                  <label class="gen-need"><input type="checkbox" name="besoin" value="autre" /> <span>Je ne sais pas encore</span></label>
+                </div>
+              </div>
+              <button type="submit" class="btn btn--primary btn--lg btn--full">Être rappelé rapidement <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+              <div class="lead-trust"><span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Gratuit</span><span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Sans engagement</span><span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Artisans vérifiés</span></div>
+              <p class="lead-form__legal">En validant, vous acceptez d'être recontacté par un artisan partenaire. Données traitées selon notre <a href="https://www.kelkun.com/politique-de-confidentialite/" target="_blank" rel="noopener noreferrer">politique de confidentialité</a>.</p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ================= CERTIF BAR ================= -->
+    <section class="certbar" aria-label="Nos garanties" data-section="certbar">
+      <div class="container">
+        <p class="certbar__label">Des artisans en qui vous pouvez avoir confiance</p>
+        <div class="certbar__row">
+          <span class="cert"><span class="cert__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span> +5 000 pros vérifiés</span>
+          <span class="cert"><span class="cert__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></span> Protection juridique incluse</span>
+          <span class="cert"><span class="cert__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg></span> Paiement sécurisé</span>
+          <span class="cert"><span class="cert__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15 9 22 9 17 14 19 21 12 17 5 21 7 14 2 9 9 9"/></svg></span> 4,7/5 avis vérifiés</span>
+          <span class="cert"><span class="cert__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></span> 85 métiers</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= COMPARATEUR ================= -->
+    <section class="section section--light" id="comparer" data-section="comparer">
+      <div class="container">
+        <div class="section__header text-center reveal">
+          <p class="section__eyebrow">L'avantage Kelkun</p>
+          <h2 class="section__title">Comparez plusieurs artisans, pas un seul</h2>
+          <p class="section__sub" style="margin:0 auto">Une entreprise classique ne vous fait qu'un seul devis. Avec Kelkun, vous comparez plusieurs <strong>artisans vérifiés près de chez vous</strong> et choisissez le meilleur rapport qualité/prix — gratuitement.</p>
+        </div>
+        <div class="compare__grid reveal">
+          <div class="compare-card"><div class="compare-card__ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg></div><h3>Plusieurs devis</h3><p>Comparez les prix de plusieurs artisans au lieu de vous fier à un seul.</p></div>
+          <div class="compare-card"><div class="compare-card__ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div><h3>Des pros près de chez vous</h3><p>Uniquement des professionnels proches de votre adresse, vérifiés et assurés.</p></div>
+          <div class="compare-card"><div class="compare-card__ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><h3>Vous choisissez librement</h3><p>Aucun engagement : vous gardez la main et décidez en toute confiance.</p></div>
+        </div>
+        <div class="text-center" style="margin-top:36px"><a href="#lead" class="btn btn--primary btn--lg" data-cta="comparer">Être rappelé rapidement</a></div>
+      </div>
+    </section>
+
+    <!-- ================= RÉALISATIONS ================= -->
+    <section class="section" id="realisations" data-section="realisations">
+      <div class="container">
+        <div class="section__header text-center reveal">
+          <p class="section__eyebrow">Nos réalisations</p>
+          <h2 class="section__title">Des projets de toutes tailles, dans tous les métiers</h2>
+          <p class="section__sub" style="margin:0 auto">Une urgence à régler ou un chantier à lancer : Kelkun trouve l'artisan qu'il vous faut.</p>
+        </div>
+        <div class="realz-grid reveal">
+          <article class="realz-card">
+            <figure class="realz-card__media"><img src="img/rea1.webp" width="1000" height="750" loading="lazy" alt="Salle de bain rénovée avec meuble double vasque" style="width:100%;height:100%;object-fit:cover;display:block" /></figure>
+            <div class="realz-card__body">
+              <div class="realz-card__tags"><span class="realz-tag">Travaux</span><span class="realz-loc">Salle de bain</span></div>
+              <h3 class="realz-card__title">Rénovation complète d'une salle de bain</h3>
+              <p class="realz-card__text">Plomberie, carrelage, meuble double vasque et éclairage. Un seul interlocuteur, un devis clair, des délais tenus.</p>
+            </div>
+          </article>
+          <article class="realz-card">
+            <figure class="realz-card__media"><img src="img/rea2.webp" width="1000" height="750" loading="lazy" alt="Climatisation réversible installée dans un salon" style="width:100%;height:100%;object-fit:cover;display:block" /></figure>
+            <div class="realz-card__body">
+              <div class="realz-card__tags"><span class="realz-tag">Installation</span><span class="realz-loc">Climatisation</span></div>
+              <h3 class="realz-card__title">Installation d'une climatisation réversible</h3>
+              <p class="realz-card__text">Pose d'un split dans un séjour, en une journée. Artisan certifié, liaisons discrètes, mise en service comprise.</p>
+            </div>
+          </article>
+          <article class="realz-card">
+            <figure class="realz-card__media"><img src="img/rea3.webp" width="1000" height="750" loading="lazy" alt="Plombier réparant une fuite sous un évier" style="width:100%;height:100%;object-fit:cover;display:block" /></figure>
+            <div class="realz-card__body">
+              <div class="realz-card__tags"><span class="realz-tag">Urgence</span><span class="realz-loc">Plomberie</span></div>
+              <h3 class="realz-card__title">Fuite sous évier réparée le jour même</h3>
+              <p class="realz-card__text">Demande postée le matin, artisan disponible dans la foulée. Diagnostic, prix annoncé avant l'intervention, fuite réglée.</p>
+            </div>
+          </article>
+        </div>
+        <div class="text-center" style="margin-top:36px"><a href="#lead" class="btn btn--primary btn--lg" data-cta="realisations">Être rappelé rapidement</a></div>
+      </div>
+    </section>
+
+    <!-- ================= MÉTIERS ================= -->
+    <section class="section section--light" id="metiers" data-section="metiers">
+      <div class="container">
+        <div class="section__header text-center reveal">
+          <p class="section__eyebrow">85 métiers disponibles</p>
+          <h2 class="section__title">Quel que soit votre besoin, on a l'artisan</h2>
+          <p class="section__sub" style="margin:0 auto">De la fuite d'eau à la rénovation complète : Kelkun couvre l'ensemble des métiers de l'artisanat.</p>
+        </div>
+        <div class="metiers-grid reveal">
+          <div class="metier-card">
+            <div class="metier-card__ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+            <h3>Urgence</h3><p>Plombier · Électricien · Serrurier · Vitrier</p>
+          </div>
+          <div class="metier-card">
+            <div class="metier-card__ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+            <h3>Travaux</h3><p>Maçon · Charpentier · Couvreur · Terrassier</p>
+          </div>
+          <div class="metier-card">
+            <div class="metier-card__ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21v-4a4 4 0 0 1 4-4h.5"/><path d="M18 2l4 4-9 9-4 1 1-4z"/></svg></div>
+            <h3>Rénovation</h3><p>Peintre · Carreleur · Menuisier · Plaquiste</p>
+          </div>
+          <div class="metier-card">
+            <div class="metier-card__ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></div>
+            <h3>Entretien</h3><p>Chauffagiste · Climaticien · Jardinier · Ramoneur</p>
+          </div>
+          <div class="metier-card">
+            <div class="metier-card__ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"/><rect x="3" y="8" width="18" height="8" rx="2"/></svg></div>
+            <h3>Déco</h3><p>Décorateur · Cuisiniste · Parqueteur · Tapissier</p>
+          </div>
+        </div>
+        <div class="text-center" style="margin-top:36px"><a href="#lead" class="btn btn--primary btn--lg" data-cta="metiers">Être rappelé rapidement</a></div>
+      </div>
+    </section>
+
+    <!-- ================= AVANTAGES ================= -->
+    <section class="section" id="avantages" data-section="avantages">
+      <div class="container">
+        <div class="section__header text-center reveal">
+          <p class="section__eyebrow">Pourquoi Kelkun</p>
+          <h2 class="section__title">La solution fiable pour trouver, suivre et sécuriser vos interventions</h2>
+          <p class="section__sub" style="margin:0 auto">Kelkun n'est pas une entreprise d'artisans : c'est une plateforme qui vous met en relation avec le bon pro — et vous accompagne du 1er clic à la fin des travaux.</p>
+        </div>
+        <div class="adv-grid reveal">
+          <div class="adv-card"><div class="adv-card__ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></div><h3>+5 000 pros vérifiés</h3><p>Vous accédez uniquement à des artisans vérifiés et assurés. Pas de pro choisi au hasard.</p></div>
+          <div class="adv-card"><div class="adv-card__ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><h3>Protection juridique incluse</h3><p>Une protection juridique jusqu'à 10 000 € (Allianz) pour sécuriser votre projet, incluse sans surcoût.</p></div>
+          <div class="adv-card"><div class="adv-card__ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg></div><h3>Paiement sécurisé</h3><p>Vous ne réglez qu'à la fin de l'intervention, une fois le travail réalisé. En toute tranquillité.</p></div>
+          <div class="adv-card"><div class="adv-card__ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div><h3>Devis gratuit</h3><p>Décrivez votre projet en 2 minutes et recevez un devis clair de l'artisan, gratuit et sans engagement.</p></div>
+          <div class="adv-card"><div class="adv-card__ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><h3>Accompagnement complet</h3><p>On vous accompagne du 1er clic à la fin des travaux : mise en relation, suivi, sérénité.</p></div>
+          <div class="adv-card"><div class="adv-card__ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15 9 22 9 17 14 19 21 12 17 5 21 7 14 2 9 9 9"/></svg></div><h3>+10 200 clients · 4,7/5</h3><p>Des milliers de particuliers accompagnés sur 85 métiers, avec une note moyenne de 4,7/5.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= 3 ÉTAPES ================= -->
+    <section class="section section--light" id="how" data-section="how">
+      <div class="container">
+        <div class="section__header text-center reveal">
+          <p class="section__eyebrow">En quelques minutes</p>
+          <h2 class="section__title">Votre artisan en 3 étapes</h2>
+        </div>
+        <div class="how-steps reveal">
+          <div class="how-step"><div class="how-step__num">1</div><h3 class="how-step__title">Décrivez votre projet</h3><p class="how-step__text">Dites-nous ce dont vous avez besoin : une minute suffit.</p></div>
+          <div class="how-step"><div class="how-step__num">2</div><h3 class="how-step__title">Nous recherchons vos artisans</h3><p class="how-step__text">Kelkun cherche pour vous les meilleurs pros disponibles près de chez vous.</p></div>
+          <div class="how-step"><div class="how-step__num">3</div><h3 class="how-step__title">Faites votre choix</h3><p class="how-step__text">Comparez les devis et choisissez votre pro en toute confiance, sans engagement.</p></div>
+        </div>
+        <div class="text-center" style="margin-top:40px"><a href="#lead" class="btn btn--primary btn--lg" data-cta="how">Être rappelé rapidement</a></div>
+      </div>
+    </section>
+
+    <!-- ================= AVIS ================= -->
+    <section class="section" id="avis" data-section="avis">
+      <div class="container">
+        <div class="section__header text-center reveal">
+          <p class="section__eyebrow">Avis clients</p>
+          <h2 class="section__title">Ils nous font confiance</h2>
+          <p class="avis-rating"><span class="avis-rating__stars" aria-hidden="true">★★★★★</span> <strong>4,7/5</strong> — Avis Google vérifiés</p>
+        </div>
+        <div class="testimonials-grid reveal">
+          <article class="testimonial-card">
+            <div class="testimonial-card__top"><span class="testimonial-card__stars">★★★★★</span><span class="testimonial-card__verified"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Avis vérifié</span></div>
+            <p class="testimonial-card__quote">« J'ai décrit mon projet en deux minutes et j'ai été rappelé le jour même. Trois devis comparés, choix facile. »</p>
+            <div class="testimonial-card__author"><img class="testimonial-card__avatar" src="img/avis-marie.webp" width="42" height="42" loading="lazy" alt="Portrait de Marie L." /><div><p class="testimonial-card__name">Marie L.</p><p class="testimonial-card__job">Rénovation salle de bain</p></div></div>
+          </article>
+          <article class="testimonial-card">
+            <div class="testimonial-card__top"><span class="testimonial-card__stars">★★★★★</span><span class="testimonial-card__verified"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Avis vérifié</span></div>
+            <p class="testimonial-card__quote">« Fini les artisans injoignables. Kelkun m'a trouvé quelqu'un de sérieux sans que j'aie à appeler dix numéros. »</p>
+            <div class="testimonial-card__author"><div class="testimonial-card__avatar testimonial-card__avatar--initial" aria-hidden="true" style="background:#7e57c2">T</div><div><p class="testimonial-card__name">Thomas R.</p><p class="testimonial-card__job">Dépannage électrique</p></div></div>
+          </article>
+          <article class="testimonial-card">
+            <div class="testimonial-card__top"><span class="testimonial-card__stars">★★★★★</span><span class="testimonial-card__verified"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Avis vérifié</span></div>
+            <p class="testimonial-card__quote">« Le fait de ne payer qu'à la fin de l'intervention m'a rassurée. Tout s'est passé exactement comme annoncé. »</p>
+            <div class="testimonial-card__author"><img class="testimonial-card__avatar" src="img/avis-sophie.webp" width="42" height="42" loading="lazy" alt="Portrait de Sophie B." /><div><p class="testimonial-card__name">Sophie B.</p><p class="testimonial-card__job">Entretien chaudière</p></div></div>
+          </article>
+          <article class="testimonial-card">
+            <div class="testimonial-card__top"><span class="testimonial-card__stars">★★★★★</span><span class="testimonial-card__verified"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Avis vérifié</span></div>
+            <p class="testimonial-card__quote">« Chantier de rénovation mené du début à la fin. Devis clair, artisan assuré, aucune mauvaise surprise. »</p>
+            <div class="testimonial-card__author"><img class="testimonial-card__avatar" src="img/avis-karim.webp" width="42" height="42" loading="lazy" alt="Photo de profil de Karim B." /><div><p class="testimonial-card__name">Karim B.</p><p class="testimonial-card__job">Rénovation appartement</p></div></div>
+          </article>
+          <article class="testimonial-card">
+            <div class="testimonial-card__top"><span class="testimonial-card__stars">★★★★★</span><span class="testimonial-card__verified"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Avis vérifié</span></div>
+            <p class="testimonial-card__quote">« Une fuite un dimanche, un plombier joignable et réactif. Réglé en moins d'une heure. »</p>
+            <div class="testimonial-card__author"><img class="testimonial-card__avatar" src="img/avis-elodie.webp" width="42" height="42" loading="lazy" alt="Photo de profil d'Élodie F." /><div><p class="testimonial-card__name">Élodie F.</p><p class="testimonial-card__job">Urgence plomberie</p></div></div>
+          </article>
+          <article class="testimonial-card">
+            <div class="testimonial-card__top"><span class="testimonial-card__stars">★★★★★</span><span class="testimonial-card__verified"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Avis vérifié</span></div>
+            <p class="testimonial-card__quote">« Service client vraiment présent. On m'a suivi jusqu'à la fin des travaux, ça change tout. »</p>
+            <div class="testimonial-card__author"><img class="testimonial-card__avatar" src="img/avis-julien.webp" width="42" height="42" loading="lazy" alt="Photo de profil de Julien M." /><div><p class="testimonial-card__name">Julien M.</p><p class="testimonial-card__job">Installation climatisation</p></div></div>
+          </article>
+        </div>
+        <div class="text-center" style="margin-top:36px"><a href="#lead" class="btn btn--primary btn--lg" data-cta="avis">Être rappelé rapidement</a></div>
+      </div>
+    </section>
+
+    <!-- ================= FAQ ================= -->
+    <section class="section section--light" id="faq" data-section="faq">
+      <div class="container">
+        <div class="section__header text-center reveal">
+          <p class="section__eyebrow">Questions fréquentes</p>
+          <h2 class="section__title">Tout ce que vous voulez savoir</h2>
+        </div>
+        <div class="faq-list reveal">
+          <details class="faq-item"><summary class="faq-q">Kelkun est-il une entreprise d'artisans&nbsp;? <span class="faq-q__icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></summary><p class="faq-a">Non. Kelkun est une plateforme de mise en relation : nous ne réalisons pas les travaux nous-mêmes. Nous vous présentons des artisans vérifiés près de chez vous, qui établissent votre devis et réalisent l'intervention. Vous restez en lien direct avec eux.</p></details>
+          <details class="faq-item"><summary class="faq-q">L'utilisation de Kelkun est-elle gratuite&nbsp;? <span class="faq-q__icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></summary><p class="faq-a">Oui. La demande, la mise en relation et le devis sont gratuits et sans engagement. Kelkun ne facture jamais le particulier : vous ne payez que la prestation de l'artisan, si vous l'acceptez.</p></details>
+          <details class="faq-item"><summary class="faq-q">Quels métiers sont couverts&nbsp;? <span class="faq-q__icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></summary><p class="faq-a">85 métiers, répartis en cinq univers : urgence, travaux, entretien, rénovation et déco. Du plombier au cuisiniste, en passant par l'électricien, le carreleur, le climaticien ou le jardinier.</p></details>
+          <details class="faq-item"><summary class="faq-q">Comment sont sélectionnés les artisans&nbsp;? <span class="faq-q__icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></summary><p class="faq-a">Identité vérifiée, assurance professionnelle contrôlée, zone d'intervention connue et avis clients réels. Une protection juridique jusqu'à 10 000 € (Allianz) est incluse pour sécuriser votre projet.</p></details>
+          <details class="faq-item"><summary class="faq-q">Quand et comment se fait le paiement&nbsp;? <span class="faq-q__icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></summary><p class="faq-a">Le paiement est sécurisé et n'intervient qu'à la fin de l'intervention, une fois le travail réalisé. Le prix vous est communiqué avant, et c'est vous qui décidez.</p></details>
+        </div>
+        <div class="text-center" style="margin-top:36px"><a href="#lead" class="btn btn--primary btn--lg" data-cta="faq">Être rappelé rapidement</a></div>
+      </div>
+    </section>
+
+    <!-- ================= FINAL CTA ================= -->
+    <section class="section final-cta" data-section="final">
+      <div class="container">
+        <h2 class="reveal">Un projet, une urgence, une envie de travaux&nbsp;?</h2>
+        <p class="reveal">Décrivez votre besoin : Kelkun vous met en relation avec un artisan vérifié près de chez vous. Gratuit et sans engagement.</p>
+        <div class="final-cta__actions reveal"><a href="#lead" class="btn btn--primary btn--lg" data-cta="final">Être rappelé rapidement</a></div>
+        <p class="final-cta__phone reveal">Ou appelez-nous au <a href="tel:+33449420039" data-cta="final-phone">04 49 42 00 39</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <a href="https://www.kelkun.com/" target="_blank" rel="noopener noreferrer" aria-label="Accueil Kelkun"><img class="site-footer__logo" src="img/logo-kelkun-blanc.webp" width="150" height="54" alt="Kelkun — Le futur de l'artisanat" /></a>
+      <p>Kelkun met en relation les particuliers avec des artisans vérifiés près de chez eux. 85 métiers, +5 000 professionnels vérifiés et assurés.</p>
+      <p class="footer-legal">© Kelkun · <a href="https://www.kelkun.com/mentions-legales/" target="_blank" rel="noopener noreferrer">Mentions légales</a> · <a href="https://www.kelkun.com/politique-de-confidentialite/" target="_blank" rel="noopener noreferrer">Politique de confidentialité</a> · <a href="https://www.kelkun.com/contactez-nous/" target="_blank" rel="noopener noreferrer">Nous contacter</a></p>
+    </div>
+  </footer>
+
+  <div class="mobile-cta">
+    <a href="tel:+33449420039" class="btn btn--accent mobile-cta__call" data-cta="mobile-phone">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      <span class="mobile-cta__txt"><small>Appeler maintenant</small><strong>04 49 42 00 39</strong></span>
+    </a>
+  </div>
+
+  <script>
+    var nav = document.getElementById('nav'), mcta = document.querySelector('.mobile-cta');
+    function onScroll(){ nav.classList.toggle('scrolled', window.scrollY > 12); mcta.classList.toggle('show', window.scrollY > 480); }
+    window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+    var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} }); }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+  </script>
+</body>
+</html>
