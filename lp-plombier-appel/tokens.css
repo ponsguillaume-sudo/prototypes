@@ -1,0 +1,479 @@
+/* ================================================
+   KELKUN DESIGN SYSTEM v2 — TOKENS
+   Source: Figma "Kelkun - Design System / Foundations"
+   Généré depuis design-tokens.tokens.json
+   ================================================ */
+
+/* Poppins est chargée via next/font/google (voir app/layout.tsx) */
+
+:root {
+
+  /* ================================================
+     COLORS
+     ================================================ */
+
+  --color-white: #ffffff;
+  --color-black: #000000;
+
+  /* Primary (Teal) */
+  --color-primary:     #03c5b8;
+  --color-primary-10:  #f1fefc;
+  --color-primary-25:  #d5fbf6;
+  --color-primary-50:  #c2faf3;
+  --color-primary-100: #93f6e9;
+  --color-primary-200: #76ede0;
+  --color-primary-300: #59e3d6;
+  --color-primary-400: #3cdacc;
+  --color-primary-450: #0ee1cf;
+  --color-primary-500: #03c5b8;
+  --color-primary-600: #029284;
+  --color-primary-700: #015f56;
+  --color-primary-800: #012d29;
+
+  /* Secondary (Navy) */
+  --color-secondary:     #0e2f58;
+  --color-secondary-1:   #f0fbfc; /* bleu ciel BTC Kelkun — fonds de sections clairs */
+  --color-secondary-2:   #e6f9f8; /* turquoise très clair — fonds des chips/icônes (on-brand) */
+  --color-secondary-10:  #eeeff7;
+  --color-secondary-25:  #e0e2f0;
+  --color-secondary-50:  #bdc3e0;
+  --color-secondary-100: #9aa3d0;
+  --color-secondary-200: #7e8cb8;
+  --color-secondary-300: #6274a0;
+  --color-secondary-400: #465d88;
+  --color-secondary-500: #0e2f58;
+  --color-secondary-600: #0a2342;
+  --color-secondary-700: #07172c;
+  --color-secondary-800: #030c16;
+
+  /* Tertiary (Yellow) */
+  --color-tertiary:     #ffc114;
+  --color-tertiary-50:  #fffbeb;
+  --color-tertiary-100: #fff5c6;
+  --color-tertiary-200: #ffe9ad;
+  --color-tertiary-300: #ffdc7a;
+  --color-tertiary-400: #ffce47;
+  --color-tertiary-500: #ffc114;
+  --color-tertiary-600: #e0a500;
+  --color-tertiary-700: #ad7f00;
+  --color-tertiary-800: #7a5a00;
+
+  /* Quarternary (Orange) */
+  --color-quarternary:     #ff7b1e;
+  --color-quarternary-50:  #fff7ed;
+  --color-quarternary-100: #ffedd4;
+  --color-quarternary-200: #ffd7a8;
+  --color-quarternary-300: #ffbb70;
+  --color-quarternary-400: #ff9237;
+  --color-quarternary-500: #ff7b1e;
+  --color-quarternary-600: #f05706;
+  --color-quarternary-700: #c74007;
+  --color-quarternary-800: #9e330e;
+  --color-quarternary-900: #7f2c0f;
+  --color-quarternary-950: #451305;
+
+  /* Neutral (Gray) */
+  --color-neutral-50:  #fafafa;
+  --color-neutral-100: #f5f5f5;
+  --color-neutral-200: #e5e5e5;
+  --color-neutral-300: #d4d4d4;
+  --color-neutral-400: #a3a3a3;
+  --color-neutral-500: #737373;
+  --color-neutral-600: #525252;
+  --color-neutral-700: #404040;
+  --color-neutral-800: #262626;
+  --color-neutral-900: #171717;
+  --color-neutral-950: #0a0a0a;
+
+  /* Success (Green) */
+  --color-success:     #3faf38;
+  --color-success-50:  #f3fbf2;
+  --color-success-100: #e2f8e0;
+  --color-success-200: #c7efc3;
+  --color-success-300: #99e194;
+  --color-success-400: #65ca5e;
+  --color-success-500: #3faf38;
+  --color-success-600: #2f9029;
+  --color-success-700: #277223;
+  --color-success-800: #235a21;
+  --color-success-900: #1e4a1d;
+
+  /* Info (Blue) */
+  --color-info:     #3cb0f5;
+  --color-info-50:  #effaff;
+  --color-info-100: #dbf3fe;
+  --color-info-200: #bfebfe;
+  --color-info-300: #94dffc;
+  --color-info-400: #61cbf9;
+  --color-info-500: #3cb0f5;
+  --color-info-600: #2694ea;
+  --color-info-700: #1f80dc;
+  --color-info-800: #1f65ae;
+  --color-info-900: #1f5589;
+  --color-info-950: #173454;
+
+  /* Warning (Amber) */
+  --color-warning:     #c27b30;
+  --color-warning-50:  #fcf7ee;
+  --color-warning-100: #f5e9d0;
+  --color-warning-200: #e9d19e;
+  --color-warning-300: #deb66b;
+  --color-warning-400: #d69f49;
+  --color-warning-500: #c27b30;
+  --color-warning-600: #b5642a;
+  --color-warning-700: #964a27;
+  --color-warning-800: #7b3c25;
+  --color-warning-900: #663221;
+  --color-warning-950: #3a180e;
+
+  /* Error (Red) */
+  --color-error:     #fa4a57;
+  --color-error-50:  #fff1f1;
+  --color-error-100: #ffe4e3;
+  --color-error-200: #ffcbcd;
+  --color-error-300: #ffa1a4;
+  --color-error-400: #ff6d74;
+  --color-error-500: #fa4a57;
+  --color-error-600: #e71731;
+  --color-error-700: #c30d27;
+  --color-error-800: #a30e28;
+  --color-error-900: #8c0f2a;
+  --color-error-950: #4e0311;
+
+  /* Accent (Perano/Purple) */
+  --color-accent:     #6778ed;
+  --color-accent-50:  #eff4fe;
+  --color-accent-100: #e1ebfe;
+  --color-accent-200: #c9d8fc;
+  --color-accent-300: #b1c5fa;
+  --color-accent-400: #859af4;
+  --color-accent-500: #6778ed;
+  --color-accent-600: #4b52e0;
+  --color-accent-700: #3c3fc6;
+  --color-accent-800: #3337a0;
+  --color-accent-900: #30357f;
+  --color-accent-950: #1c1e4a;
+
+  /* Stone (Blue-Gray) */
+  --color-stone-50:  #dee5ef;
+  --color-stone-100: #aabfd8;
+  --color-stone-200: #7c99ba;
+  --color-stone-300: #5d748d;
+  --color-stone-400: #405163;
+  --color-stone-500: #25303c;
+  --color-stone-550: #192129;
+  --color-stone-600: #0c1218;
+
+  /* Specifics — Kelkun Services */
+  --color-urgence:   #ff634d;
+  --color-depannage: #ffc114;
+  --color-travaux:   #1c61c5;
+
+
+  /* ================================================
+     TYPOGRAPHY
+     ================================================ */
+
+  --font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* Font sizes — source: font/size/* */
+  --font-size-xs:   8px;
+  --font-size-sm:   10px;
+  --font-size-md:   12px;
+  --font-size-lg:   14px;
+  --font-size-xl:   16px;
+  --font-size-2xl:  20px;
+  --font-size-3xl:  22px;
+  --font-size-4xl:  24px;
+  --font-size-5xl:  32px;
+  --font-size-6xl:  36px;
+  --font-size-7xl:  40px;
+  --font-size-8xl:  48px;
+  --font-size-9xl:  64px;
+  --font-size-10xl: 96px;
+  --font-size-11xl: 128px;
+
+  /* Font weights — source: font/weight/* */
+  --font-weight-thin:       100;
+  --font-weight-extralight: 200;
+  --font-weight-light:      300;
+  --font-weight-normal:     400;
+  --font-weight-medium:     500;
+  --font-weight-semibold:   600;
+  --font-weight-bold:       700;
+  --font-weight-extrabold:  800;
+  --font-weight-black:      900;
+
+  /* Line heights — source: font/line-height/* (valeurs px absolues) */
+  --line-height-3:  12px;
+  --line-height-4:  16px;
+  --line-height-5:  20px;
+  --line-height-6:  24px;
+  --line-height-7:  28px;
+  --line-height-8:  32px;
+  --line-height-9:  36px;
+  --line-height-10: 40px;
+  --line-height-12: 48px;
+  --line-height-15: 60px;
+  --line-height-18: 72px;
+  --line-height-24: 96px;
+  --line-height-32: 128px;
+
+  /* Letter spacing / tracking — source: font/tracking/* */
+  --tracking-tighter: -0.8px;
+  --tracking-tight:   -0.4px;
+  --tracking-normal:   0px;
+  --tracking-wide:     0.4px;
+  --tracking-wider:    0.8px;
+  --tracking-widest:   1.6px;
+
+
+  /* ================================================
+     SPACING — source: space/space/x (x = y, unifié)
+     Échelle: n × 4px
+     ================================================ */
+
+  --space-0:  0px;
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-7:  28px;
+  --space-8:  32px;
+  --space-9:  36px;
+  --space-10: 40px;
+  --space-11: 44px;
+  --space-12: 48px;
+  --space-14: 56px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-28: 112px;
+  --space-32: 128px;
+  --space-36: 144px;
+  --space-40: 160px;
+  --space-44: 176px;
+  --space-48: 192px;
+  --space-52: 208px;
+  --space-56: 224px;
+  --space-60: 240px;
+  --space-64: 256px;
+  --space-72: 288px;
+  --space-80: 320px;
+  --space-96: 384px;
+
+
+  /* ================================================
+     BORDER RADIUS — source: border-radius/*
+     ================================================ */
+
+  --rounded-none: 0px;
+  --rounded-xs:   2px;
+  --rounded-sm:   4px;
+  --rounded-md:   6px;
+  --rounded-lg:   8px;
+  --rounded-xl:   12px;
+  --rounded-2xl:  16px;
+  --rounded-3xl:  24px;
+  --rounded-4xl:  32px;
+  --rounded-5xl:  40px;
+  --rounded-full: 9999px;
+
+
+  /* ================================================
+     BORDER WIDTH — source: border-width/*
+     ================================================ */
+
+  --border-0: 0px;
+  --border:   1px;
+  --border-2: 2px;
+  --border-4: 4px;
+  --border-8: 8px;
+
+
+  /* ================================================
+     STROKE WIDTH — source: stroke-width/*
+     ================================================ */
+
+  --stroke-05:  0.5px;
+  --stroke-075: 0.75px;
+  --stroke-1:   1px;
+  --stroke-125: 1.25px;
+  --stroke-15:  1.5px;
+  --stroke-175: 1.75px;
+  --stroke-2:   2px;
+  --stroke-225: 2.25px;
+  --stroke-25:  2.5px;
+  --stroke-275: 2.75px;
+  --stroke-3:   3px;
+
+
+  /* ================================================
+     OPACITY — source: opacity/* (valeurs 0–1)
+     ================================================ */
+
+  --opacity-0:   0;
+  --opacity-5:   0.05;
+  --opacity-10:  0.10;
+  --opacity-15:  0.15;
+  --opacity-20:  0.20;
+  --opacity-25:  0.25;
+  --opacity-30:  0.30;
+  --opacity-35:  0.35;
+  --opacity-40:  0.40;
+  --opacity-45:  0.45;
+  --opacity-50:  0.50;
+  --opacity-55:  0.55;
+  --opacity-60:  0.60;
+  --opacity-65:  0.65;
+  --opacity-70:  0.70;
+  --opacity-75:  0.75;
+  --opacity-80:  0.80;
+  --opacity-85:  0.85;
+  --opacity-90:  0.90;
+  --opacity-95:  0.95;
+  --opacity-100: 1;
+
+
+  /* ================================================
+     SEMANTIC ALIASES — TEXT
+     ================================================ */
+
+  --text-primary:     var(--color-secondary);
+  --text-secondary:   var(--color-neutral-600);
+  --text-tertiary:    var(--color-neutral-500);
+  --text-muted:       var(--color-neutral-400);
+  --text-inverse:     var(--color-white);
+  --text-brand:       var(--color-primary);
+  --text-brand-dark:  var(--color-primary-700);
+  --text-error:       var(--color-error);
+  --text-success:     var(--color-success);
+  --text-warning:     var(--color-warning);
+  --text-info:        var(--color-info);
+
+
+  /* ================================================
+     SEMANTIC ALIASES — BACKGROUND
+     ================================================ */
+
+  --bg-primary:        var(--color-white);
+  --bg-secondary:      var(--color-neutral-50);
+  --bg-tertiary:       var(--color-neutral-100);
+  --bg-inverse:        var(--color-secondary);
+  --bg-brand:          var(--color-primary);
+  --bg-brand-subtle:   var(--color-primary-10);
+  --bg-brand-light:    var(--color-primary-50);
+  --bg-error:          var(--color-error-50);
+  --bg-error-strong:   var(--color-error);
+  --bg-success:        var(--color-success-50);
+  --bg-success-strong: var(--color-success);
+  --bg-warning:        var(--color-warning-50);
+  --bg-warning-strong: var(--color-warning);
+  --bg-info:           var(--color-info-50);
+  --bg-info-strong:    var(--color-info);
+
+
+  /* ================================================
+     SEMANTIC ALIASES — BORDER COLOR
+     ================================================ */
+
+  --border-color-default: var(--color-neutral-200);
+  --border-color-strong:  var(--color-neutral-300);
+  --border-color-subtle:  var(--color-neutral-100);
+  --border-color-brand:   var(--color-primary);
+  --border-color-error:   var(--color-error);
+  --border-color-success: var(--color-success);
+  --border-color-warning: var(--color-warning);
+  --border-color-info:    var(--color-info);
+
+
+  /* ================================================
+     SEMANTIC ALIASES — INTERACTIVE
+     ================================================ */
+
+  --interactive-primary:         var(--color-primary);
+  --interactive-primary-hover:   var(--color-primary-600);
+  --interactive-primary-active:  var(--color-primary-700);
+  --interactive-secondary:       var(--color-secondary);
+  --interactive-secondary-hover: var(--color-secondary-600);
+  --interactive-disabled:        var(--color-neutral-300);
+  --interactive-disabled-text:   var(--color-neutral-400);
+
+
+  /* ================================================
+     SHADOWS — source: Figma Effect Styles (effect/shadow/*)
+     ================================================ */
+
+  --shadow-xs:  0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-sm:  0 1px 3px rgba(0, 0, 0, 0.10);
+  --shadow-md:  0 4px 6px rgba(0, 0, 0, 0.07);
+  --shadow-lg:  0 10px 15px rgba(0, 0, 0, 0.10);
+  --shadow-xl:  0 20px 25px rgba(0, 0, 0, 0.10);
+  --shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.25);
+
+
+  /* ================================================
+     Z-INDEX — source: z-index/*
+     ================================================ */
+
+  --z-base:     0;
+  --z-raised:   10;
+  --z-dropdown: 100;
+  --z-sticky:   200;
+  --z-overlay:  300;
+  --z-modal:    400;
+  --z-popover:  500;
+  --z-toast:    600;
+
+
+  /* ================================================
+     TRANSITIONS — source: Figma collection "system"
+     ================================================ */
+
+  /* Durées (ms) */
+  --duration-fast:   100ms;
+  --duration-base:   150ms;
+  --duration-slow:   200ms;
+  --duration-slower: 300ms;
+
+  /* Courbes */
+  --ease-default: ease;
+  --ease-in-out:  cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-in:      cubic-bezier(0.4, 0, 1, 1);
+  --ease-out:     cubic-bezier(0, 0, 0.2, 1);
+  --ease-spring:  cubic-bezier(0.34, 1.56, 0.64, 1);
+
+
+  /* ================================================
+     FOCUS RING — source: Figma collection "system"
+     ================================================ */
+
+  --focus-ring-width:  2px;
+  --focus-ring-color:  var(--color-primary);
+  --focus-ring-offset: 2px;
+
+
+  /* ================================================
+     CONTROL HEIGHTS — source: Figma collection "system"
+     ================================================ */
+
+  --control-height-xs: 28px;
+  --control-height-sm: 32px;
+  --control-height-md: 40px;
+  --control-height-lg: 48px;
+  --control-height-xl: 56px;
+
+
+  /* ================================================
+     BREAKPOINTS — source: Figma collection "system"
+     ================================================ */
+
+  --breakpoint-sm:  640px;
+  --breakpoint-md:  768px;
+  --breakpoint-lg:  1024px;
+  --breakpoint-xl:  1280px;
+  --breakpoint-2xl: 1440px;
+
+}

@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Plombier à Montpellier — On vous appelle dans l'heure | Kelkun</title>
+  <meta name="description" content="Besoin d'un plombier à Montpellier ? Appelez Kelkun : on qualifie votre besoin et on vous trouve un artisan vérifié, proche de chez vous, sous 48 h. +5 000 pros vérifiés, protection juridique incluse." />
+  <meta name="robots" content="noindex, nofollow" />
+  <!-- ITERATION "APPEL-FIRST" — base : decla.kelkun.com/plombier-montpellier-alentours
+       /!\ DELAIS A VALIDER AVEC LE SERVICE CLIENT AVANT TOUTE DIFFUSION :
+           - "dans l'heure" (promesse de rappel)
+           - "sous 48 h" (mise en relation artisan)
+       On ne promet que ce qu'on tient (retour X). -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" />
+  <link rel="stylesheet" href="tokens.css" />
+  <link rel="stylesheet" href="lp.css" />
+  <style>
+    .clarity-pill { display:inline-flex; align-items:center; gap:8px; background:var(--color-secondary-2); color:var(--color-primary-600); border:1px solid var(--color-primary-200); font-size:13px; font-weight:600; padding:7px 14px; border-radius:999px; margin-bottom:18px; line-height:1.2; }
+
+    /* ===== CTA TÉLÉPHONE (CTA principal) ===== */
+    .phone-cta { display:inline-flex; align-items:center; gap:16px; background:var(--color-quarternary); color:#fff; border-radius:var(--rounded-full); padding:16px 32px 16px 22px; text-decoration:none; box-shadow:0 10px 30px rgba(255,123,30,.35); transition:transform .15s, box-shadow .15s; }
+    .phone-cta:hover { transform:translateY(-2px); box-shadow:0 14px 38px rgba(255,123,30,.45); }
+    .phone-cta__ic { width:46px; height:46px; border-radius:50%; background:rgba(255,255,255,.18); display:grid; place-items:center; flex-shrink:0; }
+    .phone-cta__txt { display:flex; flex-direction:column; line-height:1.15; }
+    .phone-cta__txt small { font-size:12.5px; font-weight:600; opacity:.92; letter-spacing:.02em; }
+    .phone-cta__txt strong { font-size:30px; font-weight:800; letter-spacing:-.01em; }
+    .phone-note { font-size:13px; color:var(--color-neutral-500); margin-top:10px; }
+    /* téléphone dans la nav */
+    .nav__tel { display:inline-flex; align-items:center; gap:9px; margin-left:auto; text-decoration:none; color:var(--color-secondary); flex-shrink:0; }
+    .nav__tel-ic { width:34px; height:34px; border-radius:50%; background:var(--color-quarternary); color:#fff; display:grid; place-items:center; flex-shrink:0; }
+    .nav__tel-txt { display:flex; flex-direction:column; line-height:1.1; }
+    .nav__tel-txt small { font-size:10.5px; font-weight:600; color:var(--color-neutral-500); }
+    .nav__tel-txt strong { font-size:19px; font-weight:800; }
+
+    /* ===== réassurance en ligne ===== */
+    .trust-row { display:flex; flex-wrap:wrap; gap:10px; margin-top:22px; }
+    .trust-chip { display:inline-flex; align-items:center; gap:7px; background:#fff; border:1px solid var(--color-neutral-200); border-radius:999px; padding:7px 13px; font-size:13px; font-weight:600; color:var(--color-secondary-600); }
+    .trust-chip svg { color:var(--color-primary-600); flex-shrink:0; }
+
+    /* ===== équipe (section sombre) ===== */
+    .team { background: radial-gradient(120% 120% at 15% 0%, rgba(3,197,184,.20) 0%, transparent 55%), linear-gradient(160deg, var(--color-secondary) 0%, var(--color-secondary-600) 100%); color:#fff; }
+    .team__grid { display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:center; }
+    .team__eyebrow { font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--color-primary); margin-bottom:10px; }
+    .team__title { font-size:clamp(26px,3.5vw,40px); font-weight:700; line-height:1.15; margin-bottom:16px; }
+    .team__text { font-size:17px; color:var(--color-secondary-50); line-height:1.65; margin-bottom:22px; }
+    .team__list { display:flex; flex-direction:column; gap:12px; }
+    .team__list li { display:flex; gap:11px; align-items:flex-start; font-size:15px; color:var(--color-secondary-50); }
+    .team__list .usp-check { background:rgba(3,197,184,.22); color:var(--color-primary); }
+    .team__media { border-radius:var(--rounded-xl); overflow:hidden; background:#05080f; border:1px solid rgba(255,255,255,.08); box-shadow:0 20px 54px rgba(0,0,0,.35); }
+    .team__media img { width:100%; height:auto; display:block; }
+
+    /* ===== rappel secondaire ===== */
+    .callback { background:#fff; border:1px solid var(--color-neutral-200); border-radius:var(--rounded-xl); padding:28px 26px; max-width:620px; margin:0 auto; text-align:center; box-shadow:0 10px 30px rgba(0,0,0,.05); }
+    .callback h3 { font-size:20px; font-weight:700; color:var(--color-secondary); margin-bottom:6px; }
+    .callback p { font-size:14.5px; color:var(--color-neutral-600); line-height:1.55; margin-bottom:20px; }
+    .callback__row { display:flex; gap:10px; }
+    .callback__row .phone-row { flex:1; }
+    .callback__legal { font-size:11.5px; color:var(--color-neutral-500); margin-top:14px; line-height:1.5; }
+    .phone-row { display:flex; gap:8px; }
+    .phone-row .cc { display:flex; align-items:center; gap:6px; padding:0 12px; height:52px; border:1px solid var(--color-secondary-25); border-radius:var(--rounded-lg); font-size:14px; color:var(--color-secondary-500); flex-shrink:0; }
+    .phone-row input { flex:1; height:52px; }
+
+    /* ===== avantages ===== */
+    .adv-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+    .adv-card { background:#fff; border:1px solid var(--color-neutral-200); border-radius:var(--rounded-xl); padding:24px 22px; }
+    .adv-card__ic { width:48px; height:48px; border-radius:14px; background:var(--color-secondary-2); color:var(--color-primary-600); display:grid; place-items:center; margin-bottom:14px; }
+    .adv-card h3 { font-size:16px; font-weight:700; color:var(--color-secondary); margin-bottom:6px; }
+    .adv-card p { font-size:14px; color:var(--color-neutral-600); line-height:1.55; }
+
+    @media (max-width: 860px) { .team__grid { grid-template-columns:1fr; gap:32px; } .adv-grid { grid-template-columns:1fr 1fr; } }
+    @media (max-width: 700px) { .nav__tel-txt small { display:none; } .nav__tel-txt strong { font-size:16px; } }
+    @media (max-width: 600px) {
+      .adv-grid { grid-template-columns:1fr; }
+      .hero__layout { grid-template-columns:1fr; }
+      .hero__intro, .hero__visual { min-width:0; }
+      .phone-cta { width:100%; justify-content:center; padding:14px 20px; }
+      .phone-cta__txt strong { font-size:26px; }
+      .callback__row { flex-direction:column; }
+    }
+  </style>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+</head>
+<body>
+  <a class="skip-link" href="tel:+33449420039">Appeler Kelkun</a>
+
+  <!-- ================= NAV : le téléphone EST le CTA ================= -->
+  <nav class="nav" id="nav">
+    <div class="container nav__inner">
+      <a href="https://www.kelkun.com/" target="_blank" rel="noopener noreferrer" aria-label="Accueil Kelkun" class="nav__logo-link"><img class="nav__logo" src="img/logo-kelkun.webp" width="111" height="40" alt="Kelkun — Le futur de l'artisanat" /></a>
+      <a class="nav__tel" href="tel:+33449420039" data-cta="nav-phone">
+        <span class="nav__tel-ic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
+        <span class="nav__tel-txt"><small>Appelez maintenant</small><strong>04 49 42 00 39</strong></span>
+      </a>
+    </div>
+  </nav>
+
+  <main id="main">
+    <!-- ================= HERO ================= -->
+    <header class="hero" data-section="hero">
+      <div class="container hero__layout">
+        <div class="hero__intro">
+          <div class="clarity-pill">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Plateforme de mise en relation · +5 000 pros vérifiés
+          </div>
+          <h1 class="hero__title">Besoin d'un plombier à Montpellier&nbsp;? <span class="accent">On vous appelle <span class="accent-u">dans l'heure</span></span></h1>
+          <p class="hero__sub">Un seul appel suffit : on qualifie votre besoin, puis on vous trouve un <strong>artisan vérifié, proche de chez vous, sous 48 h</strong>.</p>
+
+          <a class="phone-cta" href="tel:+33449420039" data-cta="hero-phone">
+            <span class="phone-cta__ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
+            <span class="phone-cta__txt"><small>Appeler maintenant</small><strong>04 49 42 00 39</strong></span>
+          </a>
+          <p class="phone-note">Appel gratuit · une équipe en France vous répond</p>
+
+          <div class="trust-row">
+            <span class="trust-chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg> Artisans vérifiés &amp; assurés</span>
+            <span class="trust-chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15 9 22 9 17 14 19 21 12 17 5 21 7 14 2 9 9 9"/></svg> 4,7/5 · +10 200 clients</span>
+            <span class="trust-chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Protection juridique incluse</span>
+          </div>
+        </div>
+
+        <div class="hero__visual">
+          <div class="hero__visual-blob" aria-hidden="true"></div>
+          <figure class="hero__media" style="position:relative;z-index:1">
+            <img src="img/hero-plombier.webp" width="1100" height="550" alt="Artisan Kelkun accueilli par un client à son domicile" style="border-radius:var(--rounded-xl)" />
+          </figure>
+        </div>
+      </div>
+    </header>
+
+    <!-- ================= LA PROMESSE EN 3 TEMPS ================= -->
+    <section class="section section--light" id="how" data-section="how">
+      <div class="container">
+        <div class="section__header text-center reveal">
+          <p class="section__eyebrow">Comment ça marche</p>
+          <h2 class="section__title">Un appel, et on s'occupe du reste</h2>
+        </div>
+        <div class="how-steps reveal">
+          <div class="how-step"><div class="how-step__num">1</div><h3 class="how-step__title">Vous appelez</h3><p class="how-step__text">Vous nous décrivez votre problème en deux minutes. Pas de formulaire, pas d'attente.</p></div>
+          <div class="how-step"><div class="how-step__num">2</div><h3 class="how-step__title">On qualifie votre besoin</h3><p class="how-step__text">Notre équipe cerne l'urgence, le métier et votre secteur — et lance la recherche.</p></div>
+          <div class="how-step"><div class="how-step__num">3</div><h3 class="how-step__title">Un artisan vérifié sous 48 h</h3><p class="how-step__text">On vous met en relation avec un plombier vérifié et assuré, proche de chez vous.</p></div>
+        </div>
+        <div class="text-center" style="margin-top:40px"><a href="tel:+33449420039" class="btn btn--accent btn--lg" data-cta="how-phone">Appeler le 04 49 42 00 39</a></div>
+      </div>
+    </section>
+
+    <!-- ================= L'ÉQUIPE QUI VOUS RÉPOND ================= -->
+    <section class="section team" data-section="equipe">
+      <div class="container team__grid reveal">
+        <div>
+          <p class="team__eyebrow">L'équipe Kelkun</p>
+          <h2 class="team__title">Qui décroche quand vous appelez&nbsp;?</h2>
+          <p class="team__text">Pas un robot, pas un serveur vocal. Une équipe basée en France, qui comprend votre besoin, le qualifie, et lance la recherche d'artisan pendant que vous êtes encore au téléphone.</p>
+          <ul class="team__list">
+            <li><span class="usp-check"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><span>Une équipe basée en France, joignable directement</span></li>
+            <li><span class="usp-check"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><span>Un interlocuteur unique, du 1<sup>er</sup> appel à la fin des travaux</span></li>
+            <li><span class="usp-check"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><span>C'est nous qui démarchons les artisans, pas vous</span></li>
+          </ul>
+          <a href="tel:+33449420039" class="btn btn--accent btn--lg" data-cta="equipe-phone" style="margin-top:26px">Appeler le 04 49 42 00 39</a>
+        </div>
+        <figure class="team__media">
+          <img src="img/equipe.webp" width="900" height="833" loading="lazy" alt="L'équipe service client Kelkun, basée en France" />
+        </figure>
+      </div>
+    </section>
+
+    <!-- ================= RÉASSURANCE ================= -->
+    <section class="section" id="garanties" data-section="garanties">
+      <div class="container">
+        <div class="section__header text-center reveal">
+          <p class="section__eyebrow">Vos garanties</p>
+          <h2 class="section__title">Pourquoi passer par Kelkun</h2>
+          <p class="section__sub" style="margin:0 auto">Kelkun n'est pas un plombier : c'est une plateforme qui vous met en relation avec le bon artisan — et vous protège jusqu'à la fin des travaux.</p>
+        </div>
+        <div class="adv-grid reveal">
+          <div class="adv-card"><div class="adv-card__ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></div><h3>+5 000 pros vérifiés</h3><p>Identité vérifiée, assurance contrôlée, avis clients réels. Pas d'artisan choisi au hasard.</p></div>
+          <div class="adv-card"><div class="adv-card__ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><h3>Protection juridique incluse</h3><p>Jusqu'à 10 000 € (Allianz), incluse sans surcoût, pour sécuriser votre intervention.</p></div>
+          <div class="adv-card"><div class="adv-card__ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg></div><h3>Paiement sécurisé</h3><p>Vous ne réglez qu'à la fin de l'intervention, une fois le travail réalisé.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= RAPPEL (secondaire) ================= -->
+    <section class="section section--light" id="rappel" data-section="rappel">
+      <div class="container">
+        <div class="callback reveal">
+          <h3>Vous ne pouvez pas appeler maintenant&nbsp;?</h3>
+          <p>Laissez votre numéro, on vous rappelle. C'est tout ce dont on a besoin.</p>
+          <form class="lead-form" onsubmit="return false">
+            <div class="callback__row">
+              <div class="phone-row"><span class="cc">🇫🇷 +33</span><input type="tel" id="phone" inputmode="tel" placeholder="6 12 34 56 78" aria-label="Votre numéro de téléphone" /></div>
+              <button type="submit" class="btn btn--primary btn--lg" data-cta="rappel">Être rappelé</button>
+            </div>
+            <p class="callback__legal">En validant, vous acceptez d'être recontacté par Kelkun au sujet de votre demande. Données traitées selon notre <a href="https://www.kelkun.com/politique-de-confidentialite/" target="_blank" rel="noopener noreferrer">politique de confidentialité</a>.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= AVIS ================= -->
+    <section class="section" id="avis" data-section="avis">
+      <div class="container">
+        <div class="section__header text-center reveal">
+          <p class="section__eyebrow">Avis clients</p>
+          <h2 class="section__title">Ils nous font confiance</h2>
+          <p class="avis-rating"><span class="avis-rating__stars" aria-hidden="true">★★★★★</span> <strong>4,7/5</strong> — Avis Google vérifiés</p>
+        </div>
+        <div class="testimonials-grid reveal">
+          <article class="testimonial-card">
+            <div class="testimonial-card__top"><span class="testimonial-card__stars">★★★★★</span><span class="testimonial-card__verified"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Avis vérifié</span></div>
+            <p class="testimonial-card__quote">« J'ai appelé, on m'a répondu tout de suite. Le plombier m'a contacté dans la foulée. Zéro formulaire, zéro attente. »</p>
+            <div class="testimonial-card__author"><img class="testimonial-card__avatar" src="img/avis-marie.webp" width="42" height="42" loading="lazy" alt="Portrait de Marie L." /><div><p class="testimonial-card__name">Marie L.</p><p class="testimonial-card__job">Montpellier — Beaux-Arts</p></div></div>
+          </article>
+          <article class="testimonial-card">
+            <div class="testimonial-card__top"><span class="testimonial-card__stars">★★★★★</span><span class="testimonial-card__verified"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Avis vérifié</span></div>
+            <p class="testimonial-card__quote">« Une vraie personne au bout du fil, qui comprend le problème. Ça change de tous les sites où on remplit des cases. »</p>
+            <div class="testimonial-card__author"><div class="testimonial-card__avatar testimonial-card__avatar--initial" aria-hidden="true" style="background:#7e57c2">T</div><div><p class="testimonial-card__name">Thomas R.</p><p class="testimonial-card__job">Montpellier — Port Marianne</p></div></div>
+          </article>
+          <article class="testimonial-card">
+            <div class="testimonial-card__top"><span class="testimonial-card__stars">★★★★★</span><span class="testimonial-card__verified"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Avis vérifié</span></div>
+            <p class="testimonial-card__quote">« Fuite un dimanche. J'ai appelé, ils ont trouvé quelqu'un. Le plombier était là le lendemain matin. »</p>
+            <div class="testimonial-card__author"><img class="testimonial-card__avatar" src="img/avis-sophie.webp" width="42" height="42" loading="lazy" alt="Portrait de Sophie B." /><div><p class="testimonial-card__name">Sophie B.</p><p class="testimonial-card__job">Castelnau-le-Lez</p></div></div>
+          </article>
+          <article class="testimonial-card">
+            <div class="testimonial-card__top"><span class="testimonial-card__stars">★★★★★</span><span class="testimonial-card__verified"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Avis vérifié</span></div>
+            <p class="testimonial-card__quote">« Je n'ai eu à appeler qu'un seul numéro. C'est eux qui ont démarché les artisans, pas moi. »</p>
+            <div class="testimonial-card__author"><img class="testimonial-card__avatar" src="img/avis-karim.webp" width="42" height="42" loading="lazy" alt="Photo de profil de Karim B." /><div><p class="testimonial-card__name">Karim B.</p><p class="testimonial-card__job">Lattes</p></div></div>
+          </article>
+          <article class="testimonial-card">
+            <div class="testimonial-card__top"><span class="testimonial-card__stars">★★★★★</span><span class="testimonial-card__verified"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Avis vérifié</span></div>
+            <p class="testimonial-card__quote">« Chauffe-eau HS. Appel le matin, artisan vérifié le surlendemain, prix annoncé avant. Rien à redire. »</p>
+            <div class="testimonial-card__author"><img class="testimonial-card__avatar" src="img/avis-elodie.webp" width="42" height="42" loading="lazy" alt="Photo de profil d'Élodie F." /><div><p class="testimonial-card__name">Élodie F.</p><p class="testimonial-card__job">Saint-Jean-de-Védas</p></div></div>
+          </article>
+          <article class="testimonial-card">
+            <div class="testimonial-card__top"><span class="testimonial-card__stars">★★★★★</span><span class="testimonial-card__verified"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Avis vérifié</span></div>
+            <p class="testimonial-card__quote">« Le suivi jusqu'à la fin des travaux, c'est ce qui m'a rassuré. On ne m'a pas lâché après la mise en relation. »</p>
+            <div class="testimonial-card__author"><img class="testimonial-card__avatar" src="img/avis-julien.webp" width="42" height="42" loading="lazy" alt="Photo de profil de Julien M." /><div><p class="testimonial-card__name">Julien M.</p><p class="testimonial-card__job">Pérols</p></div></div>
+          </article>
+        </div>
+        <div class="text-center" style="margin-top:36px"><a href="tel:+33449420039" class="btn btn--accent btn--lg" data-cta="avis-phone">Appeler le 04 49 42 00 39</a></div>
+      </div>
+    </section>
+
+    <!-- ================= FAQ ================= -->
+    <section class="section section--light" id="faq" data-section="faq">
+      <div class="container">
+        <div class="section__header text-center reveal">
+          <p class="section__eyebrow">Questions fréquentes</p>
+          <h2 class="section__title">Tout ce que vous voulez savoir</h2>
+        </div>
+        <div class="faq-list reveal">
+          <details class="faq-item"><summary class="faq-q">L'appel est-il gratuit&nbsp;? <span class="faq-q__icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></summary><p class="faq-a">Oui. L'appel, la qualification de votre besoin et la mise en relation avec un artisan sont gratuits et sans engagement. Vous ne payez que la prestation de l'artisan, si vous l'acceptez.</p></details>
+          <details class="faq-item"><summary class="faq-q">Kelkun est-il un plombier&nbsp;? <span class="faq-q__icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></summary><p class="faq-a">Non. Kelkun est une plateforme de mise en relation : nous ne réalisons pas les travaux. Nous qualifions votre besoin par téléphone, puis nous vous présentons un plombier vérifié et assuré près de chez vous, qui établit son devis et intervient.</p></details>
+          <details class="faq-item"><summary class="faq-q">Que se passe-t-il après mon appel&nbsp;? <span class="faq-q__icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></summary><p class="faq-a">Nous lançons la recherche auprès des plombiers vérifiés de votre secteur. Vous êtes mis en relation avec un artisan disponible, qui vous contacte pour convenir de l'intervention et vous annoncer un prix avant de commencer.</p></details>
+          <details class="faq-item"><summary class="faq-q">Les plombiers sont-ils vérifiés&nbsp;? <span class="faq-q__icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></summary><p class="faq-a">Oui : identité vérifiée, assurance professionnelle contrôlée, zone d'intervention connue et avis clients réels. Une protection juridique jusqu'à 10 000 € (Allianz) est incluse.</p></details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= FINAL ================= -->
+    <section class="section final-cta" data-section="final">
+      <div class="container">
+        <h2 class="reveal">Une fuite, une panne, un projet&nbsp;?</h2>
+        <p class="reveal">Un appel, et on vous trouve un plombier vérifié près de chez vous.</p>
+        <div class="final-cta__actions reveal">
+          <a class="phone-cta" href="tel:+33449420039" data-cta="final-phone">
+            <span class="phone-cta__ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
+            <span class="phone-cta__txt"><small>Appeler maintenant</small><strong>04 49 42 00 39</strong></span>
+          </a>
+        </div>
+        <p class="final-cta__phone reveal">Ou <a href="#rappel">laissez votre numéro</a>, on vous rappelle.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <a href="https://www.kelkun.com/" target="_blank" rel="noopener noreferrer" aria-label="Accueil Kelkun"><img class="site-footer__logo" src="img/logo-kelkun-blanc.webp" width="150" height="54" alt="Kelkun — Le futur de l'artisanat" /></a>
+      <p>Kelkun met en relation les particuliers avec des artisans vérifiés près de chez eux. Plombiers à Montpellier et dans toute la métropole.</p>
+      <p class="footer-legal">© Kelkun · <a href="https://www.kelkun.com/mentions-legales/" target="_blank" rel="noopener noreferrer">Mentions légales</a> · <a href="https://www.kelkun.com/politique-de-confidentialite/" target="_blank" rel="noopener noreferrer">Politique de confidentialité</a> · <a href="https://www.kelkun.com/contactez-nous/" target="_blank" rel="noopener noreferrer">Nous contacter</a></p>
+    </div>
+  </footer>
+
+  <div class="mobile-cta">
+    <a href="tel:+33449420039" class="btn btn--accent mobile-cta__call" data-cta="mobile-phone">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      <span class="mobile-cta__txt"><small>Appeler maintenant</small><strong>04 49 42 00 39</strong></span>
+    </a>
+  </div>
+
+  <script>
+    var nav = document.getElementById('nav'), mcta = document.querySelector('.mobile-cta');
+    function onScroll(){ nav.classList.toggle('scrolled', window.scrollY > 12); mcta.classList.toggle('show', window.scrollY > 480); }
+    window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+    var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} }); }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+  </script>
+</body>
+</html>
