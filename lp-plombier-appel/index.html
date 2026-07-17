@@ -48,8 +48,12 @@
     .team__list { display:flex; flex-direction:column; gap:12px; }
     .team__list li { display:flex; gap:11px; align-items:flex-start; font-size:15px; color:var(--color-secondary-50); }
     .team__list .usp-check { background:rgba(3,197,184,.22); color:var(--color-primary); }
-    .team__media { border-radius:var(--rounded-xl); overflow:hidden; background:#05080f; border:1px solid rgba(255,255,255,.08); box-shadow:0 20px 54px rgba(0,0,0,.35); }
-    .team__media img { width:100%; height:auto; display:block; }
+    .team__people { display:flex; align-items:center; justify-content:center; gap:16px; }
+    .team__person { width:150px; height:150px; border-radius:50%; overflow:hidden; border:3px solid rgba(255,255,255,.14); box-shadow:0 14px 34px rgba(0,0,0,.45); flex-shrink:0; }
+    .team__person img { width:100%; height:100%; object-fit:cover; display:block; transform:scale(1.12); }
+    .team__main { position:relative; flex-shrink:0; line-height:0; }
+    .team__person--main { width:210px; height:210px; border-color:var(--color-primary); }
+    .team__badge { position:absolute; right:0; bottom:6px; z-index:2; width:44px; height:44px; border-radius:50%; background:var(--color-quarternary); color:#fff; display:grid; place-items:center; border:3px solid var(--color-secondary); }
 
     /* ===== rappel secondaire ===== */
     .callback { background:#fff; border:1px solid var(--color-neutral-200); border-radius:var(--rounded-xl); padding:28px 26px; max-width:620px; margin:0 auto; text-align:center; box-shadow:0 10px 30px rgba(0,0,0,.05); }
@@ -72,6 +76,9 @@
     @media (max-width: 860px) { .team__grid { grid-template-columns:1fr; gap:32px; } .adv-grid { grid-template-columns:1fr 1fr; } }
     @media (max-width: 700px) { .nav__tel-txt small { display:none; } .nav__tel-txt strong { font-size:16px; } }
     @media (max-width: 600px) {
+      .team__person { width:104px; height:104px; }
+      .team__person--main { width:142px; height:142px; }
+      .team__badge { width:34px; height:34px; }
       .adv-grid { grid-template-columns:1fr; }
       .hero__layout { grid-template-columns:1fr; }
       .hero__intro, .hero__visual { min-width:0; }
@@ -160,9 +167,14 @@
           </ul>
           <a href="tel:+33449420039" class="btn btn--accent btn--lg" data-cta="equipe-phone" style="margin-top:26px">Appeler le 04 49 42 00 39</a>
         </div>
-        <figure class="team__media">
-          <img src="img/equipe.webp" width="900" height="833" loading="lazy" alt="L'équipe service client Kelkun, basée en France" />
-        </figure>
+        <div class="team__people">
+          <figure class="team__person"><img src="img/equipe-1.webp" width="420" height="420" loading="lazy" alt="Conseillère du service client Kelkun" /></figure>
+          <div class="team__main">
+            <figure class="team__person team__person--main"><img src="img/equipe-2.webp" width="420" height="420" loading="lazy" alt="Conseillère Kelkun au téléphone avec un client" /></figure>
+            <span class="team__badge"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
+          </div>
+          <figure class="team__person"><img src="img/equipe-3.webp" width="420" height="420" loading="lazy" alt="Conseillère du service client Kelkun" /></figure>
+        </div>
       </div>
     </section>
 
