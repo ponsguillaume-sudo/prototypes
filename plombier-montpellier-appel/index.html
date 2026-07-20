@@ -60,7 +60,8 @@
   .hero-cb__label strong{color:var(--color-secondary);font-weight:700}
   .hero-cb__row{display:flex;gap:8px}
   .hero-cb__row .phone-row{flex:1;min-width:0}
-  .hero-cb__row .btn{flex-shrink:0}
+  .hero-cb__row .btn{flex-shrink:0;background:#fff;border:1.5px solid var(--color-primary);color:var(--color-primary-600);box-shadow:none;animation:none;transition:background .15s,color .15s}
+  .hero-cb__row .btn:hover{background:var(--color-secondary-2,#eafaf8);color:var(--color-primary-600)}
   .team{background:radial-gradient(120% 120% at 15% 0%,rgba(3,197,184,.20) 0%,transparent 55%),linear-gradient(160deg,var(--color-secondary) 0%,var(--color-secondary-600) 100%);color:#fff}
   .team__grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
   .team__eyebrow{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--color-primary);margin-bottom:10px}
@@ -154,7 +155,7 @@
 <p class="hero-cb__label"><strong>Pas le temps d'appeler&nbsp;?</strong> Laissez votre numéro, on vous rappelle.</p>
 <div class="hero-cb__row">
 <div class="phone-row"><input type="tel" inputmode="tel" placeholder="Votre numéro de téléphone" aria-label="Votre numéro de téléphone"/></div>
-<button type="submit" class="btn btn--primary btn--lg" data-cta="rappel-hero">Être rappelé</button>
+<button type="submit" class="btn btn--lg" data-cta="rappel-hero">Être rappelé</button>
 </div>
 </form>
 </div>
