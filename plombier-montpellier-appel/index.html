@@ -62,6 +62,8 @@
   .hero-cb__row .phone-row{flex:1;min-width:0}
   .hero-cb__row .btn{flex-shrink:0;background:#fff;border:1.5px solid var(--color-primary);color:var(--color-primary-600);box-shadow:none;animation:none;transition:background .15s,color .15s}
   .hero-cb__row .btn:hover{background:var(--color-secondary-2,#eafaf8);color:var(--color-primary-600)}
+  .hero-cb__row .btn.is-ready{background:linear-gradient(135deg,#05d9cb 0%,var(--color-primary) 52%,var(--color-primary-600) 100%);border-color:transparent;color:#fff;box-shadow:0 10px 26px rgba(3,197,184,.4)}
+  .hero-cb__row .btn.is-ready:hover{color:#fff;transform:translateY(-2px);box-shadow:0 14px 34px rgba(3,197,184,.5)}
   .team{background:radial-gradient(120% 120% at 15% 0%,rgba(3,197,184,.20) 0%,transparent 55%),linear-gradient(160deg,var(--color-secondary) 0%,var(--color-secondary-600) 100%);color:#fff}
   .team__grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
   .team__eyebrow{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--color-primary);margin-bottom:10px}
@@ -633,9 +635,12 @@
 (function(){
   document.querySelectorAll('input[type="tel"]').forEach(function(inp){
     inp.setAttribute('maxlength','14');
+    var form=inp.closest('form');
+    var btn=form?form.querySelector('button[type="submit"]'):null;
     inp.addEventListener('input',function(){
       var v=inp.value.replace(/\D/g,'').slice(0,10);
       inp.value=v.replace(/(\d{2})(?=\d)/g,'$1 ');
+      if(btn)btn.classList.toggle('is-ready',v.length===10);
     });
   });
 })();
