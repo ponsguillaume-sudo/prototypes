@@ -629,5 +629,16 @@
   }else{els.forEach(function(e){e.classList.add('in');});}
 })();
 </script>
+<script>
+(function(){
+  document.querySelectorAll('input[type="tel"]').forEach(function(inp){
+    inp.setAttribute('maxlength','14');
+    inp.addEventListener('input',function(){
+      var v=inp.value.replace(/\D/g,'').slice(0,10);
+      inp.value=v.replace(/(\d{2})(?=\d)/g,'$1 ');
+    });
+  });
+})();
+</script>
 </body>
 </html>
