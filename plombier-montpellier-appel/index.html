@@ -64,6 +64,11 @@
   .hero-cb__row .btn:hover{background:var(--color-secondary-2,#eafaf8);color:var(--color-primary-600)}
   .hero-cb__row .btn.is-ready{background:linear-gradient(135deg,#05d9cb 0%,var(--color-primary) 52%,var(--color-primary-600) 100%);border-color:transparent;color:#fff;box-shadow:0 10px 26px rgba(3,197,184,.4)}
   .hero-cb__row .btn.is-ready:hover{color:#fff;transform:translateY(-2px);box-shadow:0 14px 34px rgba(3,197,184,.5)}
+  /* ---- Rythme des fonds de section ---- */
+  /* .certbar (CSS d'origine) forcait background:#fff + padding 26px : neutralise,
+     le bloc artisans est desormais une section a part entiere. */
+  .certbar{background:transparent;border-top:0;border-bottom:0;padding:80px 0}
+  @media (max-width:860px){.certbar{padding:56px 0}}
   /* ---- Bloc artisans renforce ---- */
   .artisans__grid{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:44px;align-items:center}
   .artisans__eyebrow{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--color-primary-600);margin-bottom:10px}
@@ -215,7 +220,7 @@
 <div class="team__people"><figure class="team__person"><img src="img/equipe-1.webp" width="420" height="420" loading="lazy" alt="Conseillère du service client Kelkun"/></figure><div class="team__main"><figure class="team__person team__person--main"><img src="img/equipe-2.webp" width="420" height="420" loading="lazy" alt="Conseillère Kelkun au téléphone avec un client"/></figure><span class="team__badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span></div><figure class="team__person"><img src="img/equipe-3.webp" width="420" height="420" loading="lazy" alt="Conseillère du service client Kelkun"/></figure></div>
 </div>
 </section>
-<section class="section section--light certbar" aria-label="Nos garanties" data-section="certbar">
+<section class="section certbar" aria-label="Nos garanties" data-section="certbar">
 <div class="container">
 <div class="artisans__grid reveal">
 <figure class="artisans__figure"><img src="img/plombier-equipe.webp" width="900" height="700" loading="lazy" alt="Plombier partenaire Kelkun vérifié, en intervention à Montpellier"/></figure>
@@ -361,7 +366,7 @@
 </div>
 </div>
 </section>
-<section class="section section--light" id="how" data-section="how">
+<section class="section" id="how" data-section="how">
 <div class="container">
 <div class="section__header text-center reveal">
 <p class="section__eyebrow">En quelques minutes</p>
@@ -389,7 +394,7 @@
 </div>
 </div>
 </section>
-<section class="section" id="prix" data-section="prix">
+<section class="section section--light" id="prix" data-section="prix">
 <div class="container">
 <div class="section__header text-center reveal">
 <p class="section__eyebrow">Combien ça coûte ?</p>
@@ -422,7 +427,7 @@
 </div>
 </div>
 </section>
-<section class="section section--light" data-section="zone">
+<section class="section" data-section="zone">
 <div class="container">
 <div class="zone-wrap reveal">
 <div class="zone-grid">
@@ -454,7 +459,7 @@
 </div>
 </div>
 </section>
-<section class="section" id="faq" data-section="faq">
+<section class="section section--light" id="faq" data-section="faq">
 <div class="container">
 <div class="section__header text-center reveal">
 <p class="section__eyebrow">Questions fréquentes</p>
@@ -515,7 +520,7 @@
 </div>
 </div>
 </section>
-<section class="section section--light" id="rappel" data-section="rappel">
+<section class="section" id="rappel" data-section="rappel">
 <div class="container">
 <div class="callback reveal">
 <span class="callback__sla"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> On vous rappelle sous 15 min<!-- SLA A VALIDER SERVICE CLIENT --></span>
