@@ -80,10 +80,14 @@
   .allianz-badge span{display:inline-flex;align-items:center;gap:7px;font-size:13.5px;color:var(--color-neutral-600,#5b6b7b);line-height:1.35;min-width:0}
   .allianz-badge svg{color:var(--color-primary-600);flex-shrink:0}
   .allianz-badge strong{color:var(--color-secondary);font-weight:700}
+  .allianz-badge__amount::before{content:"— "}
   @media (max-width:640px){
-    .allianz-badge{flex-direction:column;align-items:flex-start;gap:9px;padding:12px 13px}
+    .allianz-badge{flex-direction:column;align-items:center;text-align:center;gap:10px;padding:13px}
     .allianz-badge span{display:block;font-size:13px}
     .allianz-badge span svg{display:inline-block;vertical-align:-2px;margin-right:5px}
+    .allianz-badge .allianz-badge__amount{display:block;margin-top:2px}
+    .allianz-badge__amount::before{content:none}
+    .allianz-badge img{width:100%;height:auto;padding:9px 12px;border-radius:8px}
   }
   .artisans__stat span{display:block;font-size:11.5px;color:var(--color-neutral-600,#5b6b7b);margin-top:3px;line-height:1.3}
   .artisans__list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:15px}
@@ -224,7 +228,7 @@
 <div class="artisans__stat"><b>+5 000</b><span>artisans vérifiés</span></div>
 <div class="artisans__stat"><b>4,8/5</b><span>sur avis vérifiés</span></div>
 </div>
-<div class="allianz-badge"><img src="img/allianz.webp" width="256" height="39" alt="Allianz — Protection juridique"/><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><strong>Protection juridique</strong> incluse — jusqu'à 10&nbsp;000&nbsp;€</span></div>
+<div class="allianz-badge"><img src="img/allianz.webp" width="256" height="39" alt="Allianz — Protection juridique"/><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><strong>Protection juridique</strong> incluse<span class="allianz-badge__amount">jusqu'à 10&nbsp;000&nbsp;€</span></span></div>
 <ul class="artisans__list">
 <li class="artisans__item"><span class="artisans__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span><span><strong class="artisans__t">Kbis et identité contrôlés</strong><span class="artisans__d">Entreprise réellement immatriculée, dirigeant vérifié. Pas d'intermédiaire fantôme.</span></span></li>
 <li class="artisans__item"><span class="artisans__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span><span><strong class="artisans__t">RC pro à jour</strong><span class="artisans__d">L'attestation de responsabilité civile professionnelle est contrôlée. Si elle expire, l'artisan ne reçoit plus de demandes.</span></span></li>
