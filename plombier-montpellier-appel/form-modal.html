@@ -76,7 +76,7 @@
   /* ---- Modale de rappel : bottom sheet mobile / centree desktop ---- */
   .cbm{border:0;padding:0;background:transparent;max-width:none;max-height:none;width:100%;height:100%;margin:0;overflow:hidden}
   .cbm::backdrop{background:rgba(7,23,44,.55);backdrop-filter:blur(2px)}
-  .cbm__panel{position:absolute;left:0;right:0;bottom:0;background:#fff;border-radius:22px 22px 0 0;padding:22px 20px calc(22px + env(safe-area-inset-bottom));box-shadow:0 -12px 40px rgba(7,23,44,.28);transform:translateY(100%);transition:transform .28s cubic-bezier(.22,1,.36,1)}
+  .cbm__panel{position:absolute;left:0;right:0;bottom:0;background:#fff;border-radius:22px 22px 0 0;padding:22px 24px calc(24px + env(safe-area-inset-bottom));box-shadow:0 -12px 40px rgba(7,23,44,.28);transform:translateY(100%);transition:transform .28s cubic-bezier(.22,1,.36,1)}
   .cbm[open] .cbm__panel{transform:translateY(0)}
   .cbm__grab{width:38px;height:4px;border-radius:999px;background:var(--color-neutral-200,#e3e9ef);margin:0 auto 16px}
   .cbm__close{position:absolute;top:14px;right:14px;width:34px;height:34px;border-radius:50%;border:0;background:var(--color-secondary-2,#eafaf8);color:var(--color-secondary);display:grid;place-items:center;cursor:pointer}
@@ -87,11 +87,10 @@
   .cbm__legal{font-size:11.5px;color:var(--color-neutral-500,#7a8896);margin-top:14px;line-height:1.5}
   .cbm__alt{font-size:13.5px;color:var(--color-neutral-600,#5b6b7b);margin-top:14px;text-align:center}
   .cbm__alt a{color:var(--color-secondary);font-weight:700;text-decoration:underline;text-underline-offset:2px}
-  .cbm .hero-cb__row .btn{background:linear-gradient(135deg,#05d9cb 0%,var(--color-primary) 52%,var(--color-primary-600) 100%);border-color:transparent;color:#fff;box-shadow:0 10px 26px rgba(3,197,184,.4)}
   @media (prefers-reduced-motion:reduce){.cbm__panel{transition:none}}
   /* Desktop : modale centree */
   @media (min-width:641px){
-    .cbm__panel{position:relative;margin:0 auto;top:50%;transform:translateY(calc(-50% + 16px));max-width:440px;border-radius:20px;padding:28px 26px;box-shadow:0 24px 60px rgba(7,23,44,.32);opacity:0;transition:opacity .2s ease,transform .24s cubic-bezier(.22,1,.36,1)}
+    .cbm__panel{position:relative;margin:0 auto;top:50%;transform:translateY(calc(-50% + 16px));max-width:440px;border-radius:20px;padding:28px 30px;box-shadow:0 24px 60px rgba(7,23,44,.32);opacity:0;transition:opacity .2s ease,transform .24s cubic-bezier(.22,1,.36,1)}
     .cbm[open] .cbm__panel{transform:translateY(-50%);opacity:1}
     .cbm__grab{display:none}
   }
@@ -591,6 +590,23 @@
 </div>
 <!--$-->
 <!--/$-->
+<dialog class="cbm" id="cbm" aria-labelledby="cbm-title">
+<div class="cbm__panel">
+<div class="cbm__grab" aria-hidden="true"></div>
+<button type="button" class="cbm__close" data-cbm-close aria-label="Fermer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+<span class="cbm__sla"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> On vous rappelle sous 15 min<!-- SLA A VALIDER SERVICE CLIENT --></span>
+<h2 class="cbm__title" id="cbm-title">Laissez votre num&eacute;ro</h2>
+<p class="cbm__sub">Une conseill&egrave;re vous rappelle et qualifie votre urgence. C'est tout ce dont on a besoin.</p>
+<form onsubmit="return false">
+<div class="hero-cb__row">
+<div class="phone-row"><input type="tel" inputmode="tel" placeholder="Votre num&eacute;ro de t&eacute;l&eacute;phone" aria-label="Votre num&eacute;ro de t&eacute;l&eacute;phone"/></div>
+<button type="submit" class="btn btn--lg" data-cta="rappel-modal">&Ecirc;tre rappel&eacute;</button>
+</div>
+<p class="cbm__legal">En validant, vous acceptez d'&ecirc;tre recontact&eacute; par Kelkun au sujet de votre demande. Donn&eacute;es trait&eacute;es selon notre <a href="https://www.kelkun.com/politique-de-confidentialite/" target="_blank" rel="noopener noreferrer">politique de confidentialit&eacute;</a>.</p>
+</form>
+<p class="cbm__alt">Vous pr&eacute;f&eacute;rez appeler&nbsp;? <a href="tel:+33449420039" data-cta="modal-phone">04&nbsp;49&nbsp;42&nbsp;00&nbsp;39</a></p>
+</div>
+</dialog>
 <script>
 (function(){
   var nav=document.getElementById('nav'),mc=document.querySelector('.mobile-cta');
@@ -627,23 +643,6 @@
   });
 })();
 </script>
-<dialog class="cbm" id="cbm" aria-labelledby="cbm-title">
-<div class="cbm__panel">
-<div class="cbm__grab" aria-hidden="true"></div>
-<button type="button" class="cbm__close" data-cbm-close aria-label="Fermer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
-<span class="cbm__sla"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> On vous rappelle sous 15 min<!-- SLA A VALIDER SERVICE CLIENT --></span>
-<h2 class="cbm__title" id="cbm-title">Laissez votre num&eacute;ro</h2>
-<p class="cbm__sub">Une conseill&egrave;re vous rappelle et qualifie votre urgence. C'est tout ce dont on a besoin.</p>
-<form onsubmit="return false">
-<div class="hero-cb__row">
-<div class="phone-row"><input type="tel" inputmode="tel" placeholder="Votre num&eacute;ro de t&eacute;l&eacute;phone" aria-label="Votre num&eacute;ro de t&eacute;l&eacute;phone"/></div>
-<button type="submit" class="btn btn--lg" data-cta="rappel-modal">&Ecirc;tre rappel&eacute;</button>
-</div>
-<p class="cbm__legal">En validant, vous acceptez d'&ecirc;tre recontact&eacute; par Kelkun au sujet de votre demande. Donn&eacute;es trait&eacute;es selon notre <a href="https://www.kelkun.com/politique-de-confidentialite/" target="_blank" rel="noopener noreferrer">politique de confidentialit&eacute;</a>.</p>
-</form>
-<p class="cbm__alt">Vous pr&eacute;f&eacute;rez appeler&nbsp;? <a href="tel:+33449420039" data-cta="modal-phone">04&nbsp;49&nbsp;42&nbsp;00&nbsp;39</a></p>
-</div>
-</dialog>
 <script>
 (function(){
   var dlg=document.getElementById('cbm');
