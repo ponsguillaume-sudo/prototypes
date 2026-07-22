@@ -62,8 +62,8 @@
   .hero-cb__row .phone-row{flex:1;min-width:0}
   .hero-cb__row .btn{flex-shrink:0;background:#fff;border:1.5px solid var(--color-primary);color:var(--color-primary-600);box-shadow:none;animation:none;transition:background .15s,color .15s}
   .hero-cb__row .btn:hover{background:var(--color-secondary-2,#eafaf8);color:var(--color-primary-600)}
-  .hero-cb__row .btn.is-ready{background:linear-gradient(135deg,#05d9cb 0%,var(--color-primary) 52%,var(--color-primary-600) 100%);border-color:transparent;color:#fff;box-shadow:0 10px 26px rgba(3,197,184,.4)}
-  .hero-cb__row .btn.is-ready:hover{color:#fff;transform:translateY(-2px);box-shadow:0 14px 34px rgba(3,197,184,.5)}
+  .hero-cb__row .btn.is-ready{background:var(--color-primary);border-color:transparent;color:#fff;box-shadow:0 4px 16px rgba(3,197,184,.32)}
+  .hero-cb__row .btn.is-ready:hover{color:#fff;background:var(--color-primary-600);box-shadow:0 6px 20px rgba(3,197,184,.4)}
   /* ---- Variante "phone form" : le formulaire est l'action primaire ---- */
   .hero-cb--primary{margin-top:24px;padding-top:0;border-top:0}
   .hero-cb--primary .btn{background:linear-gradient(135deg,#05d9cb 0%,var(--color-primary) 52%,var(--color-primary-600) 100%);border-color:transparent;color:#fff;box-shadow:0 12px 30px rgba(3,197,184,.38);animation:ctaPulse 2.6s ease-in-out infinite}
@@ -196,7 +196,7 @@
 <form class="hero-cb hero-cb--primary" id="lead" onsubmit="return false">
 <div class="hero-cb__row">
 <div class="phone-row"><input type="tel" inputmode="tel" placeholder="Votre numéro de téléphone" aria-label="Votre numéro de téléphone"/></div>
-<button type="submit" class="btn btn--lg" data-cta="rappel-hero">Être rappelé</button>
+<button type="submit" class="btn btn--lg" data-cta="rappel-hero">Être rappelé rapidement<svg fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" width="18" height="18"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></button>
 </div>
 <p class="hero-cb__sla"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> On vous rappelle sous 15 min<!-- SLA A VALIDER SERVICE CLIENT --></p>
 <p class="hero-cb__alt">Vous préférez appeler&nbsp;? <a href="tel:+33449420039" data-cta="hero-phone-alt">04&nbsp;49&nbsp;42&nbsp;00&nbsp;39</a></p>
@@ -540,7 +540,7 @@
 <form class="lead-form" onsubmit="return false">
 <div class="hero-cb__row callback__row">
 <div class="phone-row"><input type="tel" inputmode="tel" placeholder="Votre numéro de téléphone" aria-label="Votre numéro de téléphone"/></div>
-<button type="submit" class="btn btn--lg" data-cta="rappel">Être rappelé</button>
+<button type="submit" class="btn btn--lg" data-cta="rappel">Être rappelé rapidement<svg fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" width="18" height="18"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></button>
 </div>
 <p class="callback__legal">En validant, vous acceptez d'être recontacté par Kelkun au sujet de votre demande. Données traitées selon notre <a href="https://www.kelkun.com/politique-de-confidentialite/" target="_blank" rel="noopener noreferrer">politique de confidentialité</a>.</p>
 </form>
