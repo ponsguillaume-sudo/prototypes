@@ -64,6 +64,24 @@
   .hero-cb__row .btn:hover{background:var(--color-secondary-2,#eafaf8);color:var(--color-primary-600)}
   .hero-cb__row .btn.is-ready{background:linear-gradient(135deg,#05d9cb 0%,var(--color-primary) 52%,var(--color-primary-600) 100%);border-color:transparent;color:#fff;box-shadow:0 10px 26px rgba(3,197,184,.4)}
   .hero-cb__row .btn.is-ready:hover{color:#fff;transform:translateY(-2px);box-shadow:0 14px 34px rgba(3,197,184,.5)}
+  /* Mini-carrousel d'avis — remplace le bloc zone, meme hauteur (62px mobile / 54px desktop) */
+  .hero-avis{position:relative;margin-top:24px;height:62px;border:1px solid var(--color-neutral-200,#e3e9ef);border-radius:var(--rounded-xl,20px);background:var(--color-secondary-2,#eafaf8);overflow:hidden}
+  .hero-avis__track{position:relative;height:100%}
+  .hero-avis__item{position:absolute;inset:0;display:flex;align-items:center;gap:10px;padding:0 14px;opacity:0;transition:opacity .5s ease;pointer-events:none}
+  .hero-avis__item.on{opacity:1}
+  .hero-avis__av{width:34px;height:34px;border-radius:50%;object-fit:cover;flex-shrink:0;border:2px solid #fff}
+  .hero-avis__body{min-width:0;flex:1}
+  .hero-avis__q{font-size:12.5px;line-height:1.35;color:var(--color-secondary-600,#243b53);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .hero-avis__meta{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--color-neutral-600,#5b6b7b);margin-top:1px}
+  .hero-avis__stars{color:#e37400;letter-spacing:.5px;flex-shrink:0}
+  .hero-avis__dots{position:absolute;right:10px;bottom:6px;display:flex;gap:4px}
+  .hero-avis__dot{width:5px;height:5px;border-radius:50%;background:var(--color-primary-200,#bdeee9);transition:background .3s}
+  .hero-avis__dot.on{background:var(--color-primary-600)}
+  @media (min-width:641px){
+    .hero-avis{height:54px}
+    .hero-avis__q{-webkit-line-clamp:1;font-size:13px}
+  }
+  @media (prefers-reduced-motion:reduce){.hero-avis__item{transition:none}}
   /* ---- Rythme des fonds de section ---- */
   /* .certbar (CSS d'origine) forcait background:#fff + padding 26px : neutralise,
      le bloc artisans est desormais une section a part entiere. */
@@ -189,7 +207,15 @@
 <li class="hero-step"><span class="hero-step__num">2</span><span class="hero-step__body"><strong class="hero-step__t">Elle mobilise les artisans du réseau qui correspondent</strong><span class="hero-step__s">Vérifiés et assurés, proches de chez vous.</span></span></li>
 <li class="hero-step"><span class="hero-step__num">3</span><span class="hero-step__body"><strong class="hero-step__t">Ils vous rappellent pour intervenir</strong><span class="hero-step__s">Vous n'avez plus qu'à choisir votre créneau.</span></span></li>
 </ol>
-<p class="hero__local"><span class="hero__local-pin"><svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" width="16" height="16"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span><span class="hero__local-text"><strong>Montpellier et 20 km à la ronde</strong> · Castelnau-le-Lez · Lattes · Juvignac</span></p>
+<div class="hero-avis" aria-label="Avis clients">
+<div class="hero-avis__track">
+<div class="hero-avis__item on"><img class="hero-avis__av" src="img/avis-marie.webp" width="34" height="34" loading="lazy" alt="Portrait de Marie L."/><div class="hero-avis__body"><p class="hero-avis__q">« Fuite sous l&#x27;évier un dimanche soir. Rappelée rapidement, le plombier est passé le lendemain matin. »</p><p class="hero-avis__meta"><span class="hero-avis__stars">★★★★★</span> Marie L. · Montpellier</p></div></div>
+<div class="hero-avis__item"><img class="hero-avis__av" src="img/avis-sophie.webp" width="34" height="34" loading="lazy" alt="Portrait de Sophie B."/><div class="hero-avis__body"><p class="hero-avis__q">« Chauffe-eau HS en plein hiver. Plombier sérieux, intervention propre, eau chaude le jour même. »</p><p class="hero-avis__meta"><span class="hero-avis__stars">★★★★★</span> Sophie B. · Castelnau-le-Lez</p></div></div>
+<div class="hero-avis__item"><img class="hero-avis__av" src="img/avis-karim.webp" width="34" height="34" loading="lazy" alt="Portrait de Karim B."/><div class="hero-avis__body"><p class="hero-avis__q">« Canalisation bouchée un dimanche. Rappelé en quelques minutes, problème réglé dans la foulée. »</p><p class="hero-avis__meta"><span class="hero-avis__stars">★★★★★</span> Karim B. · Lattes</p></div></div>
+<div class="hero-avis__item"><img class="hero-avis__av" src="img/avis-julien.webp" width="34" height="34" loading="lazy" alt="Portrait de Julien M."/><div class="hero-avis__body"><p class="hero-avis__q">« WC bouché un soir de match. Plombier joignable et réactif, réglé en moins d&#x27;une heure. »</p><p class="hero-avis__meta"><span class="hero-avis__stars">★★★★★</span> Julien M. · Pérols</p></div></div>
+</div>
+<div class="hero-avis__dots" aria-hidden="true"><span class="hero-avis__dot on"></span><span class="hero-avis__dot"></span><span class="hero-avis__dot"></span><span class="hero-avis__dot"></span></div>
+</div>
 <form class="hero-cb" onsubmit="return false">
 <p class="hero-cb__label"><strong>Pas le temps d'appeler&nbsp;?</strong> Laissez votre numéro, on vous rappelle.</p>
 <div class="hero-cb__row">
@@ -583,6 +609,19 @@
       if(btn)btn.classList.toggle('is-ready',v.length===10);
     });
   });
+})();
+</script>
+<script>
+(function(){
+  var items=document.querySelectorAll('.hero-avis__item');
+  var dots=document.querySelectorAll('.hero-avis__dot');
+  if(items.length<2)return;
+  var i=0;
+  setInterval(function(){
+    items[i].classList.remove('on'); dots[i].classList.remove('on');
+    i=(i+1)%items.length;
+    items[i].classList.add('on'); dots[i].classList.add('on');
+  },4000);
 })();
 </script>
 </body>
